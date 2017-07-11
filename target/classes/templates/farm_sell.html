@@ -22,6 +22,8 @@
 			document.forms[0].submit();
 		});
 		$('#sell').click(function() {
+			//alert($("#product option:selected" ).text());
+			$("#prodName").val($("#product option:selected" ).text());
 			document.forms[0].action = "/addProductToSell";
 			document.forms[0].submit();
 		});
@@ -57,9 +59,10 @@
 					<h3>
 						<span th:text="'Product Category:'"></span> 
 						<select id="category" th:field="*{category}">
-							<option th:value="'1'" th:text="'Dairy'">Fruits</option>
+							<option th:value="'0'" th:text="'Select'">Select</option>
+							<option th:value="'1'" th:text="'Dairy'">Dairy</option>
 							<option th:value="'2'" th:text="'Vegetables'">Vegetables</option>
-							<option th:value="'3'" th:text="'Fruits'">Dairy</option>
+							<option th:value="'3'" th:text="'Fruits'">Fruits</option>
 						</select>
 					</h3>
 				</div>
@@ -73,7 +76,12 @@
 						</select>
 					</h3>
 				</div>
-
+				<div class="hero-unit" style="display:none;">
+					<h3>
+						<span th:text="'Product Name:'"></span>
+						 <input type="text" class="form-control" id="prodName" th:field="*{prodName}" />
+					</h3>
+				</div>
 				<div class="hero-unit">
 					<h3>
 						<span th:text="'Product Description:'"></span>
@@ -93,8 +101,8 @@
 
 				<div class="hero-unit">
 					<h3>
-						<span th:text="'Product Quantity:'"></span> <input type="number"
-							class="form-control" id="prodQuantity" th:field="*{prodQuantity}" />
+						<span th:text="'Product Quantity:'"></span> 
+						<input type="number" class="form-control" id="prodQuantity" th:field="*{prodQuantity}" />
 					</h3>
 				</div>
 

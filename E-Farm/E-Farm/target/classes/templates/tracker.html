@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CPS</title>
+    <!-- Bootstrap stuff -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <!-- -->
+
+    <!-- Location picker -->
+    <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places'></script>
+    <script type="text/javascript" src="../scripts/locationpicker.jquery.js"></script>
+
+
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+
+
+
+<script>
+$( document ).ready(function() {
+	//alert("hiii1111");
+ 				var options = {
+					  enableHighAccuracy: true,
+					  timeout: 5000,
+					  maximumAge: 0,
+					  mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				function success(pos) {
+				  var crd = pos.coords;
+				  var address="";
+				  //alert('Your current position is:');
+				  //alert(`Latitude : ${crd.latitude}`);
+				  //alert(`Longitude: ${crd.longitude}`);
+				  //alert(`More or less ${crd.accuracy} meters.`);
+				  
+					$('#us2').locationpicker({
+                        location: {
+                            latitude: crd.latitude,
+                            longitude: crd.longitude
+                        },
+                        radius: 400,
+                        inputBinding: {
+                            latitudeInput: $('#us2-lat'),
+                            longitudeInput: $('#us2-lon'),
+                            radiusInput: $('#us2-radius'),
+                            locationNameInput: $('#us2-address')
+                        },
+                        enableAutocomplete: true,
+						addressFormat: "street_address"
+						//markerIcon: 'http://www.iconsdb.com/icons/preview/tropical-blue/map-marker-2-xl.png'
+                    });
+				};
+				function error(err) {
+				  console.warn(`ERROR(${err.code}): ${err.message}`);
+				};
+
+				navigator.geolocation.getCurrentPosition(success, error, options); 
+});
+ </script>
+</head>
+
+<body>
+<form  th:object="${tracker}"  method="post">
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<p><b><h3 style="color: blue;">Cognitive Parking Solutions for Smarter Cities</h3></b></p>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+			<!-- 		<li class="active"><a href="/parking">Home</a></li>
+					<li><a href="#about">About</a></li> -->
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div id="examples">
+		<p>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">Location:</label>
+
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="us2-address" />
+					</div>
+				</div>
+
+				<div id="us2" style="width: 550px; height: 400px;"></div>
+				<div class="clearfix">&nbsp;</div>
+				<div class="m-t-small">
+					<label class="p-r-small col-sm-1 control-label">Lat.:</label>
+
+					<div class="col-sm-1">
+						<input type="text" class="form-control" style="width: 110px"
+							id="us2-lat" />
+					</div>
+					<label class="p-r-small col-sm-1 control-label">Long.:</label>
+
+					<div class="col-sm-1">
+						<input type="text" class="form-control" style="width: 110px"
+							id="us2-lon" />
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			</p>
+		</div>
+	</div>
+</form>
+</body>
+
+</html>

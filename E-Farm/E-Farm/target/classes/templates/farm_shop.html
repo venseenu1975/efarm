@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>E-Farm</title>
+    <!-- Bootstrap stuff -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <!-- -->
+
+
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+
+
+
+<script>
+$( document ).ready(function() {
+
+});
+ </script>
+</head>
+
+<body>
+<form  th:object="${farm}"  method="post">
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<p><b><h3 style="color: blue;">E - Organic Market</h3></b></p>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/sell">Sell</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div id="examples">
+		<p>hello
+		 <!-- <img  th:src="@{'data:image/jpeg;base64,'+${vwNewTestContentElement.generateBase64Image()}}" /> -->
+		    <img th:each="i : ${galleria}" th:src="'data:image/jpeg;base64,'+${i.productAltImg}" width="100" height="100" alt=""/>
+ 				<!-- 	<img  src="data:image/jpeg;base64,${galleria}" /> -->
+		</p>
+		</div>
+	</div>
+</form>
+</body>
+
+</html>

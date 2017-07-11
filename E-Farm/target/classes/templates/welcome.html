@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Cognitive Parking Solutions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+</head>
+<body>
+<form  th:object="${parking}"  method="post">
+
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<p><b><h3 style="color:blue;">Cognitive Parking Solutions for Smarter Cities</h3></b></p>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+			<!-- 		<li class="active"><a href="/parking">Home</a></li>
+					<li><a href="#about">About</a></li> -->
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	
+
+	<div class="container">
+	
+		<div class="hero-unit">
+			<h2>
+				<span th:text="${message}"></span>
+			</h2>
+		</div>
+		
+		<div class="hero-unit">
+			<h3>
+				<span th:text="'Country:'"></span>
+				<select id="country" name="country" th:field="*{country}">
+				<option value="">Select</option>
+				<option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryName}"></option>
+				</select>
+			</h3>
+		</div>
+		
+		<div class="starter-template">
+			<h3>
+				<span th:text="'State:'"></span>
+				<select id="state" name="state" th:field="*{state}">
+				<option th:each="state : ${states}" th:value="${state.stateId}" th:text="${state.stateName}"></option>
+				</select>
+			</h3>
+		</div>
+		
+		<div class="starter-template">
+			<h3>
+				<span th:text="'City:'"></span>
+				<select id="city" name="country" th:field="*{city}">
+				<option th:each="city : ${cities}" th:value="${city.cityId}" th:text="${city.cityName}"></option>
+				</select>
+			</h3>
+		</div>
+		
+		<div class="starter-template">
+		<h3>
+			<span th:text="'Location:'"></span>
+			<select id="location" name="location" th:field="*{location}">
+			<option th:each="loc : ${locations}" th:value="${loc.address}" th:text="${loc.address}"></option>
+			</select>
+		</h3>
+		</div>
+		
+		<div class="starter-template">
+		<h3>
+			<table class="table table-bordered table-striped" id="garageTbl" th:if="${garages != null}">
+			<thead>
+			<tr>
+			<th>Choose</th>
+			<th>Parking Area</th>
+			<th>Type</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			 <tr th:each="garage : ${garages}">
+			 		<!-- <td><input type="text" th:field="*{title}" /></td> -->
+			 		<td><input type="radio" th:field="*{garageId}" th:value="${garage.garageId}" id="garage" name="garage" /> </td>
+			        <td th:text="${garage.buildingName}"></td>
+			        <td th:text="${garage.isPrivate}">2.41</td>
+			        <!-- <td th:text="${garage.inStock}? #{true} : #{false}">yes</td> -->
+			  </tr>
+			</tbody>
+			</table>
+			
+			<table class="table table-striped" id="parkingTbl" th:if="${parkings != null}">
+			<thead>
+			<tr>
+			<th>Space</th>
+			<th>Availability</th>
+			<th>IN</th>
+			<th>OUT</th>
+			<th>Car Type</th>
+			<th>Book</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			 <tr th:each="park : ${parkings}">
+			 		<!-- <td><input type="text" th:field="*{title}" /></td> -->
+			 		<!-- <td><input type="radio" th:field="*{garageId}" th:value="${garage.garageId}" id="garage" name="garage" /> </td> -->
+			        <td th:text="${park.parkingLotName}"></td>
+			        <td th:text="${park.isAvailable}"></td>
+			        <td>
+						<select id="intimeSel">
+							<option th:value="'9 AM'" th:text="'9 AM'">9 AM</option>
+							<option th:value="'10 AM'" th:text="'10 AM'">10 AM</option>
+							<option th:value="'11 AM'" th:text="'11 AM'">11 AM</option>
+							<option th:value="'12 PM'" th:text="'12 AM'">12 PM</option>
+							<option th:value="'1 PM'" th:text="'1 PM'">1 PM</option>
+							<option th:value="'2 PM'" th:text="'2 PM'">2 PM</option>
+							<option th:value="'3 PM'" th:text="'3 PM'">3 PM</option>
+							<option th:value="'4 PM'" th:text="'4 PM'">4 PM</option>
+							<option th:value="'5 PM'" th:text="'5 PM'">4 PM</option>
+							<option th:value="'6 PM'" th:text="'6 AM'">6 PM</option>
+						</select>
+						<input type="text" th:field="*{intime}" id="intimeInp" style="display:none"/>
+					</td>
+			        <td>
+						<select id="outtime" name="outtime">
+							<option th:value="'9 AM'" th:text="'9 AM'">9 AM</option>
+							<option th:value="'10 AM'" th:text="'10 AM'">10 AM</option>
+							<option th:value="'11 AM'" th:text="'11 AM'">11 AM</option>
+							<option th:value="'12 PM'" th:text="'12 AM'">12 PM</option>
+							<option th:value="'1 PM'" th:text="'1 PM'">1 PM</option>
+							<option th:value="'2 PM'" th:text="'2 PM'">2 PM</option>
+							<option th:value="'3 PM'" th:text="'3 PM'">3 PM</option>
+							<option th:value="'4 PM'" th:text="'4 PM'">4 PM</option>
+							<option th:value="'5 PM'" th:text="'5 PM'">4 PM</option>
+							<option th:value="'6 PM'" th:text="'6 AM'">6 PM</option>
+						</select>
+						<input type="text" th:field="*{outtime}" id="_outtime" style="display:none"/>
+			        </td>
+			            <td>
+						<select id="carType" name="carType">
+						<option value="Prime">Prime</option>
+						<option value="Sedan">Sedan</option>
+						<option value="Mini">Mini</option>
+						<option value="Micro">Micro</option>
+						</select>
+						<input type="text" th:field="*{carType}" id="_carType"  style="display:none"/>
+			        </td>
+			        <td><input type="radio" th:field="*{parkingLotId}" th:value="${park.parkingLotId}" id="book" name="book" /> </td>
+			        <!-- <td th:text="${garage.inStock}? #{true} : #{false}">yes</td> -->
+			  </tr>
+			</tbody>
+			</table>
+		</h3>
+		</div>
+
+	</div>
+	<!-- /.container -->
+	
+<!--     <div th:fragment="footer">
+      &copy; 2017 Footer
+    </div> -->
+	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	
+	<script>
+	$('#country').change( function(){
+		document.forms[0].action = "/state";
+		document.forms[0].submit();
+		    });
+	$('#state').change( function(){
+		document.forms[0].action = "/city";
+		document.forms[0].submit();
+		    });
+	$('#city').change( function(){
+		document.forms[0].action = "/location";
+		document.forms[0].submit();
+		    });
+	$('#location').change( function(){
+		document.forms[0].action = "/garage";
+		document.forms[0].submit();
+		    });
+	//$('#garage').on('click', function() {
+	$('#garageTbl > tbody tr').click(function() {
+		  $(this).find('td input:radio').prop('checked', true);
+		document.forms[0].action = "/parkingarea";
+		document.forms[0].submit();
+	    });
+	
+	$('#parkingTbl > tbody tr').find('td input:radio').click(function() {
+		  //alert( $(this).closest('tr').find( "td select#intime option:selected" ).text());
+		  $(this).closest('tr').find('td #intimeInp').val( $(this).closest('tr').find( "td select#intimeSel option:selected" ).text());
+		  $(this).closest('tr').find('td #_outtime').val( $(this).closest('tr').find( "td select#outtime option:selected" ).text());
+		  $(this).closest('tr').find('td #_carType').val( $(this).closest('tr').find( "td select#carType option:selected" ).text());
+		  //alert("Booking Confirmed...")
+ 	 	document.forms[0].action = "/parkingareabooking";
+		document.forms[0].submit();   
+	    });
+	</script>
+</form>
+</body>
+</html>

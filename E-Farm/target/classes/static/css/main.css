@@ -1,0 +1,27 @@
+h1{
+	color:#0000FF;
+}
+
+h2{
+	color:#FF0000;
+}
+/*  Today */
+.datepicker table tr td.today{
+  color: #000;
+  background-color: greenyellow;
+  border-color: #FFF;
+
+  &:hover:hover{
+    background-color: #EEE;
+  }
+}
+
+/* Active (selected day) */
+.datepicker table tr td.active.active{
+  background-color: green;
+  border-color: #FFF;
+
+  &:hover{
+    background-color: green;
+  }
+}

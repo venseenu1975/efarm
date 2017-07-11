@@ -138,7 +138,7 @@ public class FarmController {
 	public String populateState(ModelMap model,@ModelAttribute User user) {
 		System.out.println("user   "+user.getuAddress());
 		System.out.println("user   "+user.getuLat());
-		//farmService.create(user);
+		farmService.create(user);
 		System.out.println("user   "+farmService.create(user));
 		model.put("msg",  "Added");
 		return "farm_user_reg";

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
@@ -50,7 +51,7 @@ public class FarmService {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = null;
 				try{
-				    ps = connection.prepareStatement(sql);
+				    ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 	                ps.setString(1, user.getuName());
 	                ps.setString(2, user.getuAddress());
 	                ps.setString(3, user.getuPhoneNo());
@@ -95,8 +96,9 @@ public class FarmService {
     		final File image = new File(farm.getImgFilePath()); 
     		final InputStream imageIs = new FileInputStream(image); 
     		LobHandler lobHandler = new DefaultLobHandler(); 
-    		jdbcTemplate.update( "INSERT INTO seller_products (prod_id,prod_desc,prod_img,prod_delivery_mode,seller_id,prod_quantity,product_expiry,active) VALUES (?, ?,?,?,?,?,?,?)", new Object[] { 
+    		jdbcTemplate.update( "INSERT INTO seller_products (prod_id,prod_name,prod_desc,prod_img,prod_delivery_mode,seller_id,prod_quantity,product_expiry,active) VALUES (?,?, ?,?,?,?,?,?,?)", new Object[] { 
     				farm.getProdId(),
+    				farm.getProdName(),
     				farm.getProdDesc(),
     				new SqlLobValue(imageIs, (int)image.length(), lobHandler),
     				farm.getProdDeliveryMode(),
@@ -106,6 +108,7 @@ public class FarmService {
     				true
     				}, new int[] {
     						Types.INTEGER,
+    						Types.VARCHAR, 
     						Types.VARCHAR, 
     						Types.BLOB,
     						Types.VARCHAR, 
