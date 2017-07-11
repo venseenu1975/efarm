@@ -106,7 +106,18 @@ public class FarmController {
 		return new ModelAndView("login");
 	}*/
 	
-	
+    @RequestMapping("/search")
+	public String search(Map<String, Object> model,@ModelAttribute Farm farm) {
+		
+		return "farm_search";
+	}
+    
+    @RequestMapping("/buy")
+	public String buy(Map<String, Object> model,@ModelAttribute Farm farm) {
+		
+		return "farm_buy";
+	}
+    
 	@RequestMapping("/sell")
 	public String sell(Map<String, Object> model,@ModelAttribute Farm farm) {
 		
