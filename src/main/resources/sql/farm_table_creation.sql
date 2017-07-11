@@ -54,13 +54,15 @@ CREATE TABLE `product_inv` (
 CREATE TABLE `seller_products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) DEFAULT NULL,
+  `prod_name` varchar(45) DEFAULT NULL,
   `prod_desc` varchar(45) DEFAULT NULL,
   `prod_img` longblob,
   `prod_delivery_mode` varchar(45) DEFAULT NULL,
   `seller_id` varchar(45) DEFAULT NULL,
-  `date` date DEFAULT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `prod_quantity` int(11) DEFAULT NULL,
-  `product_availabilty` date DEFAULT NULL,
+  `product_expiry` timestamp NULL DEFAULT NULL,
   `active` tinyint(2) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
