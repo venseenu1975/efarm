@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>E-Farm</title>
+ <div th:replace="fragments/header :: header-css"/>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
+
+
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+
+
+
+<script>
+	$(document).ready(function() {
+		
+	});
+</script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"/>
+
+	<form th:object="${farm}" method="post" enctype="multipart/form-data">
+
+		
+		<div class="container upload">
+			<div class="row">
+				<div class="hero-unit">
+					<h3>
+						<span th:text="Under Construction"></span> 
+						
+					</h3>
+				</div>
+
+				
+			
+	</form>
+	<div th:replace="fragments/footer :: footer"/>
+</body>
+
+</html>

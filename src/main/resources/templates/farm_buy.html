@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>E-Farm</title>
+ <div th:replace="fragments/header :: header-css"/>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
+
+
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+
+
+
+<script>
+	$(document).ready(function() {
+		
+		$('#Search').click(function() {
+			document.forms[0].action = "/search";
+			document.forms[0].submit();
+		});
+		
+	    $("#date").datetimepicker({
+	        format: "mm dd yyyy - hh:ii"
+	    });
+	});
+</script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"/>
+
+	<form th:object="${farm}" method="post" enctype="multipart/form-data">
+
+		
+		<div class="container upload">
+			<div class="row">
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Category:'"></span> 
+						<select id="category" th:field="*{category}">
+						<option th:value="'0'" th:text="'Select'">Select</option>
+							<option th:value="'1'" th:text="'Dairy'">Dairy</option>
+							<option th:value="'2'" th:text="'Vegetables'">Vegetables</option>
+							<option th:value="'3'" th:text="'Fruits'">Fruits</option>
+						</select>
+					</h3>
+				</div>
+
+				
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Name:'"></span>
+						 <input type="text" class="form-control" id="prodName" th:field="*{prodName}" />
+					</h3>
+				</div>
+
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Delivery Mode:'"></span> 
+						<select id="prodDel" th:field="*{prodDeliveryMode}">
+							<option th:value="'Self Service'" th:text="'Self Service'">Self Service</option>
+							<option th:value="'Home Delivery'" th:text="'Home Delivery'">Home Delivery</option>
+						</select>
+					</h3>
+				</div>
+
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Quantity:'"></span> <input type="number"
+							class="form-control" id="prodQuantity" th:field="*{prodQuantity}" />
+					</h3>
+				</div>
+
+			
+
+		<div class="hero-unit">
+					<h3>
+					<div>
+					<input type="submit" id="buy" class="btn btn-info" value="Search"></input>
+					</div> 
+					</h3>
+				</div>		
+
+			</div>
+		</div>
+	</form>
+	<div th:replace="fragments/footer :: footer"/>
+</body>
+
+</html>
