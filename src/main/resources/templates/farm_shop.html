@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>E-Farm</title>
+ <div th:replace="fragments/header :: header-css"/>
+    <!-- Bootstrap stuff -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <!-- -->
+
+
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+
+
+
+<script>
+$( document ).ready(function() {
+
+});
+ </script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"/>
+<form  th:object="${farm}"  method="post">
+
+	<div class="container">
+		<div id="examples">
+		<p>hello
+		 <!-- <img  th:src="@{'data:image/jpeg;base64,'+${vwNewTestContentElement.generateBase64Image()}}" /> -->
+		    <img th:each="i : ${galleria}" th:src="'data:image/jpeg;base64,'+${i.productAltImg}" width="100" height="100" alt=""/>
+ 				<!-- 	<img  src="data:image/jpeg;base64,${galleria}" /> -->
+		</p>
+		</div>
+	</div>
+</form>
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+
+</html>
