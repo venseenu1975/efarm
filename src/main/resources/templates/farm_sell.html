@@ -59,10 +59,8 @@
 					<h3>
 						<span th:text="'Product Category:'"></span> 
 						<select id="category" th:field="*{category}">
-							<option th:value="'0'" th:text="'Select'">Select</option>
-							<option th:value="'1'" th:text="'Dairy'">Dairy</option>
-							<option th:value="'2'" th:text="'Vegetables'">Vegetables</option>
-							<option th:value="'3'" th:text="'Fruits'">Fruits</option>
+						<option value="">Select</option>
+							<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
 						</select>
 					</h3>
 				</div>

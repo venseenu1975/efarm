@@ -114,18 +114,18 @@ public class FarmController {
     
     @RequestMapping("/buy")
 	public String buy(Map<String, Object> model,@ModelAttribute Farm farm) {
-		
+    	
 		return "farm_buy";
 	}
     
 	@RequestMapping("/sell")
 	public String sell(Map<String, Object> model,@ModelAttribute Farm farm) {
-		
+		model.put("categories",  farmService.getCategory());
 		return "farm_sell";
 	}
 	private static String UPLOADED_FOLDER = "C://pic//";
 	@RequestMapping("/addProductToSell") // //new annotation since 4.3
-    public String singleFileUpload(@ModelAttribute Farm farm) {
+    public String singleFileUpload(@ModelAttribute Farm farm,Map<String, Object> model) {
 
         try {
             // Get the file and save it somewhere
@@ -135,6 +135,7 @@ public class FarmController {
             farm.setImgFilePath(path.toString());
             System.out.println(farm.getImgFilePath());
             System.out.println(farm.getProductExpiry());
+            model.put("categories",  farmService.getCategory());
             farmService.addSellerProducts(farm);
         } catch (IOException e) {
             e.printStackTrace();
@@ -158,6 +159,7 @@ public class FarmController {
 	@RequestMapping("/populateProduct")
 	public String populateProduct(ModelMap model,@ModelAttribute Farm farm) {
 		System.out.println("user   "+farm.getCategory());
+		model.put("categories",  farmService.getCategory());
 		model.put("products",farmService.populateProduct(farm));
 		return "farm_sell";
 	}

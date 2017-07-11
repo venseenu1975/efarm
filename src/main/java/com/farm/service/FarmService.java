@@ -28,6 +28,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.farm.entity.Category;
 import com.farm.entity.Product;
 import com.farm.model.Farm;
 import com.farm.model.Login;
@@ -146,6 +147,20 @@ public class FarmService {
 	            	product.setProdId(rs.getInt("product_id"));
 	            	product.setProdName(rs.getString("product"));
 	                return product;
+	            }
+	        });
+	}
+
+	
+	public List<Category> getCategory() {
+		 return jdbcTemplate.query("SELECT * FROM category_master",new Object[] {},
+				 new RowMapper<Category>() {
+	            @Override
+	            public Category mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	Category cat = new Category();
+	            	cat.setCatId(rs.getInt("id"));
+	            	cat.setCatName(rs.getString("cat_name"));
+	                return cat;
 	            }
 	        });
 	}
