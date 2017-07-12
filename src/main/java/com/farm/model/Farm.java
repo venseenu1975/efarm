@@ -3,6 +3,7 @@ package com.farm.model;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,27 @@ public class Farm {
 
 	private String prodUnits;
 	private BigDecimal prodPrice;
+	
+	List<BasketObject> basket;
+	
+	
+
+	public Farm() {
+		super();
+	}
+
+	public Farm(List<BasketObject> basket) {
+		super();
+		this.basket = basket;
+	}
+
+	public List<BasketObject> getBasket() {
+		return basket;
+	}
+
+	public void setBasket(List<BasketObject> basket) {
+		this.basket = basket;
+	}
 
 	public String getImgFilePath() {
 		return imgFilePath;

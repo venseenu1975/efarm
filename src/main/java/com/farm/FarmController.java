@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.farm.entity.SellerProduct;
+import com.farm.model.BasketObject;
 import com.farm.model.Farm;
 import com.farm.model.User;
 import com.farm.service.FarmService;
@@ -55,35 +56,12 @@ public class FarmController {
 
 	
     @GetMapping("/")
-    public ModelAndView home1() {
-		String base64Encoded;
-		ModelAndView mav = new ModelAndView("farm_shop");
-/*		List<Farm> farmList=farmService.getImage();
-		if(farmList!=null && !farmList.isEmpty()){
-			for(Farm farm:farmList){
-				if(farm.getProdImg() !=null){
-				byte[] encodeBase64;
-				try {
-					encodeBase64 = Base64.encodeBase64(farm.getProdImg().getBytes(1, (int) farm.getProdImg().length()));
-					base64Encoded = new String(encodeBase64, "UTF-8");
-					farm.setProductAltImg(base64Encoded);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-			}
-			}
-		}
-		mav.addObject("galleria", farmList);*/
-		return mav;
+    public String home1() {
+		return "farm_shop";
     }
-    
-
     
     @RequestMapping("/buy")
 	public String buy(Map<String, Object> model,@ModelAttribute Farm farm) {
-    	
 		return "farm_buy";
 	}
     
@@ -173,5 +151,19 @@ public class FarmController {
 		return mav;
 	}
 	
+    @RequestMapping("/addToBasket")
+	public String addToBasket(Map<String, Object> model,@ModelAttribute Farm farm) {
+    	System.out.println("farm basket >> "+farm.getBasket());
+    	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
+    		for(BasketObject basketObject:farm.getBasket()){
+    			System.out.println("basket name >> "+basketObject.getName());
+    			System.out.println("basket quantity >> "+basketObject.getQuantity());
+    			System.out.println("basket Price >> "+basketObject.getPrice());
+    			System.out.println("basket cart added >> "+basketObject.getAddToCart());
+    			System.out.println("------------------------------------------------------");
+    		}
+    	}
+		return "farm_buy";
+	}
 
 }

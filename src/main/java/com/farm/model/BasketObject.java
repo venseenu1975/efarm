@@ -10,8 +10,30 @@ public class BasketObject {
 	private Integer sellerId;
 	private Integer quantity;
 	private String name;
+	private BigDecimal price;
+	private Boolean addToCart;
+
+	public BasketObject() {
+		super();
+	}
+	public BasketObject(Integer quantity, String name,
+			BigDecimal price, Boolean addToCart, String prodUnits) {
+		super();
+		this.quantity = quantity;
+		this.name = name;
+		this.price = price;
+		this.addToCart = addToCart;
+		this.prodUnits = prodUnits;
+	}
 	
 	
+	@Override
+	public String toString() {
+		return "BasketObject [ deliveryMode=" + deliveryMode 
+				+ ", quantity=" + quantity + ", name=" + name + ", price=" + price + ", addToCart=" + addToCart
+				+ ", prodUnits=" + prodUnits+ "]";
+	}
+
 
 	private String prodUnits;
 	public String getImage() {
@@ -50,12 +72,17 @@ public class BasketObject {
 	public void setProdUnits(String prodUnits) {
 		this.prodUnits = prodUnits;
 	}
-	public BigDecimal getProdPrice() {
-		return prodPrice;
+	public BigDecimal getPrice() {
+		return price;
 	}
-	public void setProdPrice(BigDecimal prodPrice) {
-		this.prodPrice = prodPrice;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
-	private BigDecimal prodPrice;
+	public Boolean getAddToCart() {
+		return addToCart;
+	}
+	public void setAddToCart(Boolean addToCart) {
+		this.addToCart = addToCart;
+	}
 	
 }

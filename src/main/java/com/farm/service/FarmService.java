@@ -118,9 +118,9 @@ public class FarmService {
 	            	sellerProduct.setProductExpiry(rs.getTimestamp("product_expiry"));
 	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
 	            	sellerProduct.setProdName(rs.getString("prod_name"));
-	            	sellerProduct.setId(rs.getInt("id"));
-	            	System.err.println("sellerName:"+rs.getString("seller_id"));
-	            	sellerProduct.setSellerId(rs.getString("seller_id"));
+	            	sellerProduct.setProdQuantity(rs.getInt("prod_quantity"));
+	            	sellerProduct.setUnits(rs.getString("product_units"));
+	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
 	                return sellerProduct;
 	            }
 	        });

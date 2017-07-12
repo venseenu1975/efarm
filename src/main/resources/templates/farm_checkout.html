@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
 <title>E-Farm</title>
- <div th:replace="fragments/header :: header-css"></div>
+ <div th:replace="fragments/header :: header-css"/>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
@@ -70,38 +69,23 @@
 			
 				<table class="table table-bordered">
 
-				<tr th:each="farmObj,rowStat : ${farmList}">
-					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}" th:title="${farmObj.prodName}"></img></td>
-					
-					<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].name'}"
-					th:id="${'basket['+__${rowStat.index}__+'].name'}"
-					th:text="${farmObj.prodName}" 
-					th:value="${farmObj.prodName}" />
-					</td>
-					
-					<td>
-					<select  th:field="*{basket[__${rowStat.index}__].quantity}" >
-					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
+				<tr th:each="farmObj : ${farmList}">
+					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}"></img></td>
+					<td colspan="2" rowspan="1" th:text="${farmObj.prodName}" th:field="basket.name"></td>
+					<td colspan="3" rowspan="1">
+					<select>
+					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}"
+					        th:value="${ i }"
+					        th:text="${  i} + ${farmObj.prodUnits}"></option>
 					</select>
 					</td>
-					
+					<!-- <td colspan="3" rowspan="1" th:text="${farmObj.prodUnits}"></td> -->
 					<td colspan="3" rowspan="1" th:text="${farmObj.prodPrice}"></td>
-					
-					<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].price'}"
-					th:id="${'basket['+__${rowStat.index}__+'].price'}"
-					th:text="${farmObj.prodPrice}" 
-					th:value="${farmObj.prodPrice}" />
-					</td>
-					
+					<!-- <td colspan="4" rowspan="1" th:text="${farmObj.prodExpiry}"></td> -->
 					<td>  
-					<div class="checkbox checkbox-primary">
+					<div class="checkbox">
 				    <label>
-				    <input type="checkbox" th:name="${'basket['+__${rowStat.index}__+'].addToCart'}"
-					th:id="${'basket['+__${rowStat.index}__+'].addToCart'}" th:text="'Add to Basket'"/>
+				      <input type="checkbox" class="checkbox-circle"> Add to Basket </input>
 				    </label>
 				  </div>
 				  </td>
