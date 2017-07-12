@@ -11,7 +11,7 @@ public class SellerProduct {
 	private String prodName;
 	private Blob prodImg;
 	private String prodDeliveryMode;
-	private Integer sellerId;
+	private String sellerId;
 	private Timestamp date	;
 	private Integer prodQuantity;
 	private Timestamp productExpiry;
@@ -60,10 +60,10 @@ public class SellerProduct {
 	public void setProdDeliveryMode(String prodDeliveryMode) {
 		this.prodDeliveryMode = prodDeliveryMode;
 	}
-	public Integer getSellerId() {
+	public String getSellerId() {
 		return sellerId;
 	}
-	public void setSellerId(Integer sellerId) {
+	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
 	public Timestamp getDate() {

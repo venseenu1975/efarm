@@ -7,12 +7,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +30,8 @@ import com.farm.entity.SellerProduct;
 import com.farm.model.Farm;
 import com.farm.model.User;
 import com.farm.service.FarmService;
+import com.farm.util.FarmUtil;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.mysql.fabric.xmlrpc.base.Array;
 
 
@@ -120,38 +128,50 @@ public class FarmController {
 	
 	
 	@RequestMapping("/search")
-	public ModelAndView populateSearchResults(ModelMap model,@ModelAttribute Farm farm) {
+	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException {
 		ModelAndView mav = new ModelAndView("farm_search");
 		String base64Encoded;
 		List<Farm> farmList = new ArrayList<>();
 		List<SellerProduct> sellerProducts = farmService.getSellerProducts(farm);
-		
-			if(sellerProducts!=null && !sellerProducts.isEmpty()){
-				for(SellerProduct sellerProduct:sellerProducts){
-					Farm farmObj  = new Farm();
-					farmObj.setProdImg(sellerProduct.getProdImg());
-					farmObj.setProdName(sellerProduct.getProdName());
-					farmObj.setProdQuantity(sellerProduct.getProdQuantity());
-					farmObj.setProdExpiry(sellerProduct.getProductExpiry());
-					
-				
-					if(farmObj.getProdImg() !=null){
-					byte[] encodeBase64;
-					try {
-						encodeBase64 = Base64.encodeBase64(farmObj.getProdImg().getBytes(1, (int) farmObj.getProdImg().length()));
-						base64Encoded = new String(encodeBase64, "UTF-8");
-						farmObj.setProductAltImg(base64Encoded);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String loggedUser = auth.getName();
+		com.farm.entity.User buyer = farmService.getUser(loggedUser);
+		Date d = new Date();
+		if (sellerProducts != null && !sellerProducts.isEmpty()) {
+			for (SellerProduct sellerProduct : sellerProducts) {
+				Farm farmObj = new Farm();
+				Date expiryDate = sellerProduct.getProductExpiry();
+				if (expiryDate.compareTo(d)>0) {
+					System.out.println("Seller ID:"+sellerProduct.getSellerId());
+					com.farm.entity.User sellerDetails = farmService.getUser(sellerProduct.getSellerId());
+					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
+					if (distanceInKms<2) {
+						farmObj.setProdImg(sellerProduct.getProdImg());
+						farmObj.setProdName(sellerProduct.getProdName());
+						farmObj.setProdQuantity(sellerProduct.getProdQuantity());
+						farmObj.setProdExpiry(sellerProduct.getProductExpiry());
+						if (farmObj.getProdImg() != null) {
+							byte[] encodeBase64;
+							try {
+								encodeBase64 = Base64.encodeBase64(
+										farmObj.getProdImg().getBytes(1, (int) farmObj.getProdImg().length()));
+								base64Encoded = new String(encodeBase64, "UTF-8");
+								farmObj.setProductAltImg(base64Encoded);
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
+							}
+							farmList.add(farmObj);
+						}
 					}
-					farmList.add(farmObj);
-				}
 				}
 			}
-		
-		mav.addObject("farmList",  farmList);
+		}
+
+		mav.addObject("farmList", farmList);
 		return mav;
 	}
+	
+
 }

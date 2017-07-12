@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.farm.entity.Category;
 import com.farm.entity.Product;
 import com.farm.entity.SellerProduct;
+import com.farm.entity.User;
 import com.farm.model.Farm;
 import com.farm.model.Login;
 
@@ -117,10 +118,43 @@ public class FarmService {
 	            	sellerProduct.setProductExpiry(rs.getTimestamp("product_expiry"));
 	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
 	            	sellerProduct.setProdName(rs.getString("prod_name"));
+	            	sellerProduct.setId(rs.getInt("id"));
+	            	System.err.println("sellerName:"+rs.getString("seller_id"));
+	            	sellerProduct.setSellerId(rs.getString("seller_id"));
 	                return sellerProduct;
 	            }
 	        });
 	}
 	
+	public User getUser(String userName){
+		
+		 return jdbcTemplate.queryForObject("SELECT * FROM user where username =?",new Object[]  {userName},new RowMapper<User>(){
+	            @Override
+	            public User mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	User user = new User();
+	            	user.setLat(rs.getBigDecimal("lat"));
+	            	user.setLon(rs.getBigDecimal("lon"));
+	            	user.setAddress(rs.getString("address"));
+	            	user.setName(rs.getString("name"));
+	            	user.setuPhoneNo(rs.getString("contact"));
+	            	return user;
+	            }
+	        });
+	}
 	
+	public User getUserById(String userId){
+		
+		 return jdbcTemplate.queryForObject("SELECT * FROM user where uid =?",new Object[]  {userId},new RowMapper<User>(){
+	            @Override
+	            public User mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	User user = new User();
+	            	user.setLat(rs.getBigDecimal("lat"));
+	            	user.setLon(rs.getBigDecimal("lon"));
+	            	user.setAddress(rs.getString("address"));
+	            	user.setName(rs.getString("name"));
+	            	user.setuPhoneNo(rs.getString("contact"));
+	            	return user;
+	            }
+	        });
+	}
 }
