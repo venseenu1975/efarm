@@ -8,6 +8,7 @@ public class SellerProduct {
 	private Integer id;
 	private Integer  prodId;
 	private String prodDesc;
+	private String prodName;
 	private Blob prodImg;
 	private String prodDeliveryMode;
 	private Integer sellerId;
@@ -90,6 +91,11 @@ public class SellerProduct {
 		this.active = active;
 	}
 	
-	
+	public String getProdName() {
+		return prodName;
+	}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}	
 	
 }

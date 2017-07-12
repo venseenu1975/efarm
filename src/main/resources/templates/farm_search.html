@@ -27,41 +27,24 @@
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
 
 		
+		
+		
 		<div class="container upload">
 			<div class="row">
-				<div class="hero-unit">
-					<h3>
-						<span th:image="'Product Category:'"></span> 
-						<select id="category" th:field="*{category}">
-						<option value="">Select</option>
-							<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
-						</select>
-					</h3>
-				</div>
+				<table>
 
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product:'"></span> 
-						<select id="product" name="product" th:field="*{prodId}">
-							<option value="">Select</option>
-							<option th:each="p : ${products}" th:value="${p.prodId}" th:text="${p.prodName}"></option>
-						</select>
-					</h3>
-				</div>
-				<div class="hero-unit" style="display:none;">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" id="prodName" th:field="*{prodName}" />
-					</h3>
-				</div>
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Description:'"></span>
-						 <input type="text" class="form-control" id="prodDesc" th:field="*{prodDesc}" />
-					</h3>
-				</div>
+				<tr th:each="sellerProduct : ${sellerProducts}">
+					<td th:text="${sellerProduct.prodName}">1</td>
+					<td th:text="${sellerProduct.prodImg}">2</td>
+					<td th:text="${sellerProduct.prodQuantity}">3</td>
+					<td th:text="${sellerProduct.productExpiry}">4</td>
+				</tr>
+
+				</tr>
+				
+				</table>
 			</div>	
-			
+			</div>
 	</form>
 	<div th:replace="fragments/footer :: footer"/>
 </body>

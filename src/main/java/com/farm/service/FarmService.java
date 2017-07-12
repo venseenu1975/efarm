@@ -168,7 +168,7 @@ public class FarmService {
 	
 	
 	public List<SellerProduct> getSellerProducts(Farm farm) {
-		 return jdbcTemplate.query("SELECT * FROM seller_products where product_name =?",new Object[] {farm.getProdName()},
+		 return jdbcTemplate.query("SELECT * FROM seller_products where prod_name =?",new Object[] {farm.getProdName()},
 				 new RowMapper<SellerProduct>() {
 	            @Override
 	            public SellerProduct mapRow(ResultSet rs, int rowNum)throws SQLException {
@@ -177,6 +177,7 @@ public class FarmService {
 	            	sellerProduct.setProdDeliveryMode(rs.getString("prod_delivery_mode"));
 	            	sellerProduct.setProductExpiry(rs.getTimestamp("product_expiry"));
 	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
+	            	sellerProduct.setProdName(rs.getString("prod_name"));
 	                return sellerProduct;
 	            }
 	        });
