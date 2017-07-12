@@ -31,6 +31,36 @@
 		
 		<div class="container upload">
 			<div class="row">
+			<table>
+			<tr>
+			<td>
+			<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Name:'"></span>
+						 <input type="text" size="40" class="form-control" id="prodName" th:field="*{prodName}" />
+					</h3>
+				</div>
+</td>
+							
+<td>
+		<div class="hero-unit">
+					<h3>
+					<br />
+					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
+					 
+					</h3>
+				</div>		
+	</td>
+	<td>		
+			<div class="hero-unit">
+					<h3>
+						<br /> <input type="submit" id="CheckOutCart" class="btn btn-info" value="CheckOutCart"></input>
+					</h3>
+				</div>
+				</td>
+				</tr>
+			</table>
+			
 				<table>
 
 				<tr th:each="farmObj : ${farmList}">
@@ -43,6 +73,7 @@
 					<td th:text="${farmObj.prodQuantity}"></td>
 					<td/>
 					<td th:text="${farmObj.prodExpiry}"></td>
+					<td><input type="checkbox" th:text="addToBasket"   /></td>
 				</tr>
 
 				
@@ -50,12 +81,8 @@
 				</table>
 			</div>	
 			
-				<div class="hero-unit">
-					<h3>
-						<br /> <input type="submit" id="addToBasket" class="btn btn-info" value="AddToBasket"></input>
-					</h3>
-				</div>
-			
+
+							
 			</div>
 	</form>
 	<div th:replace="fragments/footer :: footer"/>
