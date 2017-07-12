@@ -23,7 +23,7 @@
 						<span th:text="'Product Category:'"></span> 
 						<select id="category" th:field="*{category}">
 						<option value="">Select</option>
-							<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
+						<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
 						</select>
 					</h3>
 				</div>
@@ -64,6 +64,25 @@
 					<h3>
 						<span th:text="'Product Quantity:'"></span> 
 						<input type="number" class="form-control" id="prodQuantity" th:field="*{prodQuantity}" />
+					</h3>
+				</div>
+				
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Units:'"></span> 
+						<select id="product" name="product" th:field="*{prodUnits}">
+							<option th:value="'0'" th:text="'Select'">Select</option>
+							<option th:value="'Kg'" th:text="'Kg'">Dairy</option>
+							<option th:value="'Liters'" th:text="'Liters'">Vegetables</option>
+							<option th:value="'Pieces'" th:text="'Pieces'">Fruits</option>
+						</select>
+					</h3>
+				</div>
+				
+				<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Price:'"></span> 
+						<input type="number" class="form-control" id="prodPrice" th:field="*{prodPrice}" />
 					</h3>
 				</div>
 
