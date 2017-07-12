@@ -2,21 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="fragments/header :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/blog.css}" />
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="blog-header">
+      <div class="container">
+        <h1 class="blog-title">About Us</h1>
+        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+      </div>
+</div>
 
 <div class="container">
 
-    <div class="starter-template">
-        <h1>Normal page (No need login)</h1>
-    </div>
+      <div class="row">
 
-</div>
-<!-- /.container -->
+        <div class="col-sm-12 blog-main">
 
-<div th:replace="fragments/footer :: footer"/>
+          <div class="blog-post">
+            <h2 class="blog-post-title">Who We Are?</h2>
+            <p class="blog-post-meta">July 12, 2017 by <a href="#">IBM Ericsson Team</a></p>
+
+            <p>We are dedicated to bring a healthy life style to you by keeping you healthy through fresh organic vegitables and other food items that is Locally available to you in your surroundings.</p>
+            
+            <p>How your food is grown or raised can have a major impact on your mental and emotional health as well as the environment. Organic foods often have more beneficial nutrients, such as antioxidants, than their conventionally-grown counterparts and people with allergies to foods, chemicals, or preservatives often find their symptoms lessen or go away when they eat only organic foods.</p>
+            <blockquote>
+              <p>"When health is absent, <strong>wisdom cannot reveal itself, art cannot manifest, strength cannot fight, wealth becomes useless, and intelligence cannot be applied</strong>." <em>-- Herophilus</em></p>
+            </blockquote>
+            <p>Unlike organic standards, <em>there is no specific definition for "local food"</em>. It could be grown in your local community, your state, your region, or your country. During large portions of the year it is usually possible to find food grown close to home at places such as a farmer's market.</p>
+          	<h2>What We Provide?</h2>
+            <p>We provide you the platform, where you can easily find the home grown healthy organic vegetables and other stuffs in your surroundings instead of buying the chemically preserved food that damages your body. Go Ahead. Now your good health is in your hand. </p>
+          </div><!-- /.blog-post -->
+       </div>
+     </div>
+   </div>
+        
+
+
+
+<footer class="blog-footer">
+      <p>
+      	<div th:replace="fragments/footer :: footer"></div>
+      </p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
 
 </body>
 </html>
