@@ -1,5 +1,6 @@
 package com.farm.entity;
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Timestamp;
 
@@ -14,6 +15,20 @@ public class SellerProduct {
 	private Integer prodQuantity;
 	private Timestamp productExpiry;
 	private Boolean active;
+	private BigDecimal productPrice;
+	private String units;
+	public String getUnits() {
+		return units;
+	}
+	public void setUnits(String units) {
+		this.units = units;
+	}
+	public BigDecimal getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(BigDecimal productPrice) {
+		this.productPrice = productPrice;
+	}
 	public Integer getId() {
 		return id;
 	}
