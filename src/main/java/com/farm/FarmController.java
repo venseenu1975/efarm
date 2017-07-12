@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.farm.model.Farm;
-import com.farm.model.Login;
 import com.farm.model.User;
 import com.farm.service.FarmService;
 
@@ -42,10 +41,7 @@ public class FarmController {
 		return new Farm();
 	}
 	
-	@RequestMapping("/userReg")
-	public String locate(Map<String, Object> model) {
-		return "farm_user_reg";
-	}
+
 	
     @GetMapping("/")
     public ModelAndView home1() {
@@ -72,31 +68,7 @@ public class FarmController {
 		return mav;
     }
     
-/*	@RequestMapping("/authenticate")
-	public ModelAndView authenticate(Map<String, Object> model,@ModelAttribute Login login) {
-		if(farmService.login(login)){
-			String base64Encoded;
-			ModelAndView mav = new ModelAndView("farm_shop");
-			List<Farm> farmList=farmService.getImage();
-			for(Farm farm:farmList){
-				byte[] encodeBase64;
-				try {
-					encodeBase64 = Base64.encodeBase64(farm.getProdImg().getBytes(1, (int) farm.getProdImg().length()));
-					base64Encoded = new String(encodeBase64, "UTF-8");
-					farm.setProductAltImg(base64Encoded);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-			}
-			mav.addObject("galleria", farmList);
-			return mav;
-		}
-		return new ModelAndView("login");
-	}*/
-	
-   
+
     
     @RequestMapping("/buy")
 	public String buy(Map<String, Object> model,@ModelAttribute Farm farm) {
@@ -132,15 +104,7 @@ public class FarmController {
         return "farm_sell";
     }
 	
-	@RequestMapping("/addUser")
-	public String populateState(ModelMap model,@ModelAttribute User user) {
-		System.out.println("user   "+user.getuAddress());
-		System.out.println("user   "+user.getuLat());
-		farmService.create(user);
-		System.out.println("user   "+farmService.create(user));
-		model.put("msg",  "Added");
-		return "farm_user_reg";
-	}
+
 	
 	@RequestMapping("/populateProduct")
 	public String populateProduct(ModelMap model,@ModelAttribute Farm farm) {

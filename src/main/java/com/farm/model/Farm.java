@@ -1,5 +1,6 @@
 package com.farm.model;
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 import java.util.Date;
@@ -25,6 +26,9 @@ private String prodName;
 @DateTimeFormat(pattern = "MM dd yyyy - hh:mm")
 private Date productExpiry;
 private Boolean active;
+
+private String prodUnits;
+private BigDecimal prodPrice;
 
 public String getImgFilePath() {
 	return imgFilePath;
@@ -137,5 +141,19 @@ public void setProductExpiry(Date productExpiry) {
 	this.productExpiry = productExpiry;
 }
 
+public String getProdUnits() {
+	return prodUnits;
+}
 
+public void setProdUnits(String prodUnits) {
+	this.prodUnits = prodUnits;
+}
+
+public BigDecimal getProdPrice() {
+	return prodPrice;
+}
+
+public void setProdPrice(BigDecimal prodPrice) {
+	this.prodPrice = prodPrice;
+}
 }
