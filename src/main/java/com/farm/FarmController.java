@@ -96,11 +96,7 @@ public class FarmController {
 		return new ModelAndView("login");
 	}*/
 	
-    @RequestMapping("/search")
-	public String search(Map<String, Object> model,@ModelAttribute Farm farm) {
-		
-		return "farm_search";
-	}
+   
     
     @RequestMapping("/buy")
 	public String buy(Map<String, Object> model,@ModelAttribute Farm farm) {
@@ -152,5 +148,13 @@ public class FarmController {
 		model.put("categories",  farmService.getCategory());
 		model.put("products",farmService.populateProduct(farm));
 		return "farm_sell";
+	}
+	
+	
+	
+	@RequestMapping("/search")
+	public String populateSearchResults(ModelMap model,@ModelAttribute Farm farm) {
+		model.put("sellerProducts",  farmService.getSellerProducts(farm));
+		return "farm_search";
 	}
 }

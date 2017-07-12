@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import com.farm.entity.Category;
 import com.farm.entity.Product;
+import com.farm.entity.SellerProduct;
 import com.farm.model.Farm;
 import com.farm.model.Login;
 import com.farm.model.User;
@@ -164,4 +165,22 @@ public class FarmService {
 	            }
 	        });
 	}
+	
+	
+	public List<SellerProduct> getSellerProducts(Farm farm) {
+		 return jdbcTemplate.query("SELECT * FROM seller_products where product_name =?",new Object[] {farm.getProdName()},
+				 new RowMapper<SellerProduct>() {
+	            @Override
+	            public SellerProduct mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	SellerProduct sellerProduct = new SellerProduct();
+	            	sellerProduct.setProdImg(rs.getBlob("prod_img"));
+	            	sellerProduct.setProdDeliveryMode(rs.getString("prod_delivery_mode"));
+	            	sellerProduct.setProductExpiry(rs.getTimestamp("product_expiry"));
+	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
+	                return sellerProduct;
+	            }
+	        });
+	}
+	
+	
 }
