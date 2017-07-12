@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
@@ -17,11 +14,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.SqlLobValue;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.security.core.Authentication;
@@ -33,50 +27,12 @@ import com.farm.entity.Product;
 import com.farm.entity.SellerProduct;
 import com.farm.model.Farm;
 import com.farm.model.Login;
-import com.farm.model.User;
 
 @Service
 public class FarmService {
 
 	@Autowired
     private JdbcTemplate jdbcTemplate;
-	
-	
-    public User create(final User user) 
-    {
-        final String sql = "INSERT INTO user (name,address,contact,lat,lon,uAliasName,uPass)values(?,?,?,?,?,?,?)";
- 
-        KeyHolder holder = new GeneratedKeyHolder();
-        jdbcTemplate.update(new PreparedStatementCreator() {
-
-			@Override
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement ps = null;
-				try{
-				    ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-	                ps.setString(1, user.getuName());
-	                ps.setString(2, user.getuAddress());
-	                ps.setString(3, user.getuPhoneNo());
-	                ps.setBigDecimal(4, user.getuLat());
-	                ps.setBigDecimal(5, user.getuLong());
-	                ps.setString(6, user.getuAliasName());
-	                ps.setString(7, user.getuPass());
-				return ps;
-				}
-				catch(Exception e){
-					e.printStackTrace();
-				}
-				finally{
-				}
-				return ps;
-			}
-        }, holder);
- 
-        int newUserId = holder.getKey().intValue();
-        user.setuId(newUserId);
-        return user;
-    }
-
 
     public boolean login(Login login) {
 
