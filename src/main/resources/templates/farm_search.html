@@ -33,17 +33,29 @@
 			<div class="row">
 				<table>
 
-				<tr th:each="sellerProduct : ${sellerProducts}">
-					<td th:text="${sellerProduct.prodName}">1</td>
-					<td th:text="${sellerProduct.prodImg}">2</td>
-					<td th:text="${sellerProduct.prodQuantity}">3</td>
-					<td th:text="${sellerProduct.productExpiry}">4</td>
+				<tr th:each="farmObj : ${farmList}">
+					<td>
+					<img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}"></img>
+					</td>
+					<td/>
+					<td th:text="${farmObj.prodName}"></td>
+					<td/>
+					<td th:text="${farmObj.prodQuantity}"></td>
+					<td/>
+					<td th:text="${farmObj.prodExpiry}"></td>
 				</tr>
 
-				</tr>
+				
 				
 				</table>
 			</div>	
+			
+				<div class="hero-unit">
+					<h3>
+						<br /> <input type="submit" id="addToBasket" class="btn btn-info" value="AddToBasket"></input>
+					</h3>
+				</div>
+			
 			</div>
 	</form>
 	<div th:replace="fragments/footer :: footer"/>

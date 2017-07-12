@@ -50,7 +50,7 @@ public class FarmService {
     				farm.getProdDeliveryMode(),
     				auth.getName(),
     				farm.getProdQuantity(),
-    				new Timestamp(new java.text.SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy").parse(farm.getProductExpiry().toString()).getTime()),
+    				new Timestamp(new java.text.SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy").parse(farm.getProdExpiry().toString()).getTime()),
     				true,
     				farm.getProdUnits(),
     				farm.getProdPrice()
