@@ -34,27 +34,15 @@ public class FarmService {
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean login(Login login) {
 
-    	String sql = "SELECT count(*) FROM user WHERE uAliasName = ? and uPass = ?";
-    	boolean result = false;
-
-    	int count = jdbcTemplate.queryForObject(
-    			sql, new Object[] { login.getUserName() ,login.getPassword()}, Integer.class);
-
-    	if (count > 0) {
-    		result = true;
-    	}
-
-    	return result;
-    }
     public void addSellerProducts(Farm farm) throws ParseException {
     	try {
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		final File image = new File(farm.getImgFilePath()); 
     		final InputStream imageIs = new FileInputStream(image); 
     		LobHandler lobHandler = new DefaultLobHandler(); 
-    		jdbcTemplate.update( "INSERT INTO seller_products (prod_id,prod_name,prod_desc,prod_img,prod_delivery_mode,seller_id,prod_quantity,product_expiry,active) VALUES (?,?, ?,?,?,?,?,?,?)", new Object[] { 
+    		jdbcTemplate.update( "INSERT INTO seller_products (prod_id,prod_name,prod_desc,prod_img,prod_delivery_mode,seller_id,"
+    				+ "prod_quantity,product_expiry,active,product_units,product_price) VALUES (?,?, ?,?,?,?,?,?,?,?,?)", new Object[] { 
     				farm.getProdId(),
     				farm.getProdName(),
     				farm.getProdDesc(),
@@ -63,7 +51,9 @@ public class FarmService {
     				auth.getName(),
     				farm.getProdQuantity(),
     				new Timestamp(new java.text.SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy").parse(farm.getProductExpiry().toString()).getTime()),
-    				true
+    				true,
+    				farm.getProdUnits(),
+    				farm.getProdPrice()
     				}, new int[] {
     						Types.INTEGER,
     						Types.VARCHAR, 
@@ -73,7 +63,10 @@ public class FarmService {
     						Types.VARCHAR,
     						Types.INTEGER,
     						Types.TIMESTAMP,
-    						Types.TINYINT}); 
+    						Types.TINYINT,
+    						Types.VARCHAR,
+    						Types.DECIMAL
+    						}); 
     		} 
     	catch (DataAccessException e) { 
     			System.out.println("DataAccessException " + e.getMessage()); 
@@ -83,16 +76,6 @@ public class FarmService {
     		}
     	}
     
-	public List<Farm> getImage() {
-		 return jdbcTemplate.query("SELECT product_img FROM product_inv", new RowMapper<Farm>() {
-            @Override
-            public Farm mapRow(ResultSet rs, int rowNum)throws SQLException {
-            	Farm farm = new Farm();
-           	 	farm.setProdImg(rs.getBlob("product_img"));
-                return farm;
-            }
-        });
-	}
 
 
 	public List<Product> populateProduct(Farm farm) {

@@ -47,7 +47,7 @@ public class FarmController {
     public ModelAndView home1() {
 		String base64Encoded;
 		ModelAndView mav = new ModelAndView("farm_shop");
-		List<Farm> farmList=farmService.getImage();
+/*		List<Farm> farmList=farmService.getImage();
 		if(farmList!=null && !farmList.isEmpty()){
 			for(Farm farm:farmList){
 				if(farm.getProdImg() !=null){
@@ -64,7 +64,7 @@ public class FarmController {
 			}
 			}
 		}
-		mav.addObject("galleria", farmList);
+		mav.addObject("galleria", farmList);*/
 		return mav;
     }
     
