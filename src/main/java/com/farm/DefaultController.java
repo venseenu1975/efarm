@@ -60,21 +60,21 @@ public class DefaultController {
         return "login";
     }
     
-	@RequestMapping("/registration")
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String locate(Model model) {
 		model.addAttribute("user", new User());
 		return "farm_user_reg";
 	}
 	
-	@RequestMapping("/addUser")
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String populateState(ModelMap model,@ModelAttribute User user) {
 		System.out.println("user   "+user.getuAddress());
 		System.out.println("user   "+user.getuLat());
 		userService.create(user);
 		//System.out.println("user   "+userService.create(user));
 		//model.put("msg",  "Added");
-		//securityService.autologin(user.getuAliasName(), user.getuPass());
-		return "farm_user_reg";
+		securityService.autologin(user.getuAliasName(), user.getuPass());
+		return "redirect:/";
 	}
 	
 }
