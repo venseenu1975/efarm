@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.farm.entity.SellerProduct;
 import com.farm.model.Farm;
 import com.farm.model.User;
 import com.farm.service.FarmService;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 
 @Controller
@@ -92,7 +95,7 @@ public class FarmController {
             Files.write(path, bytes);
             farm.setImgFilePath(path.toString());
             System.out.println(farm.getImgFilePath());
-            System.out.println(farm.getProductExpiry());
+            System.out.println(farm.getProdExpiry());
             model.put("categories",  farmService.getCategory());
             farmService.addSellerProducts(farm);
         } catch (IOException e) {
@@ -117,8 +120,38 @@ public class FarmController {
 	
 	
 	@RequestMapping("/search")
-	public String populateSearchResults(ModelMap model,@ModelAttribute Farm farm) {
-		model.put("sellerProducts",  farmService.getSellerProducts(farm));
-		return "farm_search";
+	public ModelAndView populateSearchResults(ModelMap model,@ModelAttribute Farm farm) {
+		ModelAndView mav = new ModelAndView("farm_search");
+		String base64Encoded;
+		List<Farm> farmList = new ArrayList<>();
+		List<SellerProduct> sellerProducts = farmService.getSellerProducts(farm);
+		
+			if(sellerProducts!=null && !sellerProducts.isEmpty()){
+				for(SellerProduct sellerProduct:sellerProducts){
+					Farm farmObj  = new Farm();
+					farmObj.setProdImg(sellerProduct.getProdImg());
+					farmObj.setProdName(sellerProduct.getProdName());
+					farmObj.setProdQuantity(sellerProduct.getProdQuantity());
+					farmObj.setProdExpiry(sellerProduct.getProductExpiry());
+					
+				
+					if(farmObj.getProdImg() !=null){
+					byte[] encodeBase64;
+					try {
+						encodeBase64 = Base64.encodeBase64(farmObj.getProdImg().getBytes(1, (int) farmObj.getProdImg().length()));
+						base64Encoded = new String(encodeBase64, "UTF-8");
+						farmObj.setProductAltImg(base64Encoded);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					farmList.add(farmObj);
+				}
+				}
+			}
+		
+		mav.addObject("farmList",  farmList);
+		return mav;
 	}
 }

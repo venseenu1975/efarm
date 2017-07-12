@@ -2,158 +2,158 @@ package com.farm.model;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
-import java.sql.Types;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Farm {
-private String productAltImg;
-private Integer category;
-MultipartFile imgFile;
-private String imgFilePath;
+	private String productAltImg;
+	private Integer category;
+	MultipartFile imgFile;
+	private String imgFilePath;
 
+	private Integer prodId;
+	private String prodDesc;
+	private Blob prodImg;
+	private String prodDeliveryMode;
+	private Integer sellerId;
+	private Date date;
+	private Integer prodQuantity;
+	private String prodName;
+	@DateTimeFormat(pattern = "MM dd yyyy - hh:mm")
+	private Date prodExpiry;
 
-private Integer prodId;
-private String prodDesc;
-private Blob prodImg;
-private String prodDeliveryMode;
-private Integer sellerId;
-private Date  date;
-private Integer prodQuantity;
-private String prodName;
-@DateTimeFormat(pattern = "MM dd yyyy - hh:mm")
-private Date productExpiry;
-private Boolean active;
+	private Boolean active;
 
-private String prodUnits;
-private BigDecimal prodPrice;
+	private String prodUnits;
+	private BigDecimal prodPrice;
 
-public String getImgFilePath() {
-	return imgFilePath;
-}
+	public String getImgFilePath() {
+		return imgFilePath;
+	}
 
-public void setImgFilePath(String imgFilePath) {
-	this.imgFilePath = imgFilePath;
-}
+	public void setImgFilePath(String imgFilePath) {
+		this.imgFilePath = imgFilePath;
+	}
 
-public MultipartFile getImgFile() {
-	return imgFile;
-}
+	public MultipartFile getImgFile() {
+		return imgFile;
+	}
 
-public void setImgFile(MultipartFile imgFile) {
-	this.imgFile = imgFile;
-}
+	public void setImgFile(MultipartFile imgFile) {
+		this.imgFile = imgFile;
+	}
 
-public String getProductAltImg() {
-	return productAltImg;
-}
+	public String getProductAltImg() {
+		return productAltImg;
+	}
 
-public void setProductAltImg(String productAltImg) {
-	this.productAltImg = productAltImg;
-}
+	public void setProductAltImg(String productAltImg) {
+		this.productAltImg = productAltImg;
+	}
 
-public Integer getCategory() {
-	return category;
-}
+	public Integer getCategory() {
+		return category;
+	}
 
-public void setCategory(Integer category) {
-	this.category = category;
-}
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
 
-public Integer getProdId() {
-	return prodId;
-}
+	public Integer getProdId() {
+		return prodId;
+	}
 
-public void setProdId(Integer prodId) {
-	this.prodId = prodId;
-}
+	public void setProdId(Integer prodId) {
+		this.prodId = prodId;
+	}
 
-public String getProdDesc() {
-	return prodDesc;
-}
+	public String getProdDesc() {
+		return prodDesc;
+	}
 
-public void setProdDesc(String prodDesc) {
-	this.prodDesc = prodDesc;
-}
+	public void setProdDesc(String prodDesc) {
+		this.prodDesc = prodDesc;
+	}
 
-public Blob getProdImg() {
-	return prodImg;
-}
+	public Blob getProdImg() {
+		return prodImg;
+	}
 
-public void setProdImg(Blob prodImg) {
-	this.prodImg = prodImg;
-}
+	public void setProdImg(Blob prodImg) {
+		this.prodImg = prodImg;
+	}
 
-public String getProdDeliveryMode() {
-	return prodDeliveryMode;
-}
+	public String getProdDeliveryMode() {
+		return prodDeliveryMode;
+	}
 
-public void setProdDeliveryMode(String prodDeliveryMode) {
-	this.prodDeliveryMode = prodDeliveryMode;
-}
+	public void setProdDeliveryMode(String prodDeliveryMode) {
+		this.prodDeliveryMode = prodDeliveryMode;
+	}
 
-public Integer getSellerId() {
-	return sellerId;
-}
+	public Integer getSellerId() {
+		return sellerId;
+	}
 
-public void setSellerId(Integer sellerId) {
-	this.sellerId = sellerId;
-}
-public Integer getProdQuantity() {
-	return prodQuantity;
-}
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
+	}
 
-public void setProdQuantity(Integer prodQuantity) {
-	this.prodQuantity = prodQuantity;
-}
-public Boolean getActive() {
-	return active;
-}
+	public Integer getProdQuantity() {
+		return prodQuantity;
+	}
 
-public void setActive(Boolean active) {
-	this.active = active;
-}
+	public void setProdQuantity(Integer prodQuantity) {
+		this.prodQuantity = prodQuantity;
+	}
 
-public Date getDate() {
-	return date;
-}
+	public Boolean getActive() {
+		return active;
+	}
 
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-public String getProdName() {
-	return prodName;
-}
+	public Date getDate() {
+		return date;
+	}
 
-public void setProdName(String prodName) {
-	this.prodName = prodName;
-}
+	public String getProdName() {
+		return prodName;
+	}
 
-public void setDate(Date date) {
-	this.date = date;
-}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
 
-public Date getProductExpiry() {
-	return productExpiry;
-}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-public void setProductExpiry(Date productExpiry) {
-	this.productExpiry = productExpiry;
-}
+	public String getProdUnits() {
+		return prodUnits;
+	}
 
-public String getProdUnits() {
-	return prodUnits;
-}
+	public void setProdUnits(String prodUnits) {
+		this.prodUnits = prodUnits;
+	}
 
-public void setProdUnits(String prodUnits) {
-	this.prodUnits = prodUnits;
-}
+	public BigDecimal getProdPrice() {
+		return prodPrice;
+	}
 
-public BigDecimal getProdPrice() {
-	return prodPrice;
-}
+	public void setProdPrice(BigDecimal prodPrice) {
+		this.prodPrice = prodPrice;
+	}
 
-public void setProdPrice(BigDecimal prodPrice) {
-	this.prodPrice = prodPrice;
-}
+	public Date getProdExpiry() {
+		return prodExpiry;
+	}
+
+	public void setProdExpiry(Date prodExpiry) {
+		this.prodExpiry = prodExpiry;
+	}
 }
