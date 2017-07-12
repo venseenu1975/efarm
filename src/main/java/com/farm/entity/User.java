@@ -3,27 +3,23 @@ package com.farm.entity;
 import java.math.BigDecimal;
 
 public class User {
+
 	
 	private String uPhoneNo;
 	private Integer uId;
-	private String uName;
-	private String uAddress;
-	private BigDecimal uLat;
-	private BigDecimal uLong;
-	private String uAliasName;
-	private String uPass;
-
-	public String getuPass() {
-		return uPass;
+	private String name;
+	private String address;
+	private BigDecimal lat;
+	private BigDecimal lon;
+	private String username;
+	private String password;
+	private Boolean enabled;
+	private String role;
+	public String getuPhoneNo() {
+		return uPhoneNo;
 	}
-	public void setuPass(String uPass) {
-		this.uPass = uPass;
-	}
-	public String getuAliasName() {
-		return uAliasName;
-	}
-	public void setuAliasName(String uAliasName) {
-		this.uAliasName = uAliasName;
+	public void setuPhoneNo(String uPhoneNo) {
+		this.uPhoneNo = uPhoneNo;
 	}
 	public Integer getuId() {
 		return uId;
@@ -31,34 +27,55 @@ public class User {
 	public void setuId(Integer uId) {
 		this.uId = uId;
 	}
-	public String getuName() {
-		return uName;
+	public String getName() {
+		return name;
 	}
-	public void setuName(String uName) {
-		this.uName = uName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getuAddress() {
-		return uAddress;
+	public String getAddress() {
+		return address;
 	}
-	public void setuAddress(String uAddress) {
-		this.uAddress = uAddress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public String getuPhoneNo() {
-		return uPhoneNo;
+	public BigDecimal getLat() {
+		return lat;
 	}
-	public void setuPhoneNo(String uPhoneNo) {
-		this.uPhoneNo = uPhoneNo;
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
 	}
-	public BigDecimal getuLat() {
-		return uLat;
+	public BigDecimal getLon() {
+		return lon;
 	}
-	public void setuLat(BigDecimal uLat) {
-		this.uLat = uLat;
+	public void setLon(BigDecimal lon) {
+		this.lon = lon;
 	}
-	public BigDecimal getuLong() {
-		return uLong;
+	public String getUsername() {
+		return username;
 	}
-	public void setuLong(BigDecimal uLong) {
-		this.uLong = uLong;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+
+
 }

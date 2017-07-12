@@ -37,11 +37,6 @@ public class FarmController {
 		return new User();
 	}
 	
-	@ModelAttribute(name="login")
-	public Login createLoginModel() {
-		return new Login();
-	}
-	
 	@ModelAttribute(name="farm")
 	public Farm createFarmModel() {
 		return new Farm();
@@ -50,11 +45,6 @@ public class FarmController {
 	@RequestMapping("/userReg")
 	public String locate(Map<String, Object> model) {
 		return "farm_user_reg";
-	}
-	
-	@RequestMapping("/login")
-	public String login(Map<String, Object> model,@ModelAttribute Login login) {
-		return "login";
 	}
 	
     @GetMapping("/")

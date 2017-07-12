@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+<html>
 <head>
     <title>E-Farm</title>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/header :: header-css"></div>
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
 <div class="container">
 
@@ -35,6 +34,7 @@
                     <div class="form-group">
                         <input type="password" name="password" id="password" class="form-control input-lg"
                                placeholder="Password" required="true"/>
+                        <!-- <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}"/>  -->
                     </div>
 
                     <div class="row">

@@ -5,8 +5,10 @@ CREATE TABLE `user` (
   `contact` varchar(45) DEFAULT NULL,
   `lat` decimal(20,10) DEFAULT NULL,
   `lon` decimal(20,10) DEFAULT NULL,
-  `uAliasName` varchar(45) DEFAULT NULL,
-  `uPass` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `enabled` tinyint(4) DEFAULT '1',
+  `role` varchar(45) DEFAULT 'ROLE_USER',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
