@@ -3,14 +3,27 @@
 <head>
     <title>E-Farm</title>
     <div th:replace="fragments/header :: header-css"></div>
+    <link rel="stylesheet" th:href="@{/css/blog.css}" />
 </head>
+<style>
+.w3-myfont {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+</style>
 <body>
 
 <div th:replace="fragments/header :: header"></div>
 
+<div class="blog-header" align="center">
+      <div class="container">
+        <h6 class="blog-title w3-myfont">E-Organic Market</h6> <br/>
+        <p class="lead blog-description">Eat Healthy Live Healthy</p>
+      </div>
+</div>
+
 <div class="container">
 
-    <div class="row" style="margin-top:20px">
+    <div class="row" style="margin-top:20px;text-align:center;">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <form th:action="@{/login}" method="post">
                 <fieldset>
@@ -50,8 +63,14 @@
     </div>
 
 </div>
-
-<div th:replace="fragments/footer :: footer"/>
-
+<br/><br/><br/><br/>
+<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+</footer>
 </body>
 </html>
