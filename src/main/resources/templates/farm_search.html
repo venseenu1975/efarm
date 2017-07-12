@@ -29,46 +29,17 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
 
 		
-		
+		<div th:replace="fragments/header :: prod-search"></div>
 		
 		<div class="container upload">
 			<div class="row">
-			<table>
-			<tr>
-			<td>
-			<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" size="40" class="form-control" id="prodName" th:field="*{prodName}" />
-					</h3>
-				</div>
-</td>
-							
-<td>
-		<div class="hero-unit">
-					<h3>
-					<br />
-					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
-					 
-					</h3>
-				</div>		
-	</td>
-	<td>		
-			<div class="hero-unit">
-					<h3>
-						<br /> <input type="submit" id="CheckOutCart" class="btn btn-info" value="CheckOutCart"></input>
-					</h3>
-				</div>
-				</td>
-				</tr>
-			</table>
 			
-				<table class="table table-bordered">
+				<table class="table table-bordered" th:if="${!farmList.empty}">
 
 				<tr th:each="farmObj,rowStat : ${farmList}">
 					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}" th:title="${farmObj.prodName}"></img></td>
@@ -107,15 +78,19 @@
 				  </div>
 				  </td>
 				</tr>
-
-				
-				
+				<tr>
+					<div class="hero-unit">
+					<h3>
+						<br /> <input type="submit" id="CheckOutCart" class="btn btn-info" value="CheckOutCart"></input>
+					</h3>
+				</div>
+				</tr>
 				</table>
 			</div>	
 			
 			</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 
 </html>

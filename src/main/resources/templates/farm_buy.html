@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"/>
@@ -31,36 +31,15 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-
+<div th:replace="fragments/header :: prod-search"></div>
 		
 		<div class="container upload">
-			<div class="row">
-				
-				
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" id="prodName" size="100" th:field="*{prodName}" />
-					</h3>
-				</div>
-
-							
-
-		<div class="hero-unit">
-					<h3>
-					<div>
-					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
-					</div> 
-					</h3>
-				</div>		
-
-			</div>
 		</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 
 </html>

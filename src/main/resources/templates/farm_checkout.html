@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"/>
@@ -17,88 +17,45 @@
 
 <script>
 	$(document).ready(function() {
-		$('#CheckOutCart').click(function() {
+		$('#Search').click(function() {
 			//alert($("#product option:selected" ).text());
 			//$("#prodName").val($("#product option:selected" ).text());
-			document.forms[0].action = "/addToBasket";
+			document.forms[0].action = "/search";
 			document.forms[0].submit();
-		});
 	});
 </script>
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-
-		
-		
-		
-		<div class="container upload">
+<div th:replace="fragments/header :: prod-search"></div>
+		<div class="container">
 			<div class="row">
-			<table>
-			<tr>
-			<td>
-			<div class="hero-unit">
+				<table class="table table-bordered" th:if="${!cart.empty}">
+				<div th:each="cartObj : ${cart}">
+					<tr th:if="${cartObj.addToCart}">
+							<td th:text="${cartObj.name}"></td>
+							<td>
+							<input type="number" class="form-control" size= "10" id="quantity" th:value="${cartObj.quantity} " />
+							<span th:text="${cartObj.prodUnits}"></span>
+							</td>
+							<td colspan="3" rowspan="1" th:text="${cartObj.price}"></td>
+					</tr>
+				</div>
+				<tr>
+				<div class="hero-unit">
 					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" size="40" class="form-control" id="prodName" th:field="*{prodName}" />
+					<input type="submit" id="buy" class="btn btn-info" value="Buy Now"></input>
 					</h3>
 				</div>
-</td>
-							
-<td>
-		<div class="hero-unit">
-					<h3>
-					<br />
-					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
-					 
-					</h3>
-				</div>		
-	</td>
-	<td>		
-			<div class="hero-unit">
-					<h3>
-						<br /> <input type="submit" id="CheckOutCart" class="btn btn-info" value="CheckOutCart"></input>
-					</h3>
-				</div>
-				</td>
 				</tr>
-			</table>
-			
-				<table class="table table-bordered">
-
-				<tr th:each="farmObj : ${farmList}">
-					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}"></img></td>
-					<td colspan="2" rowspan="1" th:text="${farmObj.prodName}" th:field="basket.name"></td>
-					<td colspan="3" rowspan="1">
-					<select>
-					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}"
-					        th:value="${ i }"
-					        th:text="${  i} + ${farmObj.prodUnits}"></option>
-					</select>
-					</td>
-					<!-- <td colspan="3" rowspan="1" th:text="${farmObj.prodUnits}"></td> -->
-					<td colspan="3" rowspan="1" th:text="${farmObj.prodPrice}"></td>
-					<!-- <td colspan="4" rowspan="1" th:text="${farmObj.prodExpiry}"></td> -->
-					<td>  
-					<div class="checkbox">
-				    <label>
-				      <input type="checkbox" class="checkbox-circle"> Add to Basket </input>
-				    </label>
-				  </div>
-				  </td>
-				</tr>
-
-				
-				
 				</table>
 			</div>	
-			
-			</div>
+		 </div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 
 </html>

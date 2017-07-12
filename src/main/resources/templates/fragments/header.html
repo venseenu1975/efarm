@@ -9,6 +9,17 @@
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" th:href="@{/css/main.css}" />
     </div>
+    
+    <script>
+	$(document).ready(function() {
+		$('#Search').click(function() {
+			//alert($("#product option:selected" ).text());
+			//$("#prodName").val($("#product option:selected" ).text());
+			document.forms[0].action = "/search";
+			document.forms[0].submit();
+		});
+	});
+</script>
 </head>
 <body>
 <div th:fragment="header">
@@ -43,7 +54,31 @@
     </div>
   </div>
 </nav>
-    
 </div>
+
+<div  th:fragment="prod-search">
+		<table>
+			<tr>
+			<td>
+	<div class="hero-unit">
+					<h3>
+						<span th:text="'Product Name:'"></span>
+						 <input type="text" size="40" class="form-control" id="prodName" th:field="*{prodName}" />
+					</h3>
+			</div>
+			</td>
+			<td>
+			<div class="hero-unit">
+					<h3>
+					<br />
+					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
+					</h3>	
+					
+</div>
+</td>
+</tr>
+</table>
+</div>
+
 </body>
 </html>
