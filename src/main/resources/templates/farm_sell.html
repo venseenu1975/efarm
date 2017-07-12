@@ -1,52 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>E-Farm</title>
- <div th:replace="fragments/header :: header-css"/>
+ <div th:replace="fragments/header :: header-css"></div>
  
 <script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
 
+<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css" />
 
-
-<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
-
-
-
-<script>
-	$(document).ready(function() {
-		$('#category').change(function() {
-			document.forms[0].action = "/populateProduct";
-			document.forms[0].submit();
-		});
-		$('#sell').click(function() {
-			//alert($("#product option:selected" ).text());
-			$("#prodName").val($("#product option:selected" ).text());
-			document.forms[0].action = "/addProductToSell";
-			document.forms[0].submit();
-		});
-/* 		$('#date').datepicker({
-			 format: "dd MM yyyy - hh:ii",
-			weekStart : 0,
-			startDate : "0d",
-			todayBtn : "linked",
-			language : "it",
-			autoclose : true,
-			todayHighlight : true,
-			//setDate: new Date(),
-		    autoclose: true
-		});
-		$('#date').datepicker('update', new Date()); */
-		
-	    $("#date").datetimepicker({
-	        format: "mm dd yyyy - hh:ii"
-	    });
-	});
-</script>
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
 
@@ -125,7 +90,36 @@
 			</div>
 		</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
-
+<script>
+	$(document).ready(function() {
+		$('#category').change(function() {
+			document.forms[0].action = "/populateProduct";
+			document.forms[0].submit();
+		});
+		$('#sell').click(function() {
+			//alert($("#product option:selected" ).text());
+			$("#prodName").val($("#product option:selected" ).text());
+			document.forms[0].action = "/addProductToSell";
+			document.forms[0].submit();
+		});
+/* 		$('#date').datepicker({
+			 format: "dd MM yyyy - hh:ii",
+			weekStart : 0,
+			startDate : "0d",
+			todayBtn : "linked",
+			language : "it",
+			autoclose : true,
+			todayHighlight : true,
+			//setDate: new Date(),
+		    autoclose: true
+		});
+		$('#date').datepicker('update', new Date()); */
+		
+	    $("#date").datetimepicker({
+	        format: "mm dd yyyy - hh:ii"
+	    });
+	});
+</script>
 </html>
