@@ -14,9 +14,9 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class FarmUtil {
 	
-	public static final String ACCOUNT_SID = "ACac6cbd686fe5d0d353053c3674540f3d";
-    public static final String AUTH_TOKEN = "73b2cb3aa84dcae953c9a4a0aca7842f";
-    public static final String TWILIO_NUMBER = "+14159660510";
+	public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
+    public static final String TWILIO_NUMBER = "";
     
     
     public void sendSMS(String messageContent,String toNumber) {
