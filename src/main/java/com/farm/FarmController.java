@@ -113,6 +113,7 @@ public class FarmController {
 		List<SellerProduct> sellerProducts = farmService.getSellerProducts(farm);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String loggedUser = auth.getName();
+		System.out.println("loggedUser   "+loggedUser);
 		com.farm.entity.User buyer = farmService.getUser(loggedUser);
 		Date d = new Date();
 		if (sellerProducts != null && !sellerProducts.isEmpty()) {
@@ -120,6 +121,7 @@ public class FarmController {
 				Farm farmObj = new Farm();
 				Date expiryDate = sellerProduct.getProductExpiry();
 				if (expiryDate.compareTo(d)>0) {
+					System.out.println("expiryDate:"+expiryDate);
 					System.out.println("Seller ID:"+sellerProduct.getSellerId());
 					com.farm.entity.User sellerDetails = farmService.getUser(sellerProduct.getSellerId());
 					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
@@ -128,6 +130,8 @@ public class FarmController {
 						farmObj.setProdName(sellerProduct.getProdName());
 						farmObj.setProdQuantity(sellerProduct.getProdQuantity());
 						farmObj.setProdExpiry(sellerProduct.getProductExpiry());
+						farmObj.setProdUnits(sellerProduct.getUnits());
+						farmObj.setProdPrice(sellerProduct.getProductPrice());
 						if (farmObj.getProdImg() != null) {
 							byte[] encodeBase64;
 							try {
