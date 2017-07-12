@@ -13,8 +13,7 @@
 <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
-
-
+<link rel="stylesheet" th:href="@{/css/blog.css}" />
 
 <script>
 	$(document).ready(function() {
@@ -31,12 +30,16 @@
 <body>
 <div th:replace="fragments/header :: header"/>
 
+<div class="blog-header">
+      <div class="container">
+        <h6 class="blog-title">Product details here</h6>
+        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+      </div>
+</div>
+
+<div class="container upload">
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
 
-		
-		
-		
-		<div class="container upload">
 			<div class="row">
 			<table>
 			<tr>
@@ -113,9 +116,17 @@
 				</table>
 			</div>	
 			
-			</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	</div>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
 </body>
 
 </html>

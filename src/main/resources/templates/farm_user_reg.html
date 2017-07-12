@@ -7,11 +7,18 @@
     <!-- Location picker -->
     <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyBxhO9ukdAPoyWRC6EhxFaIJPw0QE5zhEc&amp;libraries=places'></script>
     <script type="text/javascript" src="../scripts/locationpicker.jquery.js"></script>
+    <link rel="stylesheet" th:href="@{/css/blog.css}" />
 </head>
 
 <body>
 <form  th:object="${user}"  method="post">
 <div th:replace="fragments/header :: header"></div>
+<div class="blog-header">
+      <div class="container">
+        <h6 class="blog-title">New User Registration</h6>
+        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+      </div>
+</div>
 	<div class="container">
 		<div id="examples">
 			<div class="form-horizontal">
@@ -79,8 +86,15 @@
 			</div>
 		</div>
 	</div>
-</form>
-	<div th:replace="fragments/footer :: footer"></div>
+</form> <br/><br/>
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
 </body>
 <script>
 $('#register').click( function(){

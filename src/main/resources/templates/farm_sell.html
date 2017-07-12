@@ -7,11 +7,18 @@
 <script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
 
 <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" th:href="@{/css/blog.css}" />
 
 </head>
 
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div class="blog-header">
+      <div class="container">
+        <h6 class="blog-title">Sell Your Product Here</h6>
+        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+      </div>
+</div>
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
 
@@ -109,7 +116,15 @@
 			</div>
 		</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"></div>
+	
+	<footer class="blog-footer">
+      <p>
+      	<div th:replace="fragments/footer :: footer"></div>
+      </p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+	</footer>
 </body>
 <script>
 	$(document).ready(function() {

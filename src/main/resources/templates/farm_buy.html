@@ -12,6 +12,7 @@
 <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" th:href="@{/css/blog.css}" />
 
 
 
@@ -33,34 +34,38 @@
 <body>
 <div th:replace="fragments/header :: header"/>
 
+<div class="blog-header">
+      <div class="container">
+        <h6 class="blog-title">Here is your daily needs</h6>
+        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+      </div>
+</div>
+	
+	<div class="container upload">
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-
-		
-		<div class="container upload">
-			<div class="row">
-				
-				
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" id="prodName" size="100" th:field="*{prodName}" />
-					</h3>
-				</div>
-
-							
-
-		<div class="hero-unit">
-					<h3>
-					<div>
-					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
-					</div> 
-					</h3>
-				</div>		
-
-			</div>
-		</div>
+		<label for="prodName"><span th:text="'Product Name:'"></span></label>
+		  <div class="input-group">
+		    <input type="text" class="form-control" placeholder="Search your item here" id="prodName" size="100" th:field="*{prodName}" />
+		    <div class="input-group-btn">
+		      <button class="btn btn-default" type="submit" id="Search">
+		        <i class="glyphicon glyphicon-search"></i>
+		      </button>
+		    </div>
+		  </div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	</div>
+	
+	<br/><br/><br/>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
+	
 </body>
 
 </html>
