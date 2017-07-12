@@ -40,13 +40,13 @@
 				<div class="hero-unit" style="display:none;">
 					<h3>
 						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" id="prodName" th:field="*{prodName}" />
+						 <input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
 					</h3>
 				</div>
 				<div class="hero-unit">
 					<h3>
 						<span th:text="'Product Description:'"></span>
-						 <input type="text" class="form-control" id="prodDesc" th:field="*{prodDesc}" />
+						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{prodDesc}" />
 					</h3>
 				</div>
 
@@ -63,7 +63,7 @@
 				<div class="hero-unit">
 					<h3>
 						<span th:text="'Product Quantity:'"></span> 
-						<input type="number" class="form-control" id="prodQuantity" th:field="*{prodQuantity}" />
+						<input type="number" class="form-control" size= "10" id="prodQuantity" th:field="*{prodQuantity}" />
 					</h3>
 				</div>
 				
@@ -82,7 +82,7 @@
 				<div class="hero-unit">
 					<h3>
 						<span th:text="'Product Price:'"></span> 
-						<input type="number" class="form-control" id="prodPrice" th:field="*{prodPrice}" />
+						<input type="number" class="form-control" size= "20"  id="prodPrice" th:field="*{prodPrice}" />
 					</h3>
 				</div>
 
@@ -90,7 +90,7 @@
 					<h3>
 						<span th:text="'Expiry:'"></span>
 						<div class="input-group date" data-provide="datepicker">
-							<input type="text" class="form-control" id="date" th:name="prodExpiry" th:field="*{prodExpiry}"></input>
+							<input type="text" class="form-control" id="date" size= "100" th:name="prodExpiry" th:field="*{prodExpiry}"></input>
 							<div class="input-group-addon">
 								<span class="glyphicon glyphicon-th"></span>
 							</div>
