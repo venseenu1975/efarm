@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <div th:replace="fragments/header :: header-css" ></div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script
-	src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="../scripts/bootstrap-datetimepicker.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
 
 
-<link rel="stylesheet" th:href="@{/css/main.css}"
-	href="../../css/main.css" />
-<link rel="stylesheet" th:href="@{/css/main.css}"
-	href="../../css/bootstrap-datetimepicker.min.css" />
-<link rel="stylesheet"
-	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" th:href="@{/css/blog.css}" />
 
 
 
 <script>
 	$(document).ready(function() {
+		$('#Search').click(function() {
+			document.forms[0].action = "/search";
+			document.forms[0].submit();
+		});
 		$('#buy').click(function() {
 			//alert($("#product option:selected" ).text());
 			//$("#prodName").val($("#product option:selected" ).text());
@@ -38,7 +36,7 @@
 	
 	<div class="blog-header">
 	      <div class="container">
-	        <h6 class="blog-title">Order Summary</h6>
+	        <h6 class="blog-title">Your Cart</h6>
 	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
 	      </div>
 	</div>
@@ -48,20 +46,71 @@
 			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
 				<table class="table table-bordered" th:if="${cart !=null and !cart.empty}">
-					<div th:each="cartObj : ${cart}">
+					<div th:each="cartObj,rowStat : ${cart}">
 						<tr th:if="${cartObj.addToCart}">
+						
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].sellerId'}"
+							th:id="${'basket['+__${rowStat.index}__+'].sellerId'}"
+							th:text="${cartObj.sellerId}" 
+							th:value="${cartObj.sellerId}" />
+							</td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+							th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+							th:text="${cartObj.sellerProdId}" 
+							th:value="${cartObj.sellerProdId}" />
+							</td>
+							
 							<td th:text="${cartObj.name}"></td>
-							<td><input type="number" class="form-control" size="10"
-								id="quantity" th:value="${cartObj.quantity} " /> <span
-								th:text="${cartObj.prodUnits}"></span></td>
-							<td colspan="3" rowspan="1" th:text="${cartObj.price}"></td>
+							<td><input type="number" class="form-control" size="10" id="quantity" th:value="${cartObj.quantity} " /> 
+							<span th:text="${cartObj.prodUnits}"></span></td>
+							<td  th:text="${cartObj.price}"></td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].price'}"
+							th:id="${'basket['+__${rowStat.index}__+'].price'}"
+							th:text="${cartObj.price}" 
+							th:value="${cartObj.price}" />
+							</td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].prodUnits'}"
+							th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
+							th:text="${cartObj.prodUnits}" 
+							th:value="${cartObj.prodUnits}" />
+							</td>
+							
+						    <td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].quantity'}"
+							th:id="${'basket['+__${rowStat.index}__+'].quantity'}"
+							th:text="${cartObj.quantity}" 
+							th:value="${cartObj.quantity}" />
+							</td>
+							
+						</tr>
+						<tr th:if="${rowStat.index >= rowStat.size-1}">
+						<td></td>
+						<td  th:text="'Total Price'"></td>
+						<td  th:text="'Rs.' + ${cartObj.totalPrice}"></td>
+								<td hidden="hidden">
+								<input type="text" class="form-control" size= "200" 
+								th:name="${'basket['+__${rowStat.index}__+'].totalPrice'}"
+								th:id="${'basket['+__${rowStat.index}__+'].totalPrice'}"
+								th:text="${cartObj.totalPrice}" th:value="${cartObj.totalPrice}" />
+								</td>
 						</tr>
 					</div>
 					<tr>
 						<div class="hero-unit">
 							<h3>
-								<input type="submit" id="buy" class="btn btn-info"
-									value="Buy Now"></input>
+								<input type="submit" id="buy" class="btn btn-info" value="Place Order"></input>
 							</h3>
 						</div>
 					</tr>

@@ -2,6 +2,7 @@ package com.farm.model;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Farm {
 	private String prodDesc;
 	private Blob prodImg;
 	private String prodDeliveryMode;
-	private Integer sellerId;
+	private String sellerId;
 	private Date date;
 	private Integer prodQuantity;
 	private String prodName;
@@ -30,7 +31,7 @@ public class Farm {
 	private String prodUnits;
 	private BigDecimal prodPrice;
 	
-	List<BasketObject> basket;
+	List<BasketObject> basket =new ArrayList<>();
 	
 	
 
@@ -115,12 +116,12 @@ public class Farm {
 		this.prodDeliveryMode = prodDeliveryMode;
 	}
 
-	public Integer getSellerId() {
+	public String getSellerId() {
 		return sellerId;
 	}
 
-	public void setSellerId(Integer sellerId) {
-		this.sellerId = sellerId;
+	public void setSellerId(String string) {
+		this.sellerId = string;
 	}
 
 	public Integer getProdQuantity() {

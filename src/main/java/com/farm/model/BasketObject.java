@@ -5,37 +5,22 @@ import java.math.BigDecimal;
 public class BasketObject {
 
 	private String image;
-	
+	private Integer sellerProdId;
 	private String deliveryMode;
-	private Integer sellerId;
+	private String sellerId;
 	private Integer quantity;
 	private String name;
 	private BigDecimal price;
 	private Boolean addToCart;
-
-	public BasketObject() {
-		super();
-	}
-	public BasketObject(Integer quantity, String name,
-			BigDecimal price, Boolean addToCart, String prodUnits) {
-		super();
-		this.quantity = quantity;
-		this.name = name;
-		this.price = price;
-		this.addToCart = addToCart;
-		this.prodUnits = prodUnits;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "BasketObject [ deliveryMode=" + deliveryMode 
-				+ ", quantity=" + quantity + ", name=" + name + ", price=" + price + ", addToCart=" + addToCart
-				+ ", prodUnits=" + prodUnits+ "]";
-	}
-
-
 	private String prodUnits;
+	private BigDecimal totalPrice;
+	
+	public Integer getSellerProdId() {
+		return sellerProdId;
+	}
+	public void setSellerProdId(Integer sellerProdId) {
+		this.sellerProdId = sellerProdId;
+	}
 	public String getImage() {
 		return image;
 	}
@@ -48,10 +33,10 @@ public class BasketObject {
 	public void setDeliveryMode(String deliveryMode) {
 		this.deliveryMode = deliveryMode;
 	}
-	public Integer getSellerId() {
+	public String getSellerId() {
 		return sellerId;
 	}
-	public void setSellerId(Integer sellerId) {
+	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
 	public Integer getQuantity() {
@@ -84,5 +69,10 @@ public class BasketObject {
 	public void setAddToCart(Boolean addToCart) {
 		this.addToCart = addToCart;
 	}
-	
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 }

@@ -2,6 +2,7 @@ package com.farm;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -133,6 +134,8 @@ public class FarmController {
 						farmObj.setProdExpiry(sellerProduct.getProductExpiry());
 						farmObj.setProdUnits(sellerProduct.getUnits());
 						farmObj.setProdPrice(sellerProduct.getProductPrice());
+						farmObj.setProdId(sellerProduct.getId());
+						farmObj.setSellerId(sellerProduct.getSellerId());
 						if (farmObj.getProdImg() != null) {
 							byte[] encodeBase64;
 							try {
@@ -159,6 +162,7 @@ public class FarmController {
     @RequestMapping("/addToBasket")
 	public String addToBasket(Map<String, Object> model,@ModelAttribute Farm farm) {
     	System.out.println("farm basket >> "+farm.getBasket());
+    	BigDecimal total= BigDecimal.ZERO;
     	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
     		for (Iterator<BasketObject> iterator = farm.getBasket().iterator(); iterator.hasNext(); ) {
     			BasketObject basketObject = iterator.next();
@@ -167,15 +171,18 @@ public class FarmController {
         			System.out.println("basket quantity >> "+basketObject.getQuantity());
         			System.out.println("basket Price >> "+basketObject.getPrice());
         			System.out.println("basket prod units >> "+basketObject.getProdUnits());
+        			System.out.println("seller id  >> "+basketObject.getSellerId());
         			System.out.println("basket cart added >> "+basketObject.getAddToCart());
         			System.out.println("------------------------------------------------------");
-        			
+        			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
         			basketObject.setPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
+        			total=total.add(basketObject.getPrice());
     		    }
     		    else{
     		    	iterator.remove();
     		    }
-    		    System.out.println(farm.getBasket().size());
+    		    basketObject.setTotalPrice(total);
+    		    System.out.println(basketObject.getTotalPrice());
     		}
     		model.put("cart", farm.getBasket());
     	}
@@ -188,24 +195,17 @@ public class FarmController {
        	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
        		for (Iterator<BasketObject> iterator = farm.getBasket().iterator(); iterator.hasNext(); ) {
        			BasketObject basketObject = iterator.next();
-       		    if ( basketObject.getAddToCart() !=null && (basketObject.getAddToCart())) {
-       		    	System.out.println("basket name >> "+basketObject.getName());
            			System.out.println("basket quantity >> "+basketObject.getQuantity());
            			System.out.println("basket Price >> "+basketObject.getPrice());
            			System.out.println("basket prod units >> "+basketObject.getProdUnits());
-           			System.out.println("basket cart added >> "+basketObject.getAddToCart());
+           			System.out.println("basket seller  id  >> "+basketObject.getSellerId());
+           			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
+           			System.out.println("basket Total price  >> "+basketObject.getTotalPrice());
            			System.out.println("------------------------------------------------------");
-           			
-           			basketObject.setPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
-       		    }
-       		    else{
-       		    	iterator.remove();
-       		    }
-       		    System.out.println(farm.getBasket().size());
        		}
        		model.put("cart", farm.getBasket());
        	}
-   		return "farm_checkout";
+   		return "farm_order";
    	}
 
 }

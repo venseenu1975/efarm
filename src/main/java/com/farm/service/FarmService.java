@@ -35,7 +35,6 @@ import com.farm.entity.OrderSummary;
 import com.farm.entity.Product;
 import com.farm.entity.SellerProduct;
 import com.farm.entity.User;
-import com.farm.model.BasketObject;
 import com.farm.model.Farm;
 import com.farm.model.Login;
 
@@ -132,6 +131,7 @@ public class FarmService {
 	            	sellerProduct.setUnits(rs.getString("product_units"));
 	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
 	            	sellerProduct.setSellerId(rs.getString("seller_id"));
+	            	sellerProduct.setId(rs.getInt("id"));
 	                return sellerProduct;
 	            }
 	        });
@@ -169,8 +169,7 @@ public class FarmService {
 	        });
 	}
 	
-
-	public Order createOrder(Order order){
+		public Order createOrder(Order order){
 		
 			final String sql = "INSERT INTO order (buyer_id,amount,payment_mode)values(?,?,?)";
 			 
@@ -230,5 +229,4 @@ public class FarmService {
 				});
 		return orderSummaryLst;
 	}
-	
 }

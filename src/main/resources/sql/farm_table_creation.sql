@@ -68,3 +68,24 @@ CREATE TABLE `seller_products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
+----------------------------------------------------------------
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `buyer_id` varchar(45) DEFAULT NULL,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `payment_mode` varchar(45) DEFAULT 'COD',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-----------------------------------------------------------
+CREATE TABLE `order_summary` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(45) DEFAULT NULL,
+  `seller_id` varchar(45) DEFAULT NULL,
+  `amount` varchar(45) DEFAULT NULL,
+  `product_id` varchar(45) DEFAULT NULL,
+  `product_quantity` varchar(45) DEFAULT NULL,
+  `product_units` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
