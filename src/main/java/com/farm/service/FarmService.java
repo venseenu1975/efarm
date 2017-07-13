@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
@@ -13,9 +16,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.security.core.Authentication;
@@ -23,9 +30,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.farm.entity.Category;
+import com.farm.entity.Order;
+import com.farm.entity.OrderSummary;
 import com.farm.entity.Product;
 import com.farm.entity.SellerProduct;
 import com.farm.entity.User;
+import com.farm.model.BasketObject;
 import com.farm.model.Farm;
 import com.farm.model.Login;
 
@@ -158,4 +168,67 @@ public class FarmService {
 	            }
 	        });
 	}
+	
+
+	public Order createOrder(Order order){
+		
+			final String sql = "INSERT INTO order (buyer_id,amount,payment_mode)values(?,?,?)";
+			 
+	        KeyHolder holder = new GeneratedKeyHolder();
+	        jdbcTemplate.update(new PreparedStatementCreator() {
+
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					PreparedStatement ps = null;
+					try{
+					    ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+		                ps.setInt(1, order.getBuyerId());
+		                ps.setBigDecimal(2, order.getAmount());
+		                ps.setString(3, order.getPaymentMode());
+		                
+					return ps;
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					finally{
+					}
+					return ps;
+				}
+	        }, holder);
+	 
+	        int orderId = holder.getKey().intValue();
+	        order.setId(orderId);
+	        return order;
+	}
+		
+	
+	public List<OrderSummary> createOrderSummary(List<OrderSummary> orderSummaryLst){
+		 String sql = "INSERT INTO "
+			        + "order_summary "
+			        + "(order_id,seller_id,amount,product_id, product_quantity, product_units) "
+			        + "VALUES " + "(?,?,?)";
+
+			    jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+					
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException {
+						 OrderSummary orderSummary =orderSummaryLst.get(i);
+				            ps.setInt(1, orderSummary.getOrderId());
+				            ps.setInt(2, orderSummary.getSellerId());
+				            ps.setBigDecimal(3, orderSummary.getAmount());
+				            ps.setInt(4, orderSummary.getProductId());
+				            ps.setDouble(5, orderSummary.getProductQuantity());
+				            ps.setString(6, orderSummary.getUnits());
+						
+					}
+					
+					@Override
+					public int getBatchSize() {
+			            return orderSummaryLst.size();
+					}
+				});
+		return orderSummaryLst;
+	}
+	
 }
