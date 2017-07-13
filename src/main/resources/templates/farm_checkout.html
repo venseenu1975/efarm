@@ -17,6 +17,7 @@
 	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
 <link rel="stylesheet"
 	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" th:href="@{/css/blog.css}" />
 
 
 
@@ -34,6 +35,14 @@
 
 <body>
 	<div th:replace="fragments/header :: header" ></div>
+	
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title">Order Summary</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
+	</div>
+	
 	<div class="container upload">
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
@@ -61,7 +70,16 @@
 		</form>
 	</div>
 
-	<div th:replace="fragments/footer :: footer" />
+	<br/><br/><br/>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
 </body>
 
 </html>

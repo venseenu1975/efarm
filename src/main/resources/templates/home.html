@@ -3,7 +3,11 @@
 <head>
     <div th:replace="fragments/header :: header-css"/>
     <link rel="stylesheet" th:href="@{/css/blog.css}" />
-
+    <style type="text/css">
+	.w3-myfont {
+  		font-family: "Comic Sans MS", cursive, sans-serif;
+	}
+	</style>
 </head>
 <body>
 
@@ -11,14 +15,14 @@
 
 <div class="blog-header">
       <div class="container">
-        <h6 class="blog-title">Welcome To E-organic Market</h6>
+        <h6 class="blog-title w3-myfont">Welcome To E-organic Market</h6>
         <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
       </div>
 </div>
 
 <div class="container">
 
-<img src="./images/emarket.gif" class="img-rounded" alt="Cinque Terre"  align="centre"> </img>
+<img src="./images/emarket.gif" class="img-rounded" alt="Cinque Terre"  align="centre" width="600" height="300"> </img>
     <div class="starter-template">
     <!-- hello width="620" height="360"-->
   	<!-- <h1>Spring Boot Web Thymeleaf + Spring Security</h1>
@@ -37,6 +41,8 @@
     
 </div>
 <!-- /.container -->
+
+<br/><br/>
 
 <footer class="blog-footer">
 	      <p>
