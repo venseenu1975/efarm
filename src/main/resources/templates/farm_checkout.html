@@ -35,11 +35,9 @@
 
 <body>
 	<div th:replace="fragments/header :: header" />
-
-	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-		<div th:replace="fragments/header :: prod-search"></div>
-
-		<div class="container upload">
+	<div class="container upload">
+		<form th:object="${farm}" method="post" enctype="multipart/form-data">
+			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
 				<table class="table table-bordered" th:if="${!cart.empty}">
 					<div th:each="cartObj : ${cart}">
@@ -61,9 +59,9 @@
 					</tr>
 				</table>
 			</div>
+		</form>
+	</div>
 
-		</div>
-	</form>
 	<div th:replace="fragments/footer :: footer" />
 </body>
 
