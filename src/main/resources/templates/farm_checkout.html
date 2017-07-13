@@ -22,8 +22,6 @@
 			document.forms[0].submit();
 		});
 		$('#buy').click(function() {
-			//alert($("#product option:selected" ).text());
-			//$("#prodName").val($("#product option:selected" ).text());
 			document.forms[0].action = "/buyBasket";
 			document.forms[0].submit();
 		});
@@ -68,7 +66,17 @@
 							<td th:text="${cartObj.name}"></td>
 							<td><input type="number" class="form-control" size="10" id="quantity" th:value="${cartObj.quantity} " /> 
 							<span th:text="${cartObj.prodUnits}"></span></td>
+							
 							<td  th:text="${cartObj.price}"></td>
+							<td  th:text="${cartObj.itemPrice}"></td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].itemPrice'}"
+							th:id="${'basket['+__${rowStat.index}__+'].itemPrice'}"
+							th:text="${cartObj.itemPrice}" 
+							th:value="${cartObj.itemPrice}" />
+							</td>
 							
 							<td hidden="hidden">
 							<input type="text" class="form-control" size= "200" 
@@ -96,6 +104,7 @@
 							
 						</tr>
 						<tr th:if="${rowStat.index >= rowStat.size-1}">
+						<td></td>
 						<td></td>
 						<td  th:text="'Total Price'"></td>
 						<td  th:text="'Rs.' + ${cartObj.totalPrice}"></td>

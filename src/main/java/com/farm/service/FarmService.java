@@ -216,7 +216,7 @@ public class FarmService {
 						 BasketObject orderSummary =farm.getBasket().get(i);
 				            ps.setInt(1, orderSummary.getOrderId());
 				            ps.setString(2, orderSummary.getSellerId());
-				            ps.setBigDecimal(3, orderSummary.getPrice());
+				            ps.setBigDecimal(3, orderSummary.getItemPrice());
 				            ps.setInt(4, orderSummary.getSellerProdId());
 				            ps.setDouble(5, orderSummary.getQuantity());
 				            ps.setString(6, orderSummary.getProdUnits());

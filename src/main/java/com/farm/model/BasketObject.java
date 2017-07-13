@@ -11,12 +11,19 @@ public class BasketObject {
 	private Integer quantity;
 	private String name;
 	private BigDecimal price;
+	private BigDecimal itemPrice;
 	private Boolean addToCart;
 	private String prodUnits;
 	private BigDecimal totalPrice;
 	private Integer orderId;
 	
 	
+	public BigDecimal getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(BigDecimal itemPrice) {
+		this.itemPrice = itemPrice;
+	}
 	public Integer getOrderId() {
 		return orderId;
 	}

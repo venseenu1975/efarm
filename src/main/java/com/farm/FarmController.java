@@ -178,8 +178,8 @@ public class FarmController {
         			System.out.println("basket cart added >> "+basketObject.getAddToCart());
         			System.out.println("------------------------------------------------------");
         			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
-        			basketObject.setPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
-        			total=total.add(basketObject.getPrice());
+        			basketObject.setItemPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
+        			total=total.add(basketObject.getItemPrice());
     		    }
     		    else{
     		    	iterator.remove();
@@ -201,7 +201,7 @@ public class FarmController {
        		System.out.println("Ur order id is >>"+orderId);
        		for (BasketObject basketObject:farm.getBasket()) {
            			System.out.println("basket quantity >> "+basketObject.getQuantity());
-           			System.out.println("basket Price >> "+basketObject.getPrice());
+           			System.out.println("basket Price >> "+basketObject.getItemPrice());
            			System.out.println("basket prod units >> "+basketObject.getProdUnits());
            			System.out.println("basket seller  id  >> "+basketObject.getSellerId());
            			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
