@@ -86,6 +86,8 @@ public class FarmController {
             System.out.println(farm.getProdExpiry());
             model.put("categories",  farmService.getCategory());
             farmService.addSellerProducts(farm);
+            model.put("farm",  new Farm());
+            model.put("msg",  "Your Products added successfully");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
