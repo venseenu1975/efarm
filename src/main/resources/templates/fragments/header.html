@@ -25,7 +25,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/home">Home</a></li>
+        <li class=""><a href="/home">Home</a></li>
         <!-- <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Shopping <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -44,7 +44,18 @@
     </div>
   </div>
 </nav>
-    
 </div>
+
+	<div th:fragment="prod-search">
+		<label for="prodName"><span th:text="'Product Name:'"></span></label>
+		  <div class="input-group">
+		    <input type="text" class="form-control" placeholder="Search your item here" id="prodName" size="100" th:field="*{prodName}" />
+		    <div class="input-group-btn">
+		      <button class="btn btn-default" type="submit" id="Search">
+		        <i class="glyphicon glyphicon-search"></i>
+		      </button>
+		    </div>
+		  </div>
+	</div>
 </body>
 </html>

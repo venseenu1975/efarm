@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
 <title>E-Farm</title>
- <div th:replace="fragments/header :: header-css"/>
+<div th:replace="fragments/header :: header-css" />
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
+<script
+	src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="../scripts/bootstrap-datetimepicker.js"></script>
 
 
-<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
-<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/main.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet"
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
 
 
 
@@ -28,77 +34,37 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/header :: header" />
 
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
+		<div th:replace="fragments/header :: prod-search"></div>
 
-		
-		
-		
 		<div class="container upload">
 			<div class="row">
-			<table>
-			<tr>
-			<td>
-			<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" size="40" class="form-control" id="prodName" th:field="*{prodName}" />
-					</h3>
-				</div>
-</td>
-							
-<td>
-		<div class="hero-unit">
-					<h3>
-					<br />
-					<input type="submit" id="Search" class="btn btn-info" value="Search"></input>
-					 
-					</h3>
-				</div>		
-	</td>
-	<td>		
-			<div class="hero-unit">
-					<h3>
-						<br /> <input type="submit" id="CheckOutCart" class="btn btn-info" value="CheckOutCart"></input>
-					</h3>
-				</div>
-				</td>
-				</tr>
-			</table>
-			
-				<table class="table table-bordered">
-
-				<tr th:each="farmObj : ${farmList}">
-					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}"></img></td>
-					<td colspan="2" rowspan="1" th:text="${farmObj.prodName}" th:field="basket.name"></td>
-					<td colspan="3" rowspan="1">
-					<select>
-					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}"
-					        th:value="${ i }"
-					        th:text="${  i} + ${farmObj.prodUnits}"></option>
-					</select>
-					</td>
-					<!-- <td colspan="3" rowspan="1" th:text="${farmObj.prodUnits}"></td> -->
-					<td colspan="3" rowspan="1" th:text="${farmObj.prodPrice}"></td>
-					<!-- <td colspan="4" rowspan="1" th:text="${farmObj.prodExpiry}"></td> -->
-					<td>  
-					<div class="checkbox">
-				    <label>
-				      <input type="checkbox" class="checkbox-circle"> Add to Basket </input>
-				    </label>
-				  </div>
-				  </td>
-				</tr>
-
-				
-				
+				<table class="table table-bordered" th:if="${!cart.empty}">
+					<div th:each="cartObj : ${cart}">
+						<tr th:if="${cartObj.addToCart}">
+							<td th:text="${cartObj.name}"></td>
+							<td><input type="number" class="form-control" size="10"
+								id="quantity" th:value="${cartObj.quantity} " /> <span
+								th:text="${cartObj.prodUnits}"></span></td>
+							<td colspan="3" rowspan="1" th:text="${cartObj.price}"></td>
+						</tr>
+					</div>
+					<tr>
+						<div class="hero-unit">
+							<h3>
+								<input type="submit" id="buy" class="btn btn-info"
+									value="Buy Now"></input>
+							</h3>
+						</div>
+					</tr>
 				</table>
-			</div>	
-			
 			</div>
+
+		</div>
 	</form>
-	<div th:replace="fragments/footer :: footer"/>
+	<div th:replace="fragments/footer :: footer" />
 </body>
 
 </html>

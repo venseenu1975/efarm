@@ -32,26 +32,18 @@
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header"></div>
 
-<div class="blog-header">
-      <div class="container">
-        <h6 class="blog-title">Here is your daily needs</h6>
-        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
-      </div>
-</div>
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title">Here is your daily needs</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
+	</div>
 	
 	<div class="container upload">
 	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-		<label for="prodName"><span th:text="'Product Name:'"></span></label>
-		  <div class="input-group">
-		    <input type="text" class="form-control" placeholder="Search your item here" id="prodName" size="100" th:field="*{prodName}" />
-		    <div class="input-group-btn">
-		      <button class="btn btn-default" type="submit" id="Search">
-		        <i class="glyphicon glyphicon-search"></i>
-		      </button>
-		    </div>
-		  </div>
+	<div th:replace="fragments/header :: prod-search"></div>
 	</form>
 	</div>
 	

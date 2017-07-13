@@ -57,7 +57,7 @@ public class FarmController {
 	
     @GetMapping("/")
     public String home1() {
-		return "farm_shop";
+		return "home";
     }
     
     @RequestMapping("/buy")
