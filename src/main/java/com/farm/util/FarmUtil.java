@@ -1,16 +1,17 @@
 package com.farm.util;
 
 
-import com.twilio.sdk.TwilioRestClient;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.factory.MessageFactory;
-import com.twilio.sdk.resource.instance.Message;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+
+import com.twilio.sdk.TwilioRestClient;
+import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.resource.factory.MessageFactory;
+import com.twilio.sdk.resource.instance.Message;
 
 public class FarmUtil {
 	
@@ -65,5 +66,15 @@ public class FarmUtil {
         distance = Math.pow(distance, 2) + Math.pow(height, 2);
 
         return Math.sqrt(distance);
+    }
+    
+
+    public static BigDecimal calculateCost(int itemQuantity, BigDecimal itemPrice)
+    {
+    	BigDecimal itemCost  = BigDecimal.ZERO;
+    	BigDecimal totalCost = BigDecimal.ZERO;
+    	itemCost  = itemPrice.multiply(new BigDecimal(itemQuantity));
+    	totalCost = totalCost.add(itemCost);
+    	return totalCost;
     }
 }

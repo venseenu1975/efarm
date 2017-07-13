@@ -160,18 +160,17 @@ public class FarmController {
 	public String addToBasket(Map<String, Object> model,@ModelAttribute Farm farm) {
     	System.out.println("farm basket >> "+farm.getBasket());
     	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
-    /*		for(BasketObject basketObject:farm.getBasket()){
-    			System.out.println("basket name >> "+basketObject.getName());
-    			System.out.println("basket quantity >> "+basketObject.getQuantity());
-    			System.out.println("basket Price >> "+basketObject.getPrice());
-    			System.out.println("basket cart added >> "+basketObject.getAddToCart());
-    			System.out.println("------------------------------------------------------");
-    		}
-    		*/
     		for (Iterator<BasketObject> iterator = farm.getBasket().iterator(); iterator.hasNext(); ) {
-    			BasketObject bo = iterator.next();
-    		    if ( bo.getAddToCart() !=null && (bo.getAddToCart())) {
-    		        
+    			BasketObject basketObject = iterator.next();
+    		    if ( basketObject.getAddToCart() !=null && (basketObject.getAddToCart())) {
+    		    	System.out.println("basket name >> "+basketObject.getName());
+        			System.out.println("basket quantity >> "+basketObject.getQuantity());
+        			System.out.println("basket Price >> "+basketObject.getPrice());
+        			System.out.println("basket prod units >> "+basketObject.getProdUnits());
+        			System.out.println("basket cart added >> "+basketObject.getAddToCart());
+        			System.out.println("------------------------------------------------------");
+        			
+        			basketObject.setPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
     		    }
     		    else{
     		    	iterator.remove();
@@ -182,5 +181,31 @@ public class FarmController {
     	}
 		return "farm_checkout";
 	}
+    
+    @RequestMapping("/buyBasket")
+   	public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm) {
+       	System.out.println("farm basket >> "+farm.getBasket());
+       	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
+       		for (Iterator<BasketObject> iterator = farm.getBasket().iterator(); iterator.hasNext(); ) {
+       			BasketObject basketObject = iterator.next();
+       		    if ( basketObject.getAddToCart() !=null && (basketObject.getAddToCart())) {
+       		    	System.out.println("basket name >> "+basketObject.getName());
+           			System.out.println("basket quantity >> "+basketObject.getQuantity());
+           			System.out.println("basket Price >> "+basketObject.getPrice());
+           			System.out.println("basket prod units >> "+basketObject.getProdUnits());
+           			System.out.println("basket cart added >> "+basketObject.getAddToCart());
+           			System.out.println("------------------------------------------------------");
+           			
+           			basketObject.setPrice(FarmUtil.calculateCost(basketObject.getQuantity(), basketObject.getPrice()));
+       		    }
+       		    else{
+       		    	iterator.remove();
+       		    }
+       		    System.out.println(farm.getBasket().size());
+       		}
+       		model.put("cart", farm.getBasket());
+       	}
+   		return "farm_checkout";
+   	}
 
 }

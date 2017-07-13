@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"></div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -59,6 +58,14 @@
 					<select  th:field="*{basket[__${rowStat.index}__].quantity}" >
 					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
 					</select>
+					</td>
+					
+				    <td hidden="hidden">
+					<input type="text" class="form-control" size= "200" 
+					th:name="${'basket['+__${rowStat.index}__+'].prodUnits'}"
+					th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
+					th:text="${farmObj.prodUnits}" 
+					th:value="${farmObj.prodUnits}" />
 					</td>
 					
 					<td colspan="3" rowspan="1" th:text="${farmObj.prodPrice}"></td>

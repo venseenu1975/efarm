@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>E-Farm</title>
-<div th:replace="fragments/header :: header-css" />
+<div th:replace="fragments/header :: header-css" ></div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script
 	src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -23,10 +22,10 @@
 
 <script>
 	$(document).ready(function() {
-		$('#CheckOutCart').click(function() {
+		$('#buy').click(function() {
 			//alert($("#product option:selected" ).text());
 			//$("#prodName").val($("#product option:selected" ).text());
-			document.forms[0].action = "/addToBasket";
+			document.forms[0].action = "/buyBasket";
 			document.forms[0].submit();
 		});
 	});
@@ -34,7 +33,7 @@
 </head>
 
 <body>
-	<div th:replace="fragments/header :: header" />
+	<div th:replace="fragments/header :: header" ></div>
 	<div class="container upload">
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
