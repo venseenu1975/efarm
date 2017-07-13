@@ -128,7 +128,8 @@ public class FarmController {
 					System.out.println("expiryDate:"+expiryDate);
 					System.out.println("Seller ID:"+sellerProduct.getSellerId());
 					com.farm.entity.User sellerDetails = farmService.getUser(sellerProduct.getSellerId());
-					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
+					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), 
+							sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
 					if (distanceInKms<2) {
 						farmObj.setProdImg(sellerProduct.getProdImg());
 						farmObj.setProdName(sellerProduct.getProdName());
