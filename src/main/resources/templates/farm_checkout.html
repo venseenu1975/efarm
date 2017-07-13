@@ -47,7 +47,7 @@
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
-				<table class="table table-bordered" th:if="${!cart.empty}">
+				<table class="table table-bordered" th:if="${cart !=null and !cart.empty}">
 					<div th:each="cartObj : ${cart}">
 						<tr th:if="${cartObj.addToCart}">
 							<td th:text="${cartObj.name}"></td>
