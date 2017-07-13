@@ -20,7 +20,7 @@ public class UserService {
     private JdbcTemplate jdbcTemplate;
 	
 	
-    public User create(final User user) 
+    public void create(final User user) 
     {
         final String sql = "INSERT INTO user (name,address,contact,lat,lon,username,password)values(?,?,?,?,?,?,?)";
  
@@ -50,8 +50,8 @@ public class UserService {
 			}
         }, holder);
  
-        int newUserId = holder.getKey().intValue();
+      /*  int newUserId = holder.getKey().intValue();
         user.setuId(newUserId);
-        return user;
+        return user;*/
     }
 }

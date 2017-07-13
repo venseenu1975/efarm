@@ -12,7 +12,7 @@
     </div>
 </head>
 <body>
-<div th:fragment="header">
+<div th:fragment="login_header">
     <!-- this is header -->
   <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -41,6 +41,34 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a th:href="@{/registration}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+        <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+
+
+<div th:fragment="header">
+    <!-- this is header -->
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/home">E-Organic Market</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class=""><a href="/home">Home</a></li>
+        <li><a href="/buy">Buy</a></li>
+        <li><a href="/sell">Sell</a></li>
+        <li><a th:href="@{/about}">About Us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
       </ul>
     </div>
