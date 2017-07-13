@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +36,7 @@ import com.farm.entity.OrderSummary;
 import com.farm.entity.Product;
 import com.farm.entity.SellerProduct;
 import com.farm.entity.User;
+import com.farm.model.BasketObject;
 import com.farm.model.Farm;
 import com.farm.model.Login;
 
@@ -169,9 +171,9 @@ public class FarmService {
 	        });
 	}
 	
-		public Order createOrder(Order order){
-		
-			final String sql = "INSERT INTO order (buyer_id,amount,payment_mode)values(?,?,?)";
+		public Integer createOrder(BigDecimal amount){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			final String sql = "INSERT INTO efarm_orders (buyer_id,amount) values(?,?)";
 			 
 	        KeyHolder holder = new GeneratedKeyHolder();
 	        jdbcTemplate.update(new PreparedStatementCreator() {
@@ -181,10 +183,8 @@ public class FarmService {
 					PreparedStatement ps = null;
 					try{
 					    ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-		                ps.setInt(1, order.getBuyerId());
-		                ps.setBigDecimal(2, order.getAmount());
-		                ps.setString(3, order.getPaymentMode());
-		                
+		                ps.setString(1, auth.getName());
+		                ps.setBigDecimal(2, amount);
 					return ps;
 					}
 					catch(Exception e){
@@ -197,36 +197,52 @@ public class FarmService {
 	        }, holder);
 	 
 	        int orderId = holder.getKey().intValue();
-	        order.setId(orderId);
-	        return order;
+	        return orderId;
 	}
 		
 	
-	public List<OrderSummary> createOrderSummary(List<OrderSummary> orderSummaryLst){
+	public void createOrderSummary(Farm farm){
+		
+		
 		 String sql = "INSERT INTO "
 			        + "order_summary "
 			        + "(order_id,seller_id,amount,product_id, product_quantity, product_units) "
-			        + "VALUES " + "(?,?,?)";
+			        + "VALUES " + "(?,?,?,?,?,?)";
 
 			    jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 					
 					@Override
 					public void setValues(PreparedStatement ps, int i) throws SQLException {
-						 OrderSummary orderSummary =orderSummaryLst.get(i);
+						 BasketObject orderSummary =farm.getBasket().get(i);
 				            ps.setInt(1, orderSummary.getOrderId());
-				            ps.setInt(2, orderSummary.getSellerId());
-				            ps.setBigDecimal(3, orderSummary.getAmount());
-				            ps.setInt(4, orderSummary.getProductId());
-				            ps.setDouble(5, orderSummary.getProductQuantity());
-				            ps.setString(6, orderSummary.getUnits());
-						
+				            ps.setString(2, orderSummary.getSellerId());
+				            ps.setBigDecimal(3, orderSummary.getPrice());
+				            ps.setInt(4, orderSummary.getSellerProdId());
+				            ps.setDouble(5, orderSummary.getQuantity());
+				            ps.setString(6, orderSummary.getProdUnits());
 					}
-					
+
 					@Override
 					public int getBatchSize() {
-			            return orderSummaryLst.size();
+						 return farm.getBasket().size();
 					}
 				});
-		return orderSummaryLst;
+	}
+	
+	
+	
+	public List<OrderSummary> getOrderSummary(Integer orderId) {
+		 return jdbcTemplate.query("select sp.prod_name, u.address from seller_products sp, user u where sp.id in "
+		 		+ " (select product_id from order_summary where order_id = ?)  and u.username in (select seller_id from order_summary where order_id = ?)  "
+		 		+ " and sp.seller_id = u.username;",new Object[] {orderId,orderId},
+				 new RowMapper<OrderSummary>() {
+	            @Override
+	            public OrderSummary mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	OrderSummary summary = new OrderSummary();
+	            	summary.setName(rs.getString("prod_name"));
+	            	summary.setAddress(rs.getString("address"));
+	                return summary;
+	            }
+	        });
 	}
 }

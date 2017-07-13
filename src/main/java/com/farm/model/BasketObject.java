@@ -14,7 +14,15 @@ public class BasketObject {
 	private Boolean addToCart;
 	private String prodUnits;
 	private BigDecimal totalPrice;
+	private Integer orderId;
 	
+	
+	public Integer getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
 	public Integer getSellerProdId() {
 		return sellerProdId;
 	}
