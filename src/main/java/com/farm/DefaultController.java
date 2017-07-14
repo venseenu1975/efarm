@@ -43,6 +43,11 @@ public class DefaultController {
     public String about() {
         return "/about";
     }
+    
+    @GetMapping("/error")
+    public String error() {
+        return "/error";
+    }
 
     @GetMapping("/403")
     public String error403() {
