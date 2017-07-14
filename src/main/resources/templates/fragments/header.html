@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:fragment="header-css">
     <title>E-Farm</title>
@@ -9,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" th:href="@{/css/main.css}" />
+          <link rel="stylesheet" th:href="@{/css/blog.css}" href="../../css/blog.css"/>
     </div>
 </head>
 <body>
@@ -66,8 +69,37 @@
         <!-- <li class=""><a href="/home">Home</a></li> -->
         <li><a href="/buy">Buy</a></li>
         <li><a href="/sell">Sell</a></li>
-        <li><a  href="/category">Add New Product Category</a></li>
-        <li><a href="/product">Add New Product</a></li>
+   <!--      <li><a  href="/category">Add New Product Category</a></li>
+        <li><a href="/product">Add New Product</a></li> -->
+        <li><a th:href="@{/about}">About Us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+
+<div th:fragment="admin_header">
+    <!-- this is header -->
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/admin">E-Organic Market</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       <!--  <li class=""><a href="/home">Home</a></li> -->
+     <!--    <li><a href="/buy">Buy</a></li>
+        <li><a href="/sell">Sell</a></li> -->
+        <li><a  href="/admin/category">Add New Product Category</a></li>
+        <li><a href="/admin/product">Add New Product</a></li>
         <li><a th:href="@{/about}">About Us</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

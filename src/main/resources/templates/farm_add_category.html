@@ -14,25 +14,18 @@
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" th:href="@{/css/blog.css}" />
 
-
-
 <script>
 	$(document).ready(function() {
-		
-		$('#Search').click(function() {
-			document.forms[0].action = "/search";
+		$('#addCategory').click(function() {
+			document.forms[0].action = "/admin/addCategory";
 			document.forms[0].submit();
 		});
-		
-	    $("#date").datetimepicker({
-	        format: "mm dd yyyy - hh:ii"
-	    });
 	});
 </script>
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/header :: admin_header"></div>
 
 	<div class="blog-header">
 	      <div class="container">
@@ -87,12 +80,5 @@
 	</footer>
 	
 </body>
-<script>
-	$(document).ready(function() {
-		$('#addCategory').click(function() {
-			document.forms[0].action = "/addCategory";
-			document.forms[0].submit();
-		});
-	});
-</script>
+
 </html>

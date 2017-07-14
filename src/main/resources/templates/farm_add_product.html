@@ -18,21 +18,17 @@
 
 <script>
 	$(document).ready(function() {
-		
-		$('#Search').click(function() {
-			document.forms[0].action = "/search";
+		$('#addProduct').click(function() {
+			alert("hiiii");
+			document.forms[0].action = "/admin/addProduct";
 			document.forms[0].submit();
 		});
-		
-	    $("#date").datetimepicker({
-	        format: "mm dd yyyy - hh:ii"
-	    });
 	});
 </script>
 </head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/header :: admin_header"></div>
 
 	<div class="blog-header">
 	      <div class="container">
@@ -98,12 +94,5 @@
 	</footer>
 	
 </body>
-<script>
-	$(document).ready(function() {
-		$('#addProduct').click(function() {
-			document.forms[0].action = "/addProduct";
-			document.forms[0].submit();
-		});
-	});
-</script>
+
 </html>
