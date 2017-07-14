@@ -27,82 +27,82 @@
 		});
 		
 		$("#cart tbody").on("click", "tr > .removeItem", function(e){
-		//$(".remove_item").on("click", function(e){
-		   // alert("hiiii");
-		    //alert( $(this).closest("tr").find(".item_price").val());
-		    var price=$(this).closest("tr").find(".item_price").val();
-		    var length= $("#cart tbody > tr").length - 2;
-		    //alert( length);
-		    if(length == 1){
-		    	$("#cart").hide();
-		    	return false;
-		    }
-		    var total=$('#cart tbody tr:eq('+length+')').find('.total_price').val();
-		    var finalTotal=total-price;
-		    //alert( length);
-		    //alert(finalTotal);
-		    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
-		    $('#cart tbody tr:eq('+length+')').find('.total_price').prop("value", function () {
-	        	return finalTotal;
+			//$(".remove_item").on("click", function(e){
+			   // alert("hiiii");
+			    //alert( $(this).closest("tr").find(".item_price").val());
+			    var price=$(this).closest("tr").find(".item_price").val();
+			    var length= $("#cart tbody > tr").length - 2;
+			    //alert( length);
+			    if(length == 1){
+			    	$("#cart").hide();
+			    	return false;
+			    }
+			    var total=$('#cart tbody tr:eq('+length+')').find('.total_price').val();
+			    var finalTotal=total-price;
+			    //alert( length);
+			    //alert(finalTotal);
+			    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
+			    $('#cart tbody tr:eq('+length+')').find('.total_price').prop("value", function () {
+		        	return finalTotal;
+				});
+			    $(this).closest("tr").remove();
+			   
+			        $("tr .seller_id").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].sellerId";
+					});
+			        
+			        $("tr .seller_prod_id").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+					});
+			        
+			        $("tr .quantity").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].quantity";
+					});
+			        
+			        $("tr .item_price").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
+					});
+			        
+			        $("tr .price").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].price";
+					});
+			        
+			        $("tr .prod_units").prop("name", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
+					});
+			        
+			        $("tr .total_price").prop("name", function () {
+			        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
+					});
+			        
+			        $("tr .seller_id").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].sellerId";
+					});
+			        
+			        $("tr .seller_prod_id").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+					});
+			        
+			        $("tr .quantity").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].quantity";
+					});
+			        
+			        $("tr .item_price").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
+					});
+			        
+			        $("tr .price").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].price";
+					});
+			        
+			        $("tr .prod_units").prop("id", function () {
+			        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
+					});
+			        
+			        $("tr .total_price").prop("id", function () {
+			        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
+					}); 
 			});
-		    $(this).closest("tr").remove();
-		   
-		        $("tr .seller_id").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].sellerId";
-				});
-		        
-		        $("tr .seller_prod_id").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
-				});
-		        
-		        $("tr .quantity").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].quantity";
-				});
-		        
-		        $("tr .item_price").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
-				});
-		        
-		        $("tr .price").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].price";
-				});
-		        
-		        $("tr .prod_units").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
-				});
-		        
-		        $("tr .total_price").prop("name", function () {
-		        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
-				});
-		        
-		        $("tr .seller_id").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].sellerId";
-				});
-		        
-		        $("tr .seller_prod_id").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
-				});
-		        
-		        $("tr .quantity").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].quantity";
-				});
-		        
-		        $("tr .item_price").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
-				});
-		        
-		        $("tr .price").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].price";
-				});
-		        
-		        $("tr .prod_units").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
-				});
-		        
-		        $("tr .total_price").prop("id", function () {
-		        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
-				}); 
-		});
 	});
 </script>
 </head>
@@ -238,6 +238,7 @@
 	        <a href="#">Back to top</a>
 	      </p>
 	</footer>
+	
 </body>
 
 </html>
