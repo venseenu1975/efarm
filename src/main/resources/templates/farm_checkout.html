@@ -40,6 +40,7 @@
 	</div>
 	
 	<div class="container upload">
+	<div class="row" align="center">
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
@@ -119,7 +120,7 @@
 					<tr>
 						<div class="hero-unit">
 							<h3>
-								<input type="submit" id="buy" class="btn btn-info" value="Place Order"></input>
+								<input type="submit" id="buy" class="btn btn-info btn-lg" value="Place Order"></input>
 							</h3>
 						</div>
 					</tr>
@@ -127,8 +128,8 @@
 			</div>
 		</form>
 	</div>
-
-	<br/><br/><br/>
+</div>
+	<br/><br/><br/><br/>
 	
 	<footer class="blog-footer">
 	      <p>
@@ -138,6 +139,7 @@
 	        <a href="#">Back to top</a>
 	      </p>
 	</footer>
+	
 </body>
 
 </html>
