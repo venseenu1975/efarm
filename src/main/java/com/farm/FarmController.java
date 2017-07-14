@@ -30,9 +30,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.farm.entity.SellerProduct;
 import com.farm.model.BasketObject;
+import com.farm.model.Category;
 import com.farm.model.Farm;
+import com.farm.model.Product;
 import com.farm.model.User;
 import com.farm.service.FarmService;
+import com.farm.service.ProductService;
+import com.farm.service.UserService;
 import com.farm.util.FarmUtil;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.mysql.fabric.xmlrpc.base.Array;
@@ -44,7 +48,13 @@ public class FarmController {
 	
 	@Autowired
 	FarmService farmService;
+	
+	@Autowired
+	ProductService productService;
 
+	@Autowired
+	UserService userService;
+	
 	@ModelAttribute(name="user")
 	public User createUserModel() {
 		return new User();
@@ -107,7 +117,36 @@ public class FarmController {
 		return "farm_sell";
 	}
 	
+	@RequestMapping("/addCategory")
+	public String addCategory(ModelMap model,@ModelAttribute Category category) {
+		
+		 productService.createCategory(category);
+		 model.put("category",  new Category());
+         model.put("msg",  "Product Category added successfully");
+     
+		return "farm_add_category";
+	}
 	
+	@RequestMapping("/addProduct")
+	public String addProduct(ModelMap model,@ModelAttribute Product product) {
+		try {
+            // Get the file and save it somewhere
+            byte[] bytes = product.getImgFile().getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + product.getImgFile().getOriginalFilename());
+            Files.write(path, bytes);
+            product.setImage(path.toString());
+           
+            productService.createProduct(product);
+            model.put("categories",  farmService.getCategory());
+            model.put("product",  new Product());
+            model.put("msg",  "Product added successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+		  
+		
+		return "farm_add_product";
+	}
 	
 	@RequestMapping("/search")
 	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException {
@@ -118,7 +157,7 @@ public class FarmController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String loggedUser = auth.getName();
 		System.out.println("loggedUser   "+loggedUser);
-		com.farm.entity.User buyer = farmService.getUser(loggedUser);
+		com.farm.entity.User buyer = userService.getUser(loggedUser);
 		Date d = new Date();
 		if (sellerProducts != null && !sellerProducts.isEmpty()) {
 			for (SellerProduct sellerProduct : sellerProducts) {
@@ -127,9 +166,8 @@ public class FarmController {
 				if (expiryDate.compareTo(d)>0) {
 					System.out.println("expiryDate:"+expiryDate);
 					System.out.println("Seller ID:"+sellerProduct.getSellerId());
-					com.farm.entity.User sellerDetails = farmService.getUser(sellerProduct.getSellerId());
-					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), 
-							sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
+					com.farm.entity.User sellerDetails = userService.getUser(sellerProduct.getSellerId());
+					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
 					if (distanceInKms<2) {
 						farmObj.setProdImg(sellerProduct.getProdImg());
 						farmObj.setProdName(sellerProduct.getProdName());
@@ -201,7 +239,8 @@ public class FarmController {
        		System.out.println("Ur order id is >>"+orderId);
        		for (BasketObject basketObject:farm.getBasket()) {
            			System.out.println("basket quantity >> "+basketObject.getQuantity());
-           			System.out.println("basket Price >> "+basketObject.getItemPrice());
+           			System.out.println("basket Item Price >> "+basketObject.getItemPrice());
+           			System.out.println("basket Price >> "+basketObject.getPrice());
            			System.out.println("basket prod units >> "+basketObject.getProdUnits());
            			System.out.println("basket seller  id  >> "+basketObject.getSellerId());
            			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
@@ -216,5 +255,16 @@ public class FarmController {
        	}
    		return "farm_order";
    	}
-
+    
+    
+  	@RequestMapping("/category")
+  	public String sell(Map<String, Object> model,@ModelAttribute Category category) {
+  	
+  		return "farm_add_category";
+  	}
+  	@RequestMapping("/product")
+  	public String product(Map<String, Object> model,@ModelAttribute Product product) {
+  		model.put("categories",  farmService.getCategory());
+  		return "farm_add_product";
+  	}
 }

@@ -25,6 +25,84 @@
 			document.forms[0].action = "/buyBasket";
 			document.forms[0].submit();
 		});
+		
+		$("#cart tbody").on("click", "tr > .removeItem", function(e){
+		//$(".remove_item").on("click", function(e){
+		   // alert("hiiii");
+		    //alert( $(this).closest("tr").find(".item_price").val());
+		    var price=$(this).closest("tr").find(".item_price").val();
+		    var length= $("#cart tbody > tr").length - 2;
+		    //alert( length);
+		    if(length == 1){
+		    	$("#cart").hide();
+		    	return false;
+		    }
+		    var total=$('#cart tbody tr:eq('+length+')').find('.total_price').val();
+		    var finalTotal=total-price;
+		    //alert( length);
+		    //alert(finalTotal);
+		    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
+		    $('#cart tbody tr:eq('+length+')').find('.total_price').prop("value", function () {
+	        	return finalTotal;
+			});
+		    $(this).closest("tr").remove();
+		   
+		        $("tr .seller_id").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].sellerId";
+				});
+		        
+		        $("tr .seller_prod_id").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+				});
+		        
+		        $("tr .quantity").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].quantity";
+				});
+		        
+		        $("tr .item_price").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
+				});
+		        
+		        $("tr .price").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].price";
+				});
+		        
+		        $("tr .prod_units").prop("name", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
+				});
+		        
+		        $("tr .total_price").prop("name", function () {
+		        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
+				});
+		        
+		        $("tr .seller_id").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].sellerId";
+				});
+		        
+		        $("tr .seller_prod_id").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+				});
+		        
+		        $("tr .quantity").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].quantity";
+				});
+		        
+		        $("tr .item_price").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].itemPrice";
+				});
+		        
+		        $("tr .price").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].price";
+				});
+		        
+		        $("tr .prod_units").prop("id", function () {
+		        	return "basket["+($(this).closest('tr').index())+"].prodUnits";
+				});
+		        
+		        $("tr .total_price").prop("id", function () {
+		        	return "basket["+(($(this).closest('tr').index())-1)+"].totalPrice";
+				}); 
+		});
 	});
 </script>
 </head>
@@ -40,15 +118,30 @@
 	</div>
 	
 	<div class="container upload">
+	<div class="row" align="center">
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
 			<div class="row">
-				<table class="table table-bordered" th:if="${cart !=null and !cart.empty}">
+				<table class="table table-bordered" th:if="${cart !=null and !cart.empty}" id="cart">
+				<thead>
+				<tr>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>Per Unit Cost</th>
+				<th>Cost</th>
+				<th>Remove</th>
+				</tr>
+				</thead>
+				<tbody>
 					<div th:each="cartObj,rowStat : ${cart}">
 						<tr th:if="${cartObj.addToCart}">
 						
 							<td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control seller_id" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].sellerId'}"
 							th:id="${'basket['+__${rowStat.index}__+'].sellerId'}"
 							th:text="${cartObj.sellerId}" 
@@ -56,7 +149,7 @@
 							</td>
 							
 							<td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control seller_prod_id" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
 							th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
 							th:text="${cartObj.sellerProdId}" 
@@ -64,14 +157,13 @@
 							</td>
 							
 							<td th:text="${cartObj.name}"></td>
-							<td><input type="number" class="form-control" size="10" id="quantity" th:value="${cartObj.quantity} " /> 
-							<span th:text="${cartObj.prodUnits}"></span></td>
 							
+							<td  th:text="${cartObj.quantity} + ${cartObj.prodUnits}"></td>
 							<td  th:text="${cartObj.price}"></td>
 							<td  th:text="${cartObj.itemPrice}"></td>
 							
 							<td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control item_price" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].itemPrice'}"
 							th:id="${'basket['+__${rowStat.index}__+'].itemPrice'}"
 							th:text="${cartObj.itemPrice}" 
@@ -79,7 +171,7 @@
 							</td>
 							
 							<td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control price" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].price'}"
 							th:id="${'basket['+__${rowStat.index}__+'].price'}"
 							th:text="${cartObj.price}" 
@@ -87,7 +179,7 @@
 							</td>
 							
 							<td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control prod_units" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].prodUnits'}"
 							th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
 							th:text="${cartObj.prodUnits}" 
@@ -95,40 +187,48 @@
 							</td>
 							
 						    <td hidden="hidden">
-							<input type="text" class="form-control" size= "200" 
+							<input type="text" class="form-control quantity" size= "200" 
 							th:name="${'basket['+__${rowStat.index}__+'].quantity'}"
 							th:id="${'basket['+__${rowStat.index}__+'].quantity'}"
 							th:text="${cartObj.quantity}" 
 							th:value="${cartObj.quantity}" />
 							</td>
 							
+							<td class="removeItem">  <a href="#" class="remove_item"><span class="glyphicon glyphicon-remove"></span></a>
+					        </td>
 						</tr>
 						<tr th:if="${rowStat.index >= rowStat.size-1}">
-						<td></td>
-						<td></td>
-						<td  th:text="'Total Price'"></td>
-						<td  th:text="'Rs.' + ${cartObj.totalPrice}"></td>
-								<td hidden="hidden">
-								<input type="text" class="form-control" size= "200" 
-								th:name="${'basket['+__${rowStat.index}__+'].totalPrice'}"
-								th:id="${'basket['+__${rowStat.index}__+'].totalPrice'}"
-								th:text="${cartObj.totalPrice}" th:value="${cartObj.totalPrice}" />
-								</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td th:text="'Total Cost '"></td>
+							<td  class="total_display" th:text="'Rs.' + ${cartObj.totalPrice}"></td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control total_price" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].totalPrice'}"
+							th:id="${'basket['+__${rowStat.index}__+'].totalPrice'}"
+							th:text="${cartObj.totalPrice}" th:value="${cartObj.totalPrice}" />
+							</td>
 						</tr>
 					</div>
+					
 					<tr>
-						<div class="hero-unit">
-							<h3>
-								<input type="submit" id="buy" class="btn btn-info" value="Place Order"></input>
-							</h3>
-						</div>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+								<td>
+								<input type="submit" id="buy" class="btn btn-info btn-lg" value="Place Order"></input>
+							</td>
 					</tr>
+					</tbody>
 				</table>
 			</div>
 		</form>
 	</div>
-
-	<br/><br/><br/>
+</div>
+	<br/><br/><br/><br/>
 	
 	<footer class="blog-footer">
 	      <p>
