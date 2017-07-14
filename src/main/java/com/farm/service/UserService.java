@@ -2,17 +2,21 @@ package com.farm.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
-import com.farm.model.User;
+import com.farm.entity.User;
+
+
 
 @Service
 public class UserService {
@@ -20,7 +24,7 @@ public class UserService {
     private JdbcTemplate jdbcTemplate;
 	
 	
-    public void create(final User user) 
+    public void create(final com.farm.model.User user) 
     {
         final String sql = "INSERT INTO user (name,address,contact,lat,lon,username,password)values(?,?,?,?,?,?,?)";
  
@@ -54,4 +58,38 @@ public class UserService {
         user.setuId(newUserId);
         return user;*/
     }
+    
+    public User getUser(String userName){
+		
+		 return jdbcTemplate.queryForObject("SELECT * FROM user where username =?",new Object[]  {userName},new RowMapper<User>(){
+	            @Override
+	            public User mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	User user = new User();
+	            	user.setLat(rs.getBigDecimal("lat"));
+	            	user.setLon(rs.getBigDecimal("lon"));
+	            	user.setAddress(rs.getString("address"));
+	            	user.setName(rs.getString("name"));
+	            	user.setuPhoneNo(rs.getString("contact"));
+	            	return user;
+	            }
+	        });
+	}
+	
+	public User getUserById(String userId){
+		
+		 return jdbcTemplate.queryForObject("SELECT * FROM user where uid =?",new Object[]  {userId},new RowMapper<User>(){
+	            @Override
+	            public User mapRow(ResultSet rs, int rowNum)throws SQLException {
+	            	User user = new User();
+	            	user.setLat(rs.getBigDecimal("lat"));
+	            	user.setLon(rs.getBigDecimal("lon"));
+	            	user.setAddress(rs.getString("address"));
+	            	user.setName(rs.getString("name"));
+	            	user.setuPhoneNo(rs.getString("contact"));
+	            	return user;
+	            }
+	        });
+	}
+	
+	
 }

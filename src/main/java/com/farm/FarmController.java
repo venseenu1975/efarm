@@ -8,8 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,7 +16,6 @@ import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,8 +35,6 @@ import com.farm.service.FarmService;
 import com.farm.service.ProductService;
 import com.farm.service.UserService;
 import com.farm.util.FarmUtil;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 
 @Controller

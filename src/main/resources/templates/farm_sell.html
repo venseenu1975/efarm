@@ -13,6 +13,7 @@
 
 <body>
 <div th:replace="fragments/header :: header"></div>
+
 <div class="blog-header">
       <div class="container">
         <h6 class="blog-title w3-myfont">Sell Your Product Here</h6>
@@ -20,110 +21,122 @@
       </div>
 </div>
 
-	<form th:object="${farm}" method="post" enctype="multipart/form-data">
-		<h4 th:text="${msg}"></h4>
-		<div class="container upload">
-			<div class="row">
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Category:'"></span> 
-						<select id="category" th:field="*{category}">
-						<option value="">Select</option>
-						<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
-						</select>
-					</h3>
-				</div>
-
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product:'"></span> 
-						<select id="product" name="product" th:field="*{prodId}">
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<form th:object="${farm}" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<h4 th:text="${msg}"></h4>
+					
+					<div class="form-group">
+					    <label class="col-md-4 control-label"><span th:text="'Product Category:'"></span> </label>  
+						<div class="col-md-8">
+							<select id="category" th:field="*{category}" class="form-control">
 							<option value="">Select</option>
-							<option th:each="p : ${products}" th:value="${p.prodId}" th:text="${p.prodName}"></option>
-						</select>
-					</h3>
-				</div>
-				<div class="hero-unit" style="display:none;">
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
-					</h3>
-				</div>
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Description:'"></span>
-						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{prodDesc}" />
-					</h3>
-				</div>
+							<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
+							</select>
+						</div>
+					</div>
 
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Delivery Mode:'"></span> 
-						<select id="prodDel" th:field="*{prodDeliveryMode}">
-							<option th:value="'Self Service'" th:text="'Self Service'">Fruits</option>
-							<option th:value="'Home Delivery'" th:text="'Home Delivery'">Vegetables</option>
-						</select>
-					</h3>
-				</div>
-
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Quantity:'"></span> 
-						<input type="number" class="form-control" size= "10" id="prodQuantity" th:field="*{prodQuantity}" />
-					</h3>
-				</div>
-				
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Units:'"></span> 
-						<select id="product" name="product" th:field="*{prodUnits}">
-							<option th:value="'0'" th:text="'Select'">Select</option>
-							<option th:value="'Kg'" th:text="'Kg'">Dairy</option>
-							<option th:value="'Litres'" th:text="'Litres'">Vegetables</option>
-							<option th:value="'Pieces'" th:text="'Pieces'">Fruits</option>
-						</select>
-					</h3>
-				</div>
-				
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Price:'"></span> 
-						<input type="number" class="form-control" size= "20"  id="prodPrice" th:field="*{prodPrice}" />
-					</h3>
-				</div>
-
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Expiry:'"></span>
-						<div class="input-group date" data-provide="datepicker">
-							<input type="text" class="form-control" id="date" size= "100" th:name="prodExpiry" th:field="*{prodExpiry}"></input>
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-th"></span>
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Product:'"></span></label>
+						<div class="col-md-8">
+							<select id="product" name="product" th:field="*{prodId}" class="form-control">
+								<option value="">Select</option>
+								<option th:each="p : ${products}" th:value="${p.prodId}" th:text="${p.prodName}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						 <label class="col-md-4 control-label"><span th:text="'Product Name:'"></span></label>
+						 <div class="col-md-8">
+						 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
+						 </div>
+					</div>
+					
+					<div class="form-group">	
+						<label class="col-md-4 control-label"><span th:text="'Product Description:'"></span></label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{prodDesc}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Product Delivery Mode:'"></span></label>
+						<div class="col-md-8">
+							<select id="prodDel" th:field="*{prodDeliveryMode}" class="form-control">
+								<option th:value="'Self Service'" th:text="'Self Service'">Fruits</option>
+								<option th:value="'Home Delivery'" th:text="'Home Delivery'">Vegetables</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Product Quantity:'"></span></label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" size= "10" id="prodQuantity" th:field="*{prodQuantity}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Units:'"></span></label>
+						<div class="col-md-8">
+							<select id="product" name="product" th:field="*{prodUnits}" class="form-control">
+								<option th:value="'0'" th:text="'Select'">Select</option>
+								<option th:value="'Kg'" th:text="'Kg'">Dairy</option>
+								<option th:value="'Litres'" th:text="'Litres'">Vegetables</option>
+								<option th:value="'Pieces'" th:text="'Pieces'">Fruits</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Product Price:'"></span></label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" size= "20"  id="prodPrice" th:field="*{prodPrice}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Expiry:'"></span></label>
+						<div class="col-md-8">
+							<div class="input-group date" data-provide="datepicker">
+								<input type="text" class="form-control" id="date" size= "100" th:name="prodExpiry" th:field="*{prodExpiry}" />
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
+								</div>
 							</div>
 						</div>
-					</h3>
-				</div>
-
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Image:'"></span> 
-						<input type="file" name="imgFile" th:field="*{imgFile}" /><br />
-						<br /> <input type="submit" id="sell" class="btn btn-info" value="Submit"></input>
-					</h3>
-				</div>
-
-			</div>
-		</div>
-	</form>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label"><span th:text="'Product Image:'"></span></label>
+						<div class="col-md-8">
+							<input type="file" name="imgFile" th:field="*{imgFile}" /> <!-- class="form-control" -->
+						</div>
+					</div>
+					
+					<div class="form-group">        
+      					<div class="col-sm-offset-6 col-sm-6">
+							<input type="submit" id="sell" class="btn btn-info" value="Submit" />
+						</div>
+					</div>
+				
+				</form>
+			</div> <!-- ./col-sm-6 -->
+			
+			<div class="col-sm-4"></div>
+	</div> <!-- ./row -->
+</div> <!-- ./container upload -->
 	
-	<footer class="blog-footer">
-      <p>
-      	<div th:replace="fragments/footer :: footer"></div>
-      </p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-	</footer>
+<footer class="blog-footer">
+     <p>
+     	<div th:replace="fragments/footer :: footer"></div>
+     </p>
+     <p>
+       <a href="#">Back to top</a>
+     </p>
+</footer>
 </body>
 <script>
 	$(document).ready(function() {
