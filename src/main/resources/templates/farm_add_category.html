@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>E-Farm</title>
+ <div th:replace="fragments/header :: header-css"/>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
+
+
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" th:href="@{/css/blog.css}" />
+
+
+
+<script>
+	$(document).ready(function() {
+		
+		$('#Search').click(function() {
+			document.forms[0].action = "/search";
+			document.forms[0].submit();
+		});
+		
+	    $("#date").datetimepicker({
+	        format: "mm dd yyyy - hh:ii"
+	    });
+	});
+</script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title w3-myfont">Add New Category to the Product Inventory</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
+	</div>
+	
+	<div class="container upload">
+	<form th:object="${category}" method="post" enctype="multipart/form-data">
+		<h4 th:text="${msg}"></h4>
+		<div class="container upload">
+			<div class="row">
+				<div class="hero-unit" >
+					<h3>
+						<span th:text="'Category Name:'"></span>
+						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{name}" />
+					</h3>
+				</div>
+
+				<div class="hero-unit" >
+					<h3>
+						<h3>
+						<span th:text="'Category Description:'"></span>
+						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{description}" />
+					</h3>
+					</h3>
+				</div>
+				
+				<div class="hero-unit">
+					<h3>
+						<br/>
+						<br /> <input type="submit" id="addCategory" class="btn btn-info" value="AddCategory"></input>
+					</h3>
+				</div>
+
+			</div>
+		</div>
+	</form>
+	
+	</div>
+	
+	<br/><br/><br/>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
+	
+</body>
+<script>
+	$(document).ready(function() {
+		$('#addCategory').click(function() {
+			document.forms[0].action = "/addCategory";
+			document.forms[0].submit();
+		});
+	});
+</script>
+</html>
