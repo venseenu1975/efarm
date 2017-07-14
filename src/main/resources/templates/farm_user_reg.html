@@ -11,90 +11,97 @@
 </head>
 
 <body>
-<form  th:object="${user}"  method="post">
-<div th:replace="fragments/header :: header"></div>
-<div class="blog-header">
-      <div class="container">
-        <h6 class="blog-title w3-myfont">New User Registration</h6>
-        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
-      </div>
-</div>
-	<div class="container">
-		<div id="examples">
-			<div class="form-horizontal">
 
-				<div class="form-group">
-					<label class="col-sm-1 control-label">Name:</label>
-
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="name" th:field="*{uName}" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-1 control-label">Location:</label>
-
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="us2-address"  th:field="*{uAddress}"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-1 control-label">Contact:</label>
-
-					<div class="col-sm-5">
-						<input type="text" class="form-control"  th:field="*{uPhoneNo}" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-1 control-label">User Name:</label>
-
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="name" th:field="*{uAliasName}" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-1 control-label">Password:</label>
-
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="name" th:field="*{uPass}" />
-					</div>
-				</div>
-				
-				<!-- <div id="us2" style="width: 550px; height: 400px;"></div> -->
-				<div id="us2" style="width: 550px; height: 400px;display:none"></div>
-				
-				<div class="clearfix">&nbsp;</div>
-				
-				<div class="m-t-small" style="display:none;">
-					<label class="p-r-small col-sm-1 control-label">Lat.:</label>
-
-					<div class="col-sm-1">
-						<input type="text" class="form-control" style="width: 110px" id="us2-lat" th:field="*{uLat}" />
-					</div>
-					<label class="p-r-small col-sm-1 control-label">Long.:</label>
-
-					<div class="col-sm-1">
-						<input type="text" class="form-control" style="width: 110px" id="us2-lon" th:field="*{uLong}" />
-					</div>
-				</div>
-				
-				<div class="clearfix"></div>
-				<input type="submit" id="register" class="btn btn-info" value="Register"></input>
-			</div>
-		</div>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title w3-myfont">New User Registration</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
 	</div>
-</form> <br/><br/>
-	<footer class="blog-footer">
-	      <p>
-	      	<div th:replace="fragments/footer :: footer"></div>
-	      </p>
-	      <p>
-	        <a href="#">Back to top</a>
-	      </p>
-	</footer>
+	
+	<div class="container">
+		<form  th:object="${user}"  method="post">
+			<div id="examples">
+				<div class="form-horizontal">
+	
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Name:</label>
+	
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="name" th:field="*{uName}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Location:</label>
+	
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="us2-address"  th:field="*{uAddress}"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Contact:</label>
+	
+						<div class="col-sm-5">
+							<input type="text" class="form-control"  th:field="*{uPhoneNo}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-1 control-label">User Name:</label>
+	
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="name" th:field="*{uAliasName}" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Password:</label>
+	
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="name" th:field="*{uPass}" />
+						</div>
+					</div>
+					
+					<!-- <div id="us2" style="width: 550px; height: 400px;"></div> -->
+					<div id="us2" style="width: 550px; height: 400px;display:none"></div>
+					
+					<div class="clearfix">&nbsp;</div>
+					
+					<div class="m-t-small" style="display:none;">
+						<label class="p-r-small col-sm-1 control-label">Lat.:</label>
+	
+						<div class="col-sm-1">
+							<input type="text" class="form-control" style="width: 110px" id="us2-lat" th:field="*{uLat}" />
+						</div>
+						<label class="p-r-small col-sm-1 control-label">Long.:</label>
+	
+						<div class="col-sm-1">
+							<input type="text" class="form-control" style="width: 110px" id="us2-lon" th:field="*{uLong}" />
+						</div>
+					</div>
+					
+					<div class="clearfix"></div>
+					<div class="col-sm-6" align="center">
+						<input type="submit" id="register" class="btn btn-info btn-lg" value="Register"></input>
+					</div>
+				</div>
+			</div>
+		</form>
+</div> <br/>
+
+<footer class="blog-footer">
+      <p>
+      	<div th:replace="fragments/footer :: footer"></div>
+      </p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+</footer>
+
 </body>
 <script>
 $('#register').click( function(){

@@ -22,8 +22,6 @@
 			document.forms[0].submit();
 		});
 		$('#buy').click(function() {
-			//alert($("#product option:selected" ).text());
-			//$("#prodName").val($("#product option:selected" ).text());
 			document.forms[0].action = "/buyBasket";
 			document.forms[0].submit();
 		});
@@ -42,6 +40,7 @@
 	</div>
 	
 	<div class="container upload">
+	<div class="row" align="center">
 		<form th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
@@ -68,7 +67,17 @@
 							<td th:text="${cartObj.name}"></td>
 							<td><input type="number" class="form-control" size="10" id="quantity" th:value="${cartObj.quantity} " /> 
 							<span th:text="${cartObj.prodUnits}"></span></td>
+							
 							<td  th:text="${cartObj.price}"></td>
+							<td  th:text="${cartObj.itemPrice}"></td>
+							
+							<td hidden="hidden">
+							<input type="text" class="form-control" size= "200" 
+							th:name="${'basket['+__${rowStat.index}__+'].itemPrice'}"
+							th:id="${'basket['+__${rowStat.index}__+'].itemPrice'}"
+							th:text="${cartObj.itemPrice}" 
+							th:value="${cartObj.itemPrice}" />
+							</td>
 							
 							<td hidden="hidden">
 							<input type="text" class="form-control" size= "200" 
@@ -97,6 +106,7 @@
 						</tr>
 						<tr th:if="${rowStat.index >= rowStat.size-1}">
 						<td></td>
+						<td></td>
 						<td  th:text="'Total Price'"></td>
 						<td  th:text="'Rs.' + ${cartObj.totalPrice}"></td>
 								<td hidden="hidden">
@@ -110,7 +120,7 @@
 					<tr>
 						<div class="hero-unit">
 							<h3>
-								<input type="submit" id="buy" class="btn btn-info" value="Place Order"></input>
+								<input type="submit" id="buy" class="btn btn-info btn-lg" value="Place Order"></input>
 							</h3>
 						</div>
 					</tr>
@@ -118,8 +128,8 @@
 			</div>
 		</form>
 	</div>
-
-	<br/><br/><br/>
+</div>
+	<br/><br/><br/><br/>
 	
 	<footer class="blog-footer">
 	      <p>
@@ -129,6 +139,7 @@
 	        <a href="#">Back to top</a>
 	      </p>
 	</footer>
+	
 </body>
 
 </html>

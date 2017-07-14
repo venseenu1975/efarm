@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
-    <link rel="stylesheet" th:href="@{/css/blog.css}" />
+    <div th:replace="fragments/header :: header-css"></div>
+    <link rel="stylesheet" th:href="@{/css/blog.css}" href="../../css/blog.css"/>
     
 </head>
 <body>
@@ -18,7 +18,7 @@
 
 <div class="container">
 
-<img src="./images/emarket.gif" class="img-rounded" alt="Cinque Terre"  align="centre" width="600" height="300"> </img>
+<img th:src="@{./images/emarket.gif}" class="img-rounded" alt="E-Organic Market"  align="centre" width="600" height="300"> </img>
     <div class="starter-template">
     <!-- hello width="620" height="360"-->
   	<!-- <h1>Spring Boot Web Thymeleaf + Spring Security</h1>
