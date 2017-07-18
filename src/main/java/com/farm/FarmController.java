@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,7 +44,7 @@ import com.farm.util.FarmUtil;
 
 
 @Controller
-/*@SessionAttributes("farm")*/
+@SessionAttributes({"cart","farmProductList"})
 public class FarmController {
 	
 	
@@ -118,8 +120,13 @@ public class FarmController {
 	}
 	
 	@RequestMapping("/search")
-	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm,HttpSession httpSession) throws ParseException {
-		Map<Integer,Farm> farmMap=new HashMap<>();
+	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException {
+		 Map<Integer,Farm> farmMap=null;
+		 farmMap=(Map<Integer, Farm>) model.get("farmProductList");
+		 if (!(farmMap != null && !farmMap.isEmpty())){
+			 farmMap=new HashMap<>();
+		 }
+		 
 		ModelAndView mav = new ModelAndView("farm_search");
 		String base64Encoded;
 		List<Farm> farmList = new ArrayList<>();
@@ -165,18 +172,22 @@ public class FarmController {
 				}
 			}
 		}
-		httpSession.setAttribute("farmProductList", farmMap);
+		model.addAttribute("farmProductList", farmMap);
 		mav.addObject("farmList", farmList);
 		return mav;
 	}
 	
     @RequestMapping("/addToBasket")
-	public String addToBasket(Map<String, Object> model,@ModelAttribute Farm farm,HttpSession httpSession) {
-    	Map<Integer,Farm> farmMap=(Map<Integer, Farm>) httpSession.getAttribute("farmProductList");
-    	System.out.println("farm basket >> "+httpSession.getAttribute("farmProductList"));
+	public String addToBasket(ModelMap model,@ModelAttribute Farm farmObj) {
+    	Map<Integer,Farm> farmMap=(Map<Integer, Farm>) model.get("farmProductList");
+    	System.out.println("basket map keys ----"+farmMap);
+    	if(null !=model.get("cart")){
+    	farmObj.getBasket().addAll((List<BasketObject>) model.get("cart"));
+    	}
+    	System.out.println("farm basket >> "+farmObj.getBasket());
     	BigDecimal total= BigDecimal.ZERO;
-    	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
-    		for (Iterator<BasketObject> iterator = farm.getBasket().iterator(); iterator.hasNext(); ) {
+    	if(farmObj.getBasket() !=null && !farmObj.getBasket().isEmpty()){
+    		for (Iterator<BasketObject> iterator = farmObj.getBasket().iterator(); iterator.hasNext(); ) {
     			BasketObject basketObject = iterator.next();
     		    if ( basketObject.getAddToCart() !=null && (basketObject.getAddToCart())) {
     		  
@@ -189,7 +200,6 @@ public class FarmController {
         			basketObject.setName(farmMap.get(basketObject.getSellerProdId()).getProdName());
         			basketObject.setPrice(farmMap.get(basketObject.getSellerProdId()).getProdPrice());
         			basketObject.setProdUnits(farmMap.get(basketObject.getSellerProdId()).getProdUnits());
-        			//basketObject.setSellerId(farmMap.get(basketObject.getSellerProdId()).getSellerId());
         			
         		  	System.out.println("basket name >> "+farmMap.get(basketObject.getSellerProdId()).getProdName());
         			System.out.println("basket Price >> "+farmMap.get(basketObject.getSellerProdId()).getProdPrice());
@@ -199,22 +209,31 @@ public class FarmController {
         			
         			basketObject.setItemPrice(FarmUtil.calculateCost(basketObject.getQuantity(), farmMap.get(basketObject.getSellerProdId()).getProdPrice()));
         			total=total.add(basketObject.getItemPrice());
+        			basketObject.setTotalPrice(total);
+         		    System.out.println("basket tot Price >> "+basketObject.getTotalPrice());
     		    }
     		    else{
     		    	iterator.remove();
     		    }
-    		    basketObject.setTotalPrice(total);
-    		    System.out.println(basketObject.getTotalPrice());
+    		   
     		}
-    		model.put("cart", farm.getBasket());
+    		model.addAttribute("cart", farmObj.getBasket());
     	}
 		return "farm_checkout";
 	}
     
     @RequestMapping("/buyBasket")
    	public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,HttpSession httpSession) {
-    	Map<Integer,Farm> farmMap=(Map<Integer, Farm>) httpSession.getAttribute("farmProductList");
-    	BigDecimal total= BigDecimal.ZERO;
+    	Map<Integer, BasketObject> farmMap=null;
+    	if(null !=model.get("cart")){
+    		List<BasketObject> list=(List<BasketObject>) model.get("cart");
+        	 farmMap = list.stream().collect(Collectors.toMap(BasketObject::getSellerProdId, item -> item));
+        	 farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
+        }
+    	
+    	
+    	
+/*    	BigDecimal total= BigDecimal.ZERO;
        	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
        		System.out.println("farm basket total price >> "+farm.getBasket().get(farm.getBasket().size()-1).getTotalPrice());
        		int orderId=farmService.createOrder(farm.getBasket().get(farm.getBasket().size()-1).getTotalPrice());
@@ -238,7 +257,7 @@ public class FarmController {
        		
        		model.put("order_id", orderId);
        		model.put("order", farmService.getOrderSummary(orderId));
-       	}
+       	}*/
    		return "farm_order";
    	}
     
