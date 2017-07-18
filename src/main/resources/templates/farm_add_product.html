@@ -25,52 +25,59 @@
 	      </div>
 	</div>
 	
-	<div class="container upload">
-	<form th:object="${product}" method="post" enctype="multipart/form-data">
-		<h4 th:text="${msg}"></h4>
-		<div class="container upload">
-			<div class="row">
-			<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Category:'"></span> 
-						<select id="category" th:field="*{categoryId}">
-						<option value="">Select</option>
-						<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
-						</select>
-					</h3>
-				</div>
-				<div class="hero-unit" >
-					<h3>
-						<span th:text="'Product Name:'"></span>
-						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{name}" />
-					</h3>
-				</div>
-
-				<div class="hero-unit" >
-					<h3>
-						<h3>
-						<span th:text="'Product Description:'"></span>
-						 <input type="text" class="form-control" size= "200" id="prodDesc" th:field="*{description}" />
-					</h3>
-					</h3>
-				</div>
+	<br/>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
 				
-				<div class="hero-unit">
-					<h3>
-						<span th:text="'Product Image:'"></span> 
-						<input type="file" name="imgFile" th:field="*{imgFile}" /><br />
-						<br /> <input type="submit" id="addProduct" class="btn btn-info" value="AddProduct"></input>
-					</h3>
-				</div>
-				
+				<form th:object="${product}" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<h4 th:text="${msg}"></h4>
+					
+						<div class="form-group">
+						    <label class="col-md-4 control-label"><span th:text="'Product Category:'"></span>  </label>  
+							<div class="col-md-8">
+								<select id="category" th:field="*{categoryId}" class="form-control">
+								<option value="">Select</option>
+								<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							 <label class="col-md-4 control-label"><span th:text="'Product Name:'"></span></label>
+							 <div class="col-md-8">
+							 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{name}" />
+							 </div>
+						</div>
+					
+						<div class="form-group">	
+							<label class="col-md-4 control-label"><span th:text="'Product Description:'"></span></label>
+							<div class="col-md-8">
+								<input type="text" class="form-control" size= "100" id="prodDesc" th:field="*{description}" />
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-4 control-label"><span th:text="'Product Image:'"></span></label>
+							<div class="col-md-8">
+								<input type="file" name="imgFile" th:field="*{imgFile}" /> <!-- class="form-control" -->
+							</div>
+						</div>
+					
+						<div class="form-group">        
+	      					<div class="col-sm-offset-6 col-sm-6">
+								<input type="submit" id="addProduct" class="btn btn-info btn-lg" value="AddProduct" />
+							</div>
+						</div>
+						
+				</form>
 				
 			</div>
 		</div>
-	</form>
-	
 	</div>
 	
-	<br/><br/><br/>
+	<br/><br/><br/><br/>
 	
 	<footer class="blog-footer">
 	      <p>
