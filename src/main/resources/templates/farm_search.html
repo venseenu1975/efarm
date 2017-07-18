@@ -43,12 +43,26 @@
 					
 					<td hidden="hidden">
 					<input type="text" class="form-control" size= "200" 
+					th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+					th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+					th:text="${farmObj.prodId}" 
+					th:value="${farmObj.prodId}" />
+					</td>
+					
+					<td>
+					<select  th:field="*{basket[__${rowStat.index}__].quantity}" >
+					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
+					</select>
+					</td>
+					
+			<!-- 		<td hidden="hidden">
+					<input type="text" class="form-control" size= "200" 
 					th:name="${'basket['+__${rowStat.index}__+'].sellerId'}"
 					th:id="${'basket['+__${rowStat.index}__+'].sellerId'}"
 					th:text="${farmObj.sellerId}" 
 					th:value="${farmObj.sellerId}" />
-					</td>
-					
+					</td> 
+				
 					<td hidden="hidden">
 					<input type="text" class="form-control" size= "200" 
 					th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
@@ -65,10 +79,12 @@
 					th:value="${farmObj.prodName}" />
 					</td>
 					
-					<td>
-					<select  th:field="*{basket[__${rowStat.index}__].quantity}" >
-					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
-					</select>
+					<td hidden="hidden">
+					<input type="text" class="form-control" 
+					th:name="${'basket['+__${rowStat.index}__+'].price'}"
+					th:id="${'basket['+__${rowStat.index}__+'].price'}"
+					th:text="${farmObj.prodPrice}" 
+					th:value="${farmObj.prodPrice}" />
 					</td>
 					
 				    <td hidden="hidden">
@@ -77,17 +93,9 @@
 					th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
 					th:text="${farmObj.prodUnits}" 
 					th:value="${farmObj.prodUnits}" />
-					</td>
+					</td>-->
 					
-					<td colspan="3" rowspan="1" th:text="${farmObj.prodPrice}"></td>
-					
-					<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].price'}"
-					th:id="${'basket['+__${rowStat.index}__+'].price'}"
-					th:text="${farmObj.prodPrice}" 
-					th:value="${farmObj.prodPrice}" />
-					</td>
+					<td th:text="${farmObj.prodPrice}"></td>
 					
 					<td>  
 					<div class="checkbox checkbox-primary">

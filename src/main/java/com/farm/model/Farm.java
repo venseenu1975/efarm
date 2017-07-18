@@ -1,5 +1,6 @@
 package com.farm.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -8,8 +9,11 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
-
-public class Farm {
+public class Farm  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String productAltImg;
 	private Integer category;
 	MultipartFile imgFile;
@@ -32,8 +36,16 @@ public class Farm {
 	private BigDecimal prodPrice;
 	
 	List<BasketObject> basket =new ArrayList<>();
+	private Boolean addToCart;
 	
-	
+
+	public Boolean getAddToCart() {
+		return addToCart;
+	}
+
+	public void setAddToCart(Boolean addToCart) {
+		this.addToCart = addToCart;
+	}
 
 	public Farm() {
 		super();
