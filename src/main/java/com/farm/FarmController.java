@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.farm.entity.SellerProduct;
@@ -237,7 +238,7 @@ public class FarmController {
 	}
     
     @RequestMapping("/buyBasket")
-    public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,HttpSession httpSession) {
+    public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,SessionStatus status) {
     	Map<String, BasketObject> farmMap=null;
     	if(null !=model.get("cart")){
     		List<BasketObject> list=(List<BasketObject>) model.get("cart");
@@ -268,10 +269,10 @@ public class FarmController {
     				basketObject.setSellerProdId(prodId);
     			}
     			farmService.createOrderSummary(farm);
-
+    			
     			model.put("order_id", orderId);
     			model.put("order", farmService.getOrderSummary(orderId));
-
+    			status.setComplete();
     		}
     	}
 

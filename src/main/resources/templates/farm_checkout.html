@@ -18,17 +18,17 @@
 			//$(".remove_item").on("click", function(e){
 			   // alert("hiiii");
 			    //alert( $(this).closest("tr").find(".item_price").val());
-			    var price=$(this).closest("tr").find(".item_price").val();
+			    var price=$(this).closest("tr").find(".item_price_display").text();
 			    var length= $("#cart tbody > tr").length - 2;
 			    //alert( length);
 			    if(length == 1){
 			    	$("#cart").hide();
 			    	return false;
 			    }
-			    var total=$('#cart tbody tr:eq('+length+')').find('.total_price').val();
+			    var total=$('#cart tbody tr:eq('+length+')').find('.total_display').text();
 			    var finalTotal=total-price;
-			    //alert( length);
-			    //alert(finalTotal);
+			    //alert( "total "+total);
+			    //alert("finalTotal  " +finalTotal);
 			    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
 			/*     $('#cart tbody tr:eq('+length+')').find('.total_price').prop("value", function () {
 		        	return finalTotal;
@@ -36,11 +36,11 @@
 			    $(this).closest("tr").remove();
 			        
 			        $("tr .seller_prod_id").prop("name", function () {
-			        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+			        	return "basket["+($(this).closest('tr').index())+"].addToCartprodId";
 					});
 			        
 			        $("tr .seller_prod_id").prop("id", function () {
-			        	return "basket["+($(this).closest('tr').index())+"].sellerProdId";
+			        	return "basket["+($(this).closest('tr').index())+"].addToCartprodId";
 					});
 			});
 	});
@@ -83,7 +83,7 @@
 							<td th:text="${cartObj.name}"></td>
 							<td  th:text="${cartObj.quantity} + ${cartObj.prodUnits}"></td>
 							<td  th:text="${cartObj.price}"></td>
-							<td  th:text="${cartObj.itemPrice}"></td>
+							<td  class="item_price_display" th:text="${cartObj.itemPrice}"></td>
 							
 							<td hidden="hidden">
 							<input type="text" class="form-control seller_prod_id" size= "200" 
@@ -148,8 +148,8 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td th:text="'Total Cost '"></td>
-							<td  class="total_display" th:text="'Rs.' + ${cartObj.totalPrice}"></td>
+							<td th:text="'Total Cost in Rs.'"></td>
+							<td  class="total_display" th:text="${cartObj.totalPrice}"></td>
 							
 				<!-- 			<td hidden="hidden">
 							<input type="text" class="form-control total_price" size= "200" 
