@@ -7,7 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,12 +22,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -47,6 +52,12 @@ import com.farm.util.FarmUtil;
 @SessionAttributes({"cart","farmProductList"})
 public class FarmController {
 	
+	@InitBinder
+	public void bindingPreparation(WebDataBinder binder) {
+	  DateFormat dateFormat = new SimpleDateFormat("MMM d, YYYY");
+	  CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+	  binder.registerCustomEditor(Date.class, orderDateEditor);
+	}
 	
 	@Autowired
 	FarmService farmService;
@@ -186,11 +197,11 @@ public class FarmController {
     	}
     	System.out.println("farm basket >> "+farmObj.getBasket());
     	BigDecimal total= BigDecimal.ZERO;
+    	int count=0;
     	if(farmObj.getBasket() !=null && !farmObj.getBasket().isEmpty()){
     		for (Iterator<BasketObject> iterator = farmObj.getBasket().iterator(); iterator.hasNext(); ) {
     			BasketObject basketObject = iterator.next();
     		    if ( basketObject.getAddToCart() !=null && (basketObject.getAddToCart())) {
-    		  
         			System.out.println("------------------------------------------------------");
         			System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
         			System.out.println("basket quantity >> "+basketObject.getQuantity());
@@ -200,6 +211,7 @@ public class FarmController {
         			basketObject.setName(farmMap.get(basketObject.getSellerProdId()).getProdName());
         			basketObject.setPrice(farmMap.get(basketObject.getSellerProdId()).getProdPrice());
         			basketObject.setProdUnits(farmMap.get(basketObject.getSellerProdId()).getProdUnits());
+        			basketObject.setSellerId(farmMap.get(basketObject.getSellerProdId()).getSellerId());
         			
         		  	System.out.println("basket name >> "+farmMap.get(basketObject.getSellerProdId()).getProdName());
         			System.out.println("basket Price >> "+farmMap.get(basketObject.getSellerProdId()).getProdPrice());
@@ -211,6 +223,8 @@ public class FarmController {
         			total=total.add(basketObject.getItemPrice());
         			basketObject.setTotalPrice(total);
          		    System.out.println("basket tot Price >> "+basketObject.getTotalPrice());
+         		    basketObject.setAddToCartprodId(basketObject.getSellerProdId()+"_"+count++);
+         		    System.out.println("prod new  id  >> "+basketObject.getAddToCartprodId());
     		    }
     		    else{
     		    	iterator.remove();
@@ -223,43 +237,46 @@ public class FarmController {
 	}
     
     @RequestMapping("/buyBasket")
-   	public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,HttpSession httpSession) {
-    	Map<Integer, BasketObject> farmMap=null;
+    public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,HttpSession httpSession) {
+    	Map<String, BasketObject> farmMap=null;
     	if(null !=model.get("cart")){
     		List<BasketObject> list=(List<BasketObject>) model.get("cart");
-        	 farmMap = list.stream().collect(Collectors.toMap(BasketObject::getSellerProdId, item -> item));
-        	 farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
-        }
-    	
-    	
-    	
-/*    	BigDecimal total= BigDecimal.ZERO;
-       	if(farm.getBasket() !=null && !farm.getBasket().isEmpty()){
-       		System.out.println("farm basket total price >> "+farm.getBasket().get(farm.getBasket().size()-1).getTotalPrice());
-       		int orderId=farmService.createOrder(farm.getBasket().get(farm.getBasket().size()-1).getTotalPrice());
-       		System.out.println("Ur order id is >>"+orderId);
-       		for (BasketObject basketObject:farm.getBasket()) {
-       				System.out.println("basket seller prod id  >> "+basketObject.getSellerProdId());
-       				System.out.println("---------------------From map---------------------------------");
-           			System.out.println("basket quantity >> "+farmMap.get(basketObject.getSellerProdId()).getProdQuantity());
-           			System.out.println("basket Item Price >> "+farmMap.get(basketObject.getSellerProdId()).getProdPrice());
-           			System.out.println("basket Price >> "+farmMap.get(basketObject.getSellerProdId()).getProdPrice());
-           			System.out.println("basket prod units >> "+farmMap.get(basketObject.getSellerProdId()).getProdUnits());
-           			System.out.println("basket seller  id  >> "+farmMap.get(basketObject.getSellerProdId()).getSellerId());
-           			basketObject.setItemPrice(FarmUtil.calculateCost(basketObject.getQuantity(), farmMap.get(basketObject.getSellerProdId()).getProdPrice()));
-        			total=total.add(basketObject.getItemPrice());
-           			basketObject.setOrderId(orderId);
-           			System.out.println("basket total  price  >> "+basketObject.getTotalPrice());
-           			System.out.println("------------------------------------------------------");
-       		}
-       		
-       		farmService.createOrderSummary(farm);
-       		
-       		model.put("order_id", orderId);
-       		model.put("order", farmService.getOrderSummary(orderId));
-       	}*/
-   		return "farm_order";
-   	}
+    		if(list !=null && !list.isEmpty()){
+    			farmMap = list.stream().collect(Collectors.toMap(BasketObject::getAddToCartprodId, item -> item));
+    			farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
+
+    			System.out.println("farm basket total price >> "+list.get(list.size()-1).getTotalPrice());
+    			int orderId=farmService.createOrder(list.get(list.size()-1).getTotalPrice());
+    			System.out.println("Ur order id is >>"+orderId);
+    			for (BasketObject basketObject:farm.getBasket()) {
+    				int prodId=Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_")));
+    				System.out.println("basket seller prod id  >> "+Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_"))));
+    				System.out.println("---------------------From map---------------------------------");
+    				System.out.println("basket quantity >> "+farmMap.get(basketObject.getAddToCartprodId()).getQuantity());
+    				System.out.println("basket Item Price >> "+farmMap.get(basketObject.getAddToCartprodId()).getItemPrice());
+    				System.out.println("basket Price >> "+farmMap.get(basketObject.getAddToCartprodId()).getPrice());
+    				System.out.println("basket prod units >> "+farmMap.get(basketObject.getAddToCartprodId()).getProdUnits());
+    				System.out.println("basket seller  id  >> "+farmMap.get(basketObject.getAddToCartprodId()).getSellerId());
+    				System.out.println("basket total  price  >> "+basketObject.getTotalPrice());
+    				System.out.println("------------------------------------------------------");
+    				
+    				basketObject.setQuantity(farmMap.get(basketObject.getAddToCartprodId()).getQuantity());
+    				basketObject.setItemPrice(farmMap.get(basketObject.getAddToCartprodId()).getItemPrice());
+    				basketObject.setProdUnits(farmMap.get(basketObject.getAddToCartprodId()).getProdUnits());
+    				basketObject.setSellerId(farmMap.get(basketObject.getAddToCartprodId()).getSellerId());
+    				basketObject.setOrderId(orderId);
+    				basketObject.setSellerProdId(prodId);
+    			}
+    			farmService.createOrderSummary(farm);
+
+    			model.put("order_id", orderId);
+    			model.put("order", farmService.getOrderSummary(orderId));
+
+    		}
+    	}
+
+    	return "farm_order";
+    }
     
 	@RequestMapping("/admin/addCategory")
 	public String addCategory(ModelMap model,@ModelAttribute Category category) {

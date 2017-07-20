@@ -17,7 +17,16 @@ public class BasketObject {
 	private BigDecimal totalPrice;
 	private Integer orderId;
 	
+	private String addToCartprodId;
 	
+
+	public String getAddToCartprodId() {
+		return addToCartprodId;
+	}
+
+	public void setAddToCartprodId(String addToCartprodId) {
+		this.addToCartprodId = addToCartprodId;
+	}
 	public BigDecimal getItemPrice() {
 		return itemPrice;
 	}

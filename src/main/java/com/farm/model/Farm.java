@@ -34,10 +34,20 @@ public class Farm  implements Serializable{
 
 	private String prodUnits;
 	private BigDecimal prodPrice;
+	private String addToCartprodId;
+	
+
+	public String getAddToCartprodId() {
+		return addToCartprodId;
+	}
+
+	public void setAddToCartprodId(String addToCartprodId) {
+		this.addToCartprodId = addToCartprodId;
+	}
 	
 	List<BasketObject> basket =new ArrayList<>();
 	private Boolean addToCart;
-	
+
 
 	public Boolean getAddToCart() {
 		return addToCart;
