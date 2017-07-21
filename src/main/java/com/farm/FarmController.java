@@ -32,6 +32,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -230,6 +231,49 @@ public class FarmController {
     	}
 		return "farm_checkout";
 	}
+    
+    @RequestMapping("/removeItem/{id}")
+    public String removeItem(ModelMap model,@ModelAttribute Farm farm, @PathVariable("id") String sellerProdId) {
+    	BigDecimal newTotal= BigDecimal.ZERO;
+    	BigDecimal currTotal= BigDecimal.ZERO;
+    	BigDecimal currItemPrice= BigDecimal.ZERO;
+    	Map<String, BasketObject> farmMap=null;
+    	List<BasketObject> modifiedList=null;
+    	if(null !=model.get("cart")){
+    		List<BasketObject> list=(List<BasketObject>) model.get("cart");
+    		if(list !=null && !list.isEmpty()){
+    			
+    			//converted list to map
+    			farmMap = list.stream().collect(Collectors.toMap(BasketObject::getAddToCartprodId, item -> item));
+    			farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
+    			
+    			//get current removal element cost
+    			System.out.println("basket Item Price >> "+farmMap.get(sellerProdId).getItemPrice());
+    			currItemPrice=farmMap.get(sellerProdId).getItemPrice();
+    			
+    			//get total cost of basket
+    			System.out.println("farm basket total price >> "+list.get(list.size()-1).getTotalPrice());
+    			currTotal=list.get(list.size()-1).getTotalPrice();
+    			
+    			//remove curr item from map
+    			farmMap.remove(sellerProdId);
+    			farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
+    			
+    			//compute new total
+    			newTotal=currTotal.subtract(currItemPrice);
+    			
+    			//map to list
+    			modifiedList = new ArrayList(farmMap.values());
+    			
+    			//set new total
+    			System.out.println("farm basket new total price >> "+newTotal);
+    			modifiedList.get(modifiedList.size()-1).setTotalPrice(newTotal);
+    			System.out.println("farm basket list size >> "+modifiedList.size());
+    		}
+    	}
+    	model.addAttribute("cart", modifiedList);
+    	return "farm_checkout";
+    }
     
     @RequestMapping("/buyBasket")
     public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,SessionStatus status) {
