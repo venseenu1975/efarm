@@ -1,9 +1,12 @@
 package com.farm.util;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -77,4 +80,33 @@ public class FarmUtil {
     	totalCost = totalCost.add(itemCost);
     	return totalCost;
     }
+    
+    public static Properties getProperties() throws IOException {
+
+		System.out.println("Entering inside Utils.getConnectionProperties()");
+
+		Properties connectionProp = new Properties();
+		String propFileName = "efarm.properties";
+
+		InputStream input = FarmUtil.class.getClassLoader().getResourceAsStream(propFileName);
+
+		if (input == null) {
+			System.out.println("Could not find/read file: " + propFileName);
+
+		} else {
+
+			// load a properties file
+			try {
+				connectionProp.load(input);
+			} catch (IOException e) {
+
+				System.err.println("Could not load properties file: " + propFileName);
+				throw new IOException(e.getMessage(), e);
+
+			}
+
+		}
+		return connectionProp;
+
+	}
 }
