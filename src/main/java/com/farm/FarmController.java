@@ -152,7 +152,8 @@ public class FarmController {
 					System.out.println("Seller ID:"+sellerProduct.getSellerId());
 					com.farm.entity.User sellerDetails = userService.getUser(sellerProduct.getSellerId());
 					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
-					if (distanceInKms<2) {
+					System.out.println("distance in m >>"+distanceInKms);
+					if ((distanceInKms/1000)<2) {
 						farmObj.setProdImg(sellerProduct.getProdImg());
 						farmObj.setProdName(sellerProduct.getProdName());
 						farmObj.setProdQuantity(sellerProduct.getProdQuantity());
