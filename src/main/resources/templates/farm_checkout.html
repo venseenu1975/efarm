@@ -18,12 +18,12 @@
 			//$(".remove_item").on("click", function(e){
 			   // alert("hiiii");
 			   // alert( $(this).closest("tr").find(".seller_prod_id").val());
-			   var length= $("#cart tbody > tr").length - 2;
+		/* 	   var length= $("#cart tbody > tr").length - 2;
 			    //alert( length);
 			    if(length == 1){
 			    	$("#cart").hide();
 			    	return false;
-			    }
+			    } */
 			    var id=$(this).closest("tr").find(".seller_prod_id").val();
 			    document.forms[0].action = "/removeItem/"+id;
 				document.forms[0].submit();

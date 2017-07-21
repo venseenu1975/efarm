@@ -267,7 +267,9 @@ public class FarmController {
     			
     			//set new total
     			System.out.println("farm basket new total price >> "+newTotal);
+    			if(modifiedList !=null && !modifiedList.isEmpty()){
     			modifiedList.get(modifiedList.size()-1).setTotalPrice(newTotal);
+    			}
     			System.out.println("farm basket list size >> "+modifiedList.size());
     		}
     	}
