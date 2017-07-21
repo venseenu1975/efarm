@@ -27,7 +27,7 @@ public class Farm  implements Serializable{
 	private Date date;
 	private Integer prodQuantity;
 	private String prodName;
-	@DateTimeFormat(pattern = "MM dd yyyy - hh:mm")
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date prodExpiry;
 
 	private Boolean active;

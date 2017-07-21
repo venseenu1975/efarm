@@ -4,8 +4,8 @@
 <title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"></div>
  
-<script type="text/javascript" src="../scripts/bootstrap-datetimepicker.js"></script>
-<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css" />
+<script type="text/javascript" src="../scripts/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" href="../../css/bootstrap-datepicker.min.css" />
 
 </head>
 
@@ -148,8 +148,8 @@
 			document.forms[0].action = "/addProductToSell";
 			document.forms[0].submit();
 		});
-/* 		$('#date').datepicker({
-			 format: "dd MM yyyy - hh:ii",
+		$('#date').datepicker({
+			format: "mm/dd/yyyy",
 			weekStart : 0,
 			startDate : "0d",
 			todayBtn : "linked",
@@ -159,11 +159,11 @@
 			//setDate: new Date(),
 		    autoclose: true
 		});
-		$('#date').datepicker('update', new Date()); */
+		//$("#date").datepicker('update',new Date());
 		
-	    $("#date").datetimepicker({
+	/*     $("#date").datetimepicker({
 	        format: "mm dd yyyy - hh:ii"
-	    });
+	    }); */
 	});
 </script>
 </html>

@@ -26,9 +26,10 @@
 			    	return false;
 			    }
 			    var total=$('#cart tbody tr:eq('+length+')').find('.total_display').text();
+			    alert( "price "+price);
+			    alert( "total "+total);
 			    var finalTotal=total-price;
-			    //alert( "total "+total);
-			    //alert("finalTotal  " +finalTotal);
+			    alert("finalTotal  " +finalTotal);
 			    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
 			/*     $('#cart tbody tr:eq('+length+')').find('.total_price').prop("value", function () {
 		        	return finalTotal;

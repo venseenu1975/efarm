@@ -53,13 +53,7 @@ import com.farm.util.FarmUtil;
 @SessionAttributes({"cart","farmProductList"})
 public class FarmController {
 	
-	@InitBinder
-	public void bindingPreparation(WebDataBinder binder) {
-	  DateFormat dateFormat = new SimpleDateFormat("MMM d, YYYY");
-	  CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
-	  binder.registerCustomEditor(Date.class, orderDateEditor);
-	}
-	
+
 	@Autowired
 	FarmService farmService;
 	
