@@ -139,8 +139,7 @@ public class FarmService {
 	        });
 	}
 	
-		public Integer createOrder(BigDecimal amount){
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		public Integer createOrder(String buyerName, BigDecimal amount){
 			final String sql = "INSERT INTO efarm_orders (buyer_id,amount) values(?,?)";
 			 
 	        KeyHolder holder = new GeneratedKeyHolder();
@@ -151,7 +150,7 @@ public class FarmService {
 					PreparedStatement ps = null;
 					try{
 					    ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-		                ps.setString(1, auth.getName());
+		                ps.setString(1, buyerName);
 		                ps.setBigDecimal(2, amount);
 					return ps;
 					}
@@ -212,5 +211,14 @@ public class FarmService {
 	                return summary;
 	            }
 	        });
+	}
+
+
+
+	public String getUserContact(String name) {
+	    String sql = "SELECT contact FROM user WHERE username=?";
+	    String contact = (String) jdbcTemplate.queryForObject(
+	            sql, new Object[] { name }, String.class);
+	    return contact;
 	}
 }

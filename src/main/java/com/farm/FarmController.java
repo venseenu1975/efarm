@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -278,8 +279,12 @@ public class FarmController {
     	return "farm_checkout";
     }
     
+    @Value("${order_success_message}")
+    private String orderSuccessMsg;
+    
     @RequestMapping("/buyBasket")
     public String buyBasket(Map<String, Object> model,@ModelAttribute Farm farm,SessionStatus status) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	Map<String, BasketObject> farmMap=null;
     	if(null !=model.get("cart")){
     		List<BasketObject> list=(List<BasketObject>) model.get("cart");
@@ -288,7 +293,7 @@ public class FarmController {
     			farmMap.forEach((k, v) -> System.out.println(k + " => " + v));
 
     			System.out.println("farm basket total price >> "+list.get(list.size()-1).getTotalPrice());
-    			int orderId=farmService.createOrder(list.get(list.size()-1).getTotalPrice());
+    			int orderId=farmService.createOrder(auth.getName(),list.get(list.size()-1).getTotalPrice());
     			System.out.println("Ur order id is >>"+orderId);
     			for (BasketObject basketObject:farm.getBasket()) {
     				int prodId=Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_")));
@@ -313,6 +318,8 @@ public class FarmController {
     			
     			model.put("order_id", orderId);
     			model.put("order", farmService.getOrderSummary(orderId));
+    			orderSuccessMsg=orderSuccessMsg+" "+orderId;
+    			FarmUtil.sendSMS(orderSuccessMsg, farmService.getUserContact(auth.getName()));
     			status.setComplete();
     		}
     	}

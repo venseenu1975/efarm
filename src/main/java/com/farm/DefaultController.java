@@ -3,6 +3,7 @@ package com.farm;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.farm.model.User;
 import com.farm.service.SecurityService;
 import com.farm.service.UserService;
+import com.farm.util.FarmUtil;
 
 @Controller
 public class DefaultController {
@@ -71,13 +73,15 @@ public class DefaultController {
 		return "farm_user_reg";
 	}
 	
+    @Value("${registration_success_message}")
+    private String regSuccessMsg;
+    
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String populateState(ModelMap model,@ModelAttribute User user) {
 		System.out.println("user   "+user.getuAddress());
 		System.out.println("user   "+user.getuLat());
 		userService.create(user);
-		//System.out.println("user   "+userService.create(user));
-		//model.put("msg",  "Added");
+		FarmUtil.sendSMS(regSuccessMsg, user.getuPhoneNo());
 		securityService.autologin(user.getuAliasName(), user.getuPass());
 		return "redirect:/";
 	}
