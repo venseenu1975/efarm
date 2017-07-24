@@ -128,7 +128,7 @@ public class FarmController {
 	}
 	
 	@RequestMapping("/search")
-	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException {
+	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException, IOException {
 		 Map<Integer,Farm> farmMap=null;
 		 farmMap=(Map<Integer, Farm>) model.get("farmProductList");
 		 if (!(farmMap != null && !farmMap.isEmpty())){
@@ -152,9 +152,14 @@ public class FarmController {
 					System.out.println("expiryDate:"+expiryDate);
 					System.out.println("Seller ID:"+sellerProduct.getSellerId());
 					com.farm.entity.User sellerDetails = userService.getUser(sellerProduct.getSellerId());
+					String configuredDistance =  FarmUtil.getProperties().get("distanceInKms").toString();
+					double confDistance = 0;
+					if(null!=configuredDistance)
+						 confDistance = Double.valueOf(configuredDistance); 
+					System.out.println("Configured Distance:"+configuredDistance);
 					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(), buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(), buyer.getLon().doubleValue());
 					System.out.println("distance in m >>"+distanceInKms);
-					if ((distanceInKms/1000)<2) {
+					if ((distanceInKms/1000)<confDistance) {
 						farmObj.setProdImg(sellerProduct.getProdImg());
 						farmObj.setProdName(sellerProduct.getProdName());
 						farmObj.setProdQuantity(sellerProduct.getProdQuantity());
