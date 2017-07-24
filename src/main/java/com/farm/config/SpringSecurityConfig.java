@@ -21,6 +21,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	@Autowired
+	private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+	
+	
     /*@Autowired
     private AccessDeniedHandler accessDeniedHandler;*/
 	
@@ -46,7 +50,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/")
+			.successHandler(myAuthenticationSuccessHandler)
+			//.defaultSuccessUrl("/")
 			.permitAll()
 			.and()
         .logout()
