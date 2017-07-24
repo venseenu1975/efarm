@@ -127,7 +127,7 @@ public class FarmController {
 		return "farm_sell";
 	}
 	
-	@RequestMapping("/search")
+		@RequestMapping("/search")
 	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm) throws ParseException, IOException {
 		 Map<Integer,Farm> farmMap=null;
 		 farmMap=(Map<Integer, Farm>) model.get("farmProductList");
@@ -284,6 +284,24 @@ public class FarmController {
     	return "farm_checkout";
     }
     
+    
+    
+    
+    @RequestMapping("/payBasket")
+    public String payBasket(ModelMap model,@ModelAttribute Farm farm,SessionStatus status) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	if(null !=model.get("cart")){
+    		List<BasketObject> list=(List<BasketObject>) model.get("cart");
+    		if(list !=null && !list.isEmpty()){
+    			System.out.println("farm basket total price >> "+list.get(list.size()-1).getTotalPrice());
+    			model.addAttribute("total", list.get(list.size()-1).getTotalPrice());
+        		model.addAttribute("cart", list);
+    		}
+    	}
+    	return "farm_pay";
+    }
+    
+    
     @Value("${order_success_message}")
     private String orderSuccessMsg;
     
@@ -300,9 +318,10 @@ public class FarmController {
     			System.out.println("farm basket total price >> "+list.get(list.size()-1).getTotalPrice());
     			int orderId=farmService.createOrder(auth.getName(),list.get(list.size()-1).getTotalPrice());
     			System.out.println("Ur order id is >>"+orderId);
-    			for (BasketObject basketObject:farm.getBasket()) {
+    			
+    		for (BasketObject basketObject:list) {
     				int prodId=Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_")));
-    				System.out.println("basket seller prod id  >> "+Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_"))));
+    				/*System.out.println("basket seller prod id  >> "+Integer.valueOf(basketObject.getAddToCartprodId().substring(0, basketObject.getAddToCartprodId().indexOf("_"))));
     				System.out.println("---------------------From map---------------------------------");
     				System.out.println("basket quantity >> "+farmMap.get(basketObject.getAddToCartprodId()).getQuantity());
     				System.out.println("basket Item Price >> "+farmMap.get(basketObject.getAddToCartprodId()).getItemPrice());
@@ -315,16 +334,17 @@ public class FarmController {
     				basketObject.setQuantity(farmMap.get(basketObject.getAddToCartprodId()).getQuantity());
     				basketObject.setItemPrice(farmMap.get(basketObject.getAddToCartprodId()).getItemPrice());
     				basketObject.setProdUnits(farmMap.get(basketObject.getAddToCartprodId()).getProdUnits());
-    				basketObject.setSellerId(farmMap.get(basketObject.getAddToCartprodId()).getSellerId());
+    				basketObject.setSellerId(farmMap.get(basketObject.getAddToCartprodId()).getSellerId());*/
     				basketObject.setOrderId(orderId);
     				basketObject.setSellerProdId(prodId);
     			}
+    			farm.setBasket(list);
     			farmService.createOrderSummary(farm);
     			
     			model.put("order_id", orderId);
     			model.put("order", farmService.getOrderSummary(orderId));
     			orderSuccessMsg=orderSuccessMsg+" "+orderId;
-    			FarmUtil.sendSMS(orderSuccessMsg, farmService.getUserContact(auth.getName()));
+    			//FarmUtil.sendSMS(orderSuccessMsg, farmService.getUserContact(auth.getName()));
     			status.setComplete();
     		}
     	}

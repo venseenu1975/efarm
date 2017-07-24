@@ -5,6 +5,28 @@
 
 <script>
 	$(document).ready(function() {
+		$('.cod').click(function() {
+			$(".row").hide();
+			document.forms[0].action = "/buyBasket";
+			document.forms[0].submit();
+		});
+		
+		$('.amex').click(function() {
+			$(".row").show();
+		});
+		
+		$('.visa').click(function() {
+			$(".row").show();
+		});
+		
+		$('.master').click(function() {
+			$(".row").show();
+		});
+		
+		$('#buy').click(function() {
+			document.forms[0].action = "/buyBasket";
+			document.forms[0].submit();
+		});
 	});
 </script>
 </head>
@@ -22,23 +44,23 @@
 							<div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
 					            <label class="btn paymentMethod active">
 					            	<div class="method visa"></div>
-					                <input type="radio" name="options" checked="checked" > </input>
+					                <input type="radio" name="options" checked="checked" class="" > </input>
 					            </label>
 					            <label class="btn paymentMethod">
-					            	<div class="method master-card"></div>
-					                <input type="radio" name="options"> </input>
+					            	<div class="method master-card master"></div>
+					                <input type="radio" name="options" class=""> </input>
 					            </label>
 					            <label class="btn paymentMethod">
 				            		<div class="method amex"></div>
-					                <input type="radio" name="options"></input>
+					                <input type="radio" name="options" class=""></input>
 					            </label>
-					             <label class="btn paymentMethod">
+					     <!--         <label class="btn paymentMethod">
 				             		<div class="method vishwa"></div>
 					                <input type="radio" name="options"> </input>
-					            </label>
+					            </label> -->
 					            <label class="btn paymentMethod">
-				            		<div class="method ez-cash"></div>
-					                <input type="radio" name="options"> </input>
+				            		<div class="method ez-cash cod"></div>
+					                <input type="radio" name="options" class=""> </input>
 					            </label>
 					         
 					        </div>        
@@ -80,13 +102,14 @@
               <div class='col-md-12'>
                 <div class='form-control total btn btn-info'>
                   Total:
-                  <span class='amount'>$300</span>
+                  <span class='amount' th:text="${total}"></span>
                 </div>
               </div>
             </div>
             <div class='form-row'>
               <div class='col-md-12 form-group'>
-                <button class='form-control btn btn-primary submit-button' type='submit'>Pay »</button>
+              	<input type="submit" id="buy" class='form-control btn btn-primary submit-button'  value="Pay"></input>
+                <!-- <button class='form-control btn btn-primary submit-button' type='submit'>Pay »</button> -->
               </div>
             </div>
             <div class='form-row'>
