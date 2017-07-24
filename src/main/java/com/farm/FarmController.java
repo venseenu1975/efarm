@@ -168,6 +168,7 @@ public class FarmController {
 						farmObj.setProdPrice(sellerProduct.getProductPrice());
 						farmObj.setProdId(sellerProduct.getId());
 						farmObj.setSellerId(sellerProduct.getSellerId());
+						farmObj.setProdDesc(sellerProduct.getProdDesc());
 						if (farmObj.getProdImg() != null) {
 							byte[] encodeBase64;
 							try {

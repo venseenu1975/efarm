@@ -134,6 +134,7 @@ public class FarmService {
 	            	sellerProduct.setProductPrice(rs.getBigDecimal("product_price"));
 	            	sellerProduct.setSellerId(rs.getString("seller_id"));
 	            	sellerProduct.setId(rs.getInt("id"));
+	            	sellerProduct.setProdDesc(rs.getString("prod_desc"));
 	                return sellerProduct;
 	            }
 	        });

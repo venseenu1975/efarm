@@ -15,40 +15,9 @@
 		});
 		
 		$("#cart tbody").on("click", "tr > .removeItem", function(e){
-			//$(".remove_item").on("click", function(e){
-			   // alert("hiiii");
-			   // alert( $(this).closest("tr").find(".seller_prod_id").val());
-		/* 	   var length= $("#cart tbody > tr").length - 2;
-			    //alert( length);
-			    if(length == 1){
-			    	$("#cart").hide();
-			    	return false;
-			    } */
 			    var id=$(this).closest("tr").find(".seller_prod_id").val();
 			    document.forms[0].action = "/removeItem/"+id;
 				document.forms[0].submit();
-	/* 		    var price=$(this).closest("tr").find(".item_price_display").text();
-			    var length= $("#cart tbody > tr").length - 2;
-			    //alert( length);
-			    if(length == 1){
-			    	$("#cart").hide();
-			    	return false;
-			    }
-			    var total=$('#cart tbody tr:eq('+length+')').find('.total_display').text();
-			    alert( "price "+price);
-			    alert( "total "+total);
-			    var finalTotal=total-price;
-			    alert("finalTotal  " +finalTotal);
-			    $('#cart tbody tr:eq('+length+')').find('.total_display').text("Rs."+finalTotal);
-			    $(this).closest("tr").remove();
-			        
-		        $("tr .seller_prod_id").prop("name", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].addToCartprodId";
-				});
-		        
-		        $("tr .seller_prod_id").prop("id", function () {
-		        	return "basket["+($(this).closest('tr').index())+"].addToCartprodId";
-				}); */
 			});
 	});
 </script>
@@ -73,7 +42,7 @@
 			<br></br>
 			<br></br>
 			<div class="row">
-				<table class="table table-bordered" th:if="${cart !=null and !cart.empty}" id="cart">
+				<table class="table table-striped table-hover table-bordered"  th:if="${cart !=null and !cart.empty}" id="cart">
 				<thead>
 				<tr>
 				<th>Product</th>
@@ -83,8 +52,8 @@
 				<th>Remove</th>
 				</tr>
 				</thead>
-				<tbody>
-					<div th:each="cartObj,rowStat : ${cart}">
+				<tbody th:each="cartObj,rowStat : ${cart}">
+					<!-- <div th:each="cartObj,rowStat : ${cart}"> -->
 						<tr th:if="${cartObj.addToCart}">
 						
 							<td th:text="${cartObj.name}"></td>
@@ -100,81 +69,16 @@
 							th:value="${cartObj.addToCartprodId}" />
 							</td>
 							
-							<!-- <td hidden="hidden">
-							<input type="text" class="form-control seller_id" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].sellerId'}"
-							th:id="${'basket['+__${rowStat.index}__+'].sellerId'}"
-							th:text="${cartObj.sellerId}" 
-							th:value="${cartObj.sellerId}" />
-							</td>
-							
-							<td hidden="hidden">
-							<input type="text" class="form-control seller_prod_id" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
-							th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
-							th:text="${cartObj.sellerProdId}" 
-							th:value="${cartObj.sellerProdId}" />
-							</td>
-							
-							<td hidden="hidden">
-							<input type="text" class="form-control item_price" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].itemPrice'}"
-							th:id="${'basket['+__${rowStat.index}__+'].itemPrice'}"
-							th:text="${cartObj.itemPrice}" 
-							th:value="${cartObj.itemPrice}" />
-							</td>
-							
-							<td hidden="hidden">
-							<input type="text" class="form-control price" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].price'}"
-							th:id="${'basket['+__${rowStat.index}__+'].price'}"
-							th:text="${cartObj.price}" 
-							th:value="${cartObj.price}" />
-							</td>
-							
-							<td hidden="hidden">
-							<input type="text" class="form-control prod_units" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].prodUnits'}"
-							th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
-							th:text="${cartObj.prodUnits}" 
-							th:value="${cartObj.prodUnits}" />
-							</td>
-							
-						    <td hidden="hidden">
-							<input type="text" class="form-control quantity" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].quantity'}"
-							th:id="${'basket['+__${rowStat.index}__+'].quantity'}"
-							th:text="${cartObj.quantity}" 
-							th:value="${cartObj.quantity}" />
-							</td> -->
-							
-							<td class="removeItem">  <a href="#" class="remove_item"><span class="glyphicon glyphicon-remove"></span></a>
-					        </td>
+							<td class="removeItem">  <a href="#" class="remove_item"><span class="glyphicon glyphicon-remove"></span></a></td>
 						</tr>
 						<tr th:if="${rowStat.index >= rowStat.size-1}">
-							<td></td>
-							<td></td>
-							<td></td>
-							<td th:text="'Total Cost in Rs.'"></td>
-							<td  class="total_display" th:text="${cartObj.totalPrice}"></td>
-							
-				<!-- 			<td hidden="hidden">
-							<input type="text" class="form-control total_price" size= "200" 
-							th:name="${'basket['+__${rowStat.index}__+'].totalPrice'}"
-							th:id="${'basket['+__${rowStat.index}__+'].totalPrice'}"
-							th:text="${cartObj.totalPrice}" th:value="${cartObj.totalPrice}" />
-							</td> -->
+							<th colspan="4"><span class="pull-right" th:text="'Total Cost in Rs.'"></span></th>
+							<th  class="total_display" th:text="${cartObj.totalPrice}"></th>
 						</tr>
-					</div>
+					<!-- </div> -->
 					
-					<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-								<td>
-								<input type="submit" id="pay" class="btn btn-info btn-lg" value="Proceed To Pay"></input>
-							</td>
+					<tr th:if="${rowStat.index >= rowStat.size-1}">
+                	<td colspan="5"><input type="submit" id="pay" class="pull-right btn btn-success" value="Proceed To Pay" /></td>
 					</tr>
 					</tbody>
 				</table>

@@ -35,8 +35,44 @@
 <form th:object="${farm}" method="post" enctype="multipart/form-data">
 <div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
-			
-				<table class="table table-bordered" th:if="${!farmList.empty}">
+				<br/><br/><br/>
+		<div th:if="${!farmList.empty}">
+		<div class="col-md-3 col-sm-6" th:each="farmObj,rowStat : ${farmList}">
+    		<span class="thumbnail">
+      			<!-- <img src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png" alt="..."></img> -->
+      			<img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}" th:title="${farmObj.prodName}"></img>
+      			<div  style="display:none;">
+      			<input type="text" class="form-control" size= "200" 
+					th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+					th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
+					th:text="${farmObj.prodId}" 
+					th:value="${farmObj.prodId}" />
+				</div>	
+				<div>
+				<select  th:field="*{basket[__${rowStat.index}__].quantity}" >
+					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
+					</select>
+				</div>
+      			<h4 th:text="${farmObj.prodName}"></h4>
+
+      			<p th:text="${farmObj.prodDesc}"></p>
+      			<hr class="line"></hr>
+      			<div class="row">
+      				<div class="col-md-6 col-sm-6">
+      					<p class="price" th:text="${farmObj.prodPrice}"></p>
+      				</div>
+      				<div class="col-md-6 col-sm-6">
+      				 <input type="checkbox" th:name="${'basket['+__${rowStat.index}__+'].addToCart'}"
+					 th:id="${'basket['+__${rowStat.index}__+'].addToCart'}"/>
+					 <span class="glyphicon glyphicon-shopping-cart"></span>
+      				<!--  <a href="http://cookingfoodsworld.blogspot.in/" target="_blank" >	<button class="btn btn-info right" > BUY ITEM</button></a> -->
+      				</div>
+      				
+      			</div>
+    		</span>
+  		</div>
+		</div>	
+				<!-- <table class="table table-bordered" th:if="${!farmList.empty}">
 
 				<tr th:each="farmObj,rowStat : ${farmList}">
 					<td colspan="2" rowspan="1"> <img th:src="'data:image/jpeg;base64,'+${farmObj.productAltImg}" th:title="${farmObj.prodName}"></img></td>
@@ -54,46 +90,6 @@
 					<option th:each="i : ${#numbers.sequence( 1,  farmObj.prodQuantity)}" th:text="${i} + ${farmObj.prodUnits}" th:value="${i}" /> 
 					</select>
 					</td>
-					
-			<!-- 		<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].sellerId'}"
-					th:id="${'basket['+__${rowStat.index}__+'].sellerId'}"
-					th:text="${farmObj.sellerId}" 
-					th:value="${farmObj.sellerId}" />
-					</td> 
-				
-					<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
-					th:id="${'basket['+__${rowStat.index}__+'].sellerProdId'}"
-					th:text="${farmObj.prodId}" 
-					th:value="${farmObj.prodId}" />
-					</td>
-					
-					<td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].name'}"
-					th:id="${'basket['+__${rowStat.index}__+'].name'}"
-					th:text="${farmObj.prodName}" 
-					th:value="${farmObj.prodName}" />
-					</td>
-					
-					<td hidden="hidden">
-					<input type="text" class="form-control" 
-					th:name="${'basket['+__${rowStat.index}__+'].price'}"
-					th:id="${'basket['+__${rowStat.index}__+'].price'}"
-					th:text="${farmObj.prodPrice}" 
-					th:value="${farmObj.prodPrice}" />
-					</td>
-					
-				    <td hidden="hidden">
-					<input type="text" class="form-control" size= "200" 
-					th:name="${'basket['+__${rowStat.index}__+'].prodUnits'}"
-					th:id="${'basket['+__${rowStat.index}__+'].prodUnits'}"
-					th:text="${farmObj.prodUnits}" 
-					th:value="${farmObj.prodUnits}" />
-					</td>-->
 					
 					<td th:text="${farmObj.prodPrice}"></td>
 					
@@ -114,15 +110,15 @@
 					</h3>
 					</div>
 				</tr>
-				</table>
+				</table> -->
+				
+				<button type="submit" id="CheckOutCart" class="btn btn-info btn-lg" value="CheckOutCart">CheckOutCart</button>
 			</div>	
 			
 	</form>
  </div>	
 </div>
-	
 	<br/><br/><br/>
-	
 	<footer class="blog-footer">
 	      <p>
 	      	<div th:replace="fragments/footer :: footer"></div>
