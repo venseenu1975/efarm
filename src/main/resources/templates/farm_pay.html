@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="fragments/header :: header-css" ></div>
+
+<script>
+	$(document).ready(function() {
+	});
+</script>
+</head>
+
+<body>
+	<div th:replace="fragments/header :: header" ></div>
+	
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title">Payment</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
+	</div>
+					<div class="paymentWrap">
+							<div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
+					            <label class="btn paymentMethod active">
+					            	<div class="method visa"></div>
+					                <input type="radio" name="options" checked="checked" > </input>
+					            </label>
+					            <label class="btn paymentMethod">
+					            	<div class="method master-card"></div>
+					                <input type="radio" name="options"> </input>
+					            </label>
+					            <label class="btn paymentMethod">
+				            		<div class="method amex"></div>
+					                <input type="radio" name="options"></input>
+					            </label>
+					             <label class="btn paymentMethod">
+				             		<div class="method vishwa"></div>
+					                <input type="radio" name="options"> </input>
+					            </label>
+					            <label class="btn paymentMethod">
+				            		<div class="method ez-cash"></div>
+					                <input type="radio" name="options"> </input>
+					            </label>
+					         
+					        </div>        
+						</div>	
+<div class="container">
+    <div class='row'>
+        <div class='col-md-4'></div>
+        <div class='col-md-4'>
+          <form id="payment-form" method="post">
+          <div style="margin:0;padding:0;display:inline">
+          </div>
+            <div class='form-row'>
+              <div class='col-xs-12 form-group required'>
+                <label class='control-label'>Name on Card</label>
+                <input class='form-control' size='4' type='text'></input>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='col-xs-12 form-group card required'>
+                <label class='control-label'>Card Number</label>
+                <input autocomplete='off' class='form-control card-number' size='20' type='text'></input>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='col-xs-4 form-group cvc required'>
+                <label class='control-label'>CVC</label>
+                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'></input>
+              </div>
+              <div class='col-xs-4 form-group expiration required'>
+                <label class='control-label'>Expiration</label>
+                <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'></input>
+              </div>
+              <div class='col-xs-4 form-group expiration required'>
+                <label class='control-label'> </label>
+                <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'></input>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='col-md-12'>
+                <div class='form-control total btn btn-info'>
+                  Total:
+                  <span class='amount'>$300</span>
+                </div>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='col-md-12 form-group'>
+                <button class='form-control btn btn-primary submit-button' type='submit'>Pay »</button>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='col-md-12 error form-group hide'>
+                <div class='alert-danger alert'>
+                  Please correct the errors and try again.
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class='col-md-4'></div>
+    </div>
+</div>
+
+	<br/><br/><br/>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
+</body>
+
+</html>
