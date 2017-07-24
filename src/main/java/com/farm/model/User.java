@@ -2,14 +2,31 @@ package com.farm.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
 	private Integer uId;
+	
+	@NotEmpty
+	@NotNull
+	@Size(min=4, max=30)
 	private String uName;
+	@NotEmpty
+	@NotNull
 	private String uAddress;
+	@NotNull
 	private BigDecimal uLat;
+	@NotNull
 	private BigDecimal uLong;
+	@NotEmpty
 	private String uPhoneNo;
+	@NotEmpty
 	private String uAliasName;
+	@NotEmpty
+	@Size(min=4, max=30)
 	private String uPass;
 	
 	

@@ -2,11 +2,14 @@ package com.farm;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +80,12 @@ public class DefaultController {
     private String regSuccessMsg;
     
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String populateState(ModelMap model,@ModelAttribute User user) {
+	public String populateState(@Valid User user, BindingResult bindingResult, Model model) {
+    	
+    	if (bindingResult.hasErrors()) {
+			return "farm_user_reg";
+		}
+    	
 		System.out.println("user   "+user.getuAddress());
 		System.out.println("user   "+user.getuLat());
 		userService.create(user);

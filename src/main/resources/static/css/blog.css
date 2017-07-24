@@ -170,3 +170,5 @@ h6, .h6 {
   font-family: "Comic Sans MS", cursive, sans-serif;
   color: #008000;
 }
+
+p.form-error-text { color: red; }

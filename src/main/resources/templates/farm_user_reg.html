@@ -29,7 +29,11 @@
 						<label class="col-sm-1 control-label">Name:</label>
 	
 						<div class="col-sm-5">
-							<input type="text" class="form-control" id="name" th:field="*{uName}" />
+							<input type="text" class="form-control" id="name" th:field="*{uName}" required="required" />
+						</div>
+						
+						<div class="col-sm-6">
+							<p class="form-error-text" th:if="${#fields.hasErrors('uName')}" th:errors="*{uName}">Full Name Error</p>
 						</div>
 					</div>
 					
@@ -39,6 +43,10 @@
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="us2-address"  th:field="*{uAddress}"/>
 						</div>
+						
+						<div class="col-sm-6">
+							<p class="form-error-text" th:if="${#fields.hasErrors('uAddress')}" th:errors="*{uAddress}">Address Error</p>
+						</div>
 					</div>
 					
 					<div class="form-group">
@@ -46,6 +54,10 @@
 	
 						<div class="col-sm-5">
 							<input type="text" class="form-control"  th:field="*{uPhoneNo}" />
+						</div>
+						
+						<div class="col-sm-6">
+							<p class="form-error-text" th:if="${#fields.hasErrors('uPhoneNo')}" th:errors="*{uPhoneNo}">Contact No Error</p>
 						</div>
 					</div>
 					
@@ -55,6 +67,10 @@
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="name" th:field="*{uAliasName}" />
 						</div>
+						
+						<div class="col-sm-6">
+							<p class="form-error-text" th:if="${#fields.hasErrors('uAliasName')}" th:errors="*{uAliasName}">User Name Error</p>
+						</div>
 					</div>
 					
 					<div class="form-group">
@@ -62,6 +78,10 @@
 	
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="name" th:field="*{uPass}" />
+						</div>
+						
+						<div class="col-sm-6">
+							<p class="form-error-text" th:if="${#fields.hasErrors('uPass')}" th:errors="*{uPass}">Password Error</p>
 						</div>
 					</div>
 					
