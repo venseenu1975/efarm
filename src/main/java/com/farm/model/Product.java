@@ -1,14 +1,20 @@
 package com.farm.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Product {
 
 	private Integer id;
 	MultipartFile imgFile;
+	@NotNull
 	private Integer categoryId;
+	@NotEmpty
 	private String name;
 	private String image;
+	@NotEmpty
 	private String description;
 	public Integer getId() {
 		return id;

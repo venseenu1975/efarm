@@ -361,7 +361,11 @@ public class FarmController {
     }
     
 	@RequestMapping("/admin/addCategory")
-	public String addCategory(ModelMap model,@ModelAttribute Category category) {
+	public String addCategory(@Valid Category category, BindingResult bindingResult, ModelMap model) {
+		
+		if (bindingResult.hasErrors()) {
+			return "farm_add_category";
+		}
 		
 		 productService.createCategory(category);
 		 model.put("category",  new Category());
@@ -371,8 +375,12 @@ public class FarmController {
 	}
 	
 	@RequestMapping("/admin/addProduct")
-	public String addProduct(ModelMap model,@ModelAttribute Product product) {
+	public String addProduct(@Valid Product product, BindingResult bindingResult, ModelMap model) {
 		try {
+			if (bindingResult.hasErrors()) {
+				return "farm_add_product";
+			}
+			
 			System.out.println("in ---");
             // Get the file and save it somewhere
             byte[] bytes = product.getImgFile().getBytes();

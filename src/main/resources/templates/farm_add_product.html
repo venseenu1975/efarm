@@ -29,50 +29,65 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-9">
 				
 				<form th:object="${product}" method="post" enctype="multipart/form-data" class="form-horizontal">
-					<h4 th:text="${msg}"></h4>
+					<h4 th:text="${msg}" style="color: green;font-family: Arial, Times, serif;" align="center"></h4>
 					
 						<div class="form-group">
-						    <label class="col-md-4 control-label"><span th:text="'Product Category:'"></span>  </label>  
-							<div class="col-md-8">
+						    <label class="col-md-3 control-label"><span th:text="'Product Category:'"></span>  </label>  
+							<div class="col-md-6">
 								<select id="category" th:field="*{categoryId}" class="form-control">
 								<option value="">Select</option>
 								<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
 								</select>
 							</div>
-						</div>
-						
-						<div class="form-group">
-							 <label class="col-md-4 control-label"><span th:text="'Product Name:'"></span></label>
-							 <div class="col-md-8">
-							 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{name}" />
-							 </div>
-						</div>
-					
-						<div class="form-group">	
-							<label class="col-md-4 control-label"><span th:text="'Product Description:'"></span></label>
-							<div class="col-md-8">
-								<input type="text" class="form-control" size= "100" id="prodDesc" th:field="*{description}" />
+							<div class="col-md-3">
+								<p class="form-error-text" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}">Category Error</p>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-md-4 control-label"><span th:text="'Product Image:'"></span></label>
-							<div class="col-md-8">
+							 <label class="col-md-3 control-label"><span th:text="'Product Name:'"></span></label>
+							 <div class="col-md-6">
+							 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{name}" />
+							 </div>
+							 <div class="col-md-3">
+							 	<p class="form-error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Product Name Error</p>
+							</div>
+						</div>
+					
+						<div class="form-group">	
+							<label class="col-md-3 control-label"><span th:text="'Product Description:'"></span></label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" size= "100" id="prodDesc" th:field="*{description}" />
+							</div>
+							<div class="col-md-3">
+								<p class="form-error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Product Description Error</p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label"><span th:text="'Product Image:'"></span></label>
+							<div class="col-md-6">
 								<input type="file" name="imgFile" th:field="*{imgFile}" /> <!-- class="form-control" -->
+							</div>
+							<div class="col-md-3">
+								<!-- <p class="form-error-text" th:if="${#fields.hasErrors('imgFile')}" th:errors="*{imgFile}">Product Image Name Error</p> -->
 							</div>
 						</div>
 					
 						<div class="form-group">        
-	      					<div class="col-sm-offset-6 col-sm-6">
+	      					<div class="col-sm-offset-5 col-sm-7">
 								<input type="submit" id="addProduct" class="btn btn-info btn-lg" value="AddProduct" />
 							</div>
 						</div>
 						
 				</form>
 				
+			</div>
+			
+			<div class="col-sm-3">
 			</div>
 		</div>
 	</div>

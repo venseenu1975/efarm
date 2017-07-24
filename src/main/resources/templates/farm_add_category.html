@@ -28,31 +28,40 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-9">
 				<form th:object="${category}" method="post" enctype="multipart/form-data" class="form-horizontal">
-					<!-- <h4 th:text="${msg}"></h4> -->
+					<h4 th:text="${msg}" style="color: green;font-family: Arial, Times, serif;" align="center"></h4>
 					
 					<div class="form-group">
-						 <label class="col-md-4 control-label"><span th:text="'Category Name:'"></span></label>
-						 <div class="col-md-8">
+						 <label class="col-md-3 control-label"><span th:text="'Category Name:'"></span></label>
+						 <div class="col-md-6">
 						 	<input type="text" class="form-control" size= "100" id="prodCategory" th:field="*{name}" />
 						 </div>
+						 <div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Category Name Error</p>
+						</div>
 					</div>
 					
 					<div class="form-group">
-						 <label class="col-md-4 control-label"><span th:text="'Category Description:'"></span></label>
-						 <div class="col-md-8">
+						 <label class="col-md-3 control-label"><span th:text="'Category Description:'"></span></label>
+						 <div class="col-md-6">
 						 	<input type="text" class="form-control" size= "100" id="prodDescription" th:field="*{description}" />
 						 </div>
+						 <div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Category Description Error</p>
+						</div>
 					</div>
 					
 					<div class="form-group">        
-      					<div class="col-sm-offset-6 col-sm-6">
+      					<div class="col-sm-offset-5 col-sm-7">
 							<input type="submit" id="addCategory" class="btn btn-info btn-lg" value="AddCategory" />
 						</div>
 					</div>
 				</form>
 				
+			</div>
+			
+			<div class="col-sm-3">
 			</div>
 		</div>
 	</div>
