@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 public class Farm  implements Serializable{
@@ -15,24 +19,28 @@ public class Farm  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String productAltImg;
+	@NotNull
 	private Integer category;
 	MultipartFile imgFile;
 	private String imgFilePath;
-
+	@NotNull
 	private Integer prodId;
 	private String prodDesc;
 	private Blob prodImg;
 	private String prodDeliveryMode;
 	private String sellerId;
 	private Date date;
+	@NotNull
 	private Integer prodQuantity;
+	@NotEmpty @NotNull
 	private String prodName;
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date prodExpiry;
 
 	private Boolean active;
-
+	@NotEmpty @NotNull
 	private String prodUnits;
+	@NotNull
 	private BigDecimal prodPrice;
 	private String addToCartprodId;
 	

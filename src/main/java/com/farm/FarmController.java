@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -94,8 +96,13 @@ public class FarmController {
 	}
 	private static String UPLOADED_FOLDER = "C://pic//";
 	@RequestMapping("/addProductToSell") // //new annotation since 4.3
-    public String singleFileUpload(@ModelAttribute Farm farm,Map<String, Object> model) {
+    //public String singleFileUpload(@ModelAttribute Farm farm,Map<String, Object> model) {
+	public String singleFileUpload(@Valid Farm farm, BindingResult bindingResult, Map<String, Object> model) {
 
+		if (bindingResult.hasErrors()) {
+			return "farm_sell";
+		}
+		
         try {
             // Get the file and save it somewhere
             byte[] bytes = farm.getImgFile().getBytes();

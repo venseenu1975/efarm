@@ -21,64 +21,82 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="col-sm-10">
 			<form th:object="${farm}" method="post" enctype="multipart/form-data" class="form-horizontal">
-					<h4 th:text="${msg}"></h4>
+					<h4 th:text="${msg}" style="color: green;font-family: Arial, Times, serif;" align="center"></h4>
 					
 					<div class="form-group">
-					    <label class="col-md-4 control-label"><span th:text="'Product Category:'"></span> </label>  
-						<div class="col-md-8">
+					    <label class="col-md-3 control-label"><span th:text="'Product Category:'"></span> </label>  
+						<div class="col-md-6">
 							<select id="category" th:field="*{category}" class="form-control">
 							<option value="">Select</option>
 							<option th:each="c : ${categories}" th:value="${c.catId}" th:text="${c.catName}"></option>
 							</select>
 						</div>
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Category Error</p>
+						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Product:'"></span></label>
-						<div class="col-md-8">
+						<label class="col-md-3 control-label"><span th:text="'Product:'"></span></label>
+						<div class="col-md-6">
 							<select id="product" name="product" th:field="*{prodId}" class="form-control">
 								<option value="">Select</option>
 								<option th:each="p : ${products}" th:value="${p.prodId}" th:text="${p.prodName}"></option>
 							</select>
 						</div>
-					</div>
-					
-					<div class="form-group">
-						 <label class="col-md-4 control-label"><span th:text="'Product Name:'"></span></label>
-						 <div class="col-md-8">
-						 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
-						 </div>
-					</div>
-					
-					<div class="form-group">	
-						<label class="col-md-4 control-label"><span th:text="'Product Description:'"></span></label>
-						<div class="col-md-8">
-							<input type="text" class="form-control" size= "100" id="prodDesc" th:field="*{prodDesc}" />
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('prodId')}" th:errors="*{prodId}">Product Name Error</p>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Product Delivery Mode:'"></span></label>
-						<div class="col-md-8">
+						 <label class="col-md-3 control-label"><span th:text="'Product Name:'"></span></label>
+						 <div class="col-md-6">
+						 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
+						 </div>
+						 <div class="col-md-3">
+						 	<p class="form-error-text" th:if="${#fields.hasErrors('prodName')}" th:errors="*{prodName}">Product Variety Error</p>
+						</div>
+					</div>
+					
+					<div class="form-group">	
+						<label class="col-md-3 control-label"><span th:text="'Product Description:'"></span></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" size= "100" id="prodDesc" th:field="*{prodDesc}" />
+						</div>
+						<div class="col-md-3">
+							<!-- <p class="form-error-text" th:if="${#fields.hasErrors('prodDesc')}" th:errors="*{prodDesc}">Product Description Error</p> -->
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label"><span th:text="'Product Delivery Mode:'"></span></label>
+						<div class="col-md-6">
 							<select id="prodDel" th:field="*{prodDeliveryMode}" class="form-control">
 								<option th:value="'Self Service'" th:text="'Self Service'">Fruits</option>
 								<option th:value="'Home Delivery'" th:text="'Home Delivery'">Vegetables</option>
 							</select>
 						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Product Quantity:'"></span></label>
-						<div class="col-md-8">
-							<input type="number" class="form-control" size= "10" id="prodQuantity" th:field="*{prodQuantity}" />
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('prodDeliveryMode')}" th:errors="*{prodDeliveryMode}">Product Delivery Mode Error</p>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Units:'"></span></label>
-						<div class="col-md-8">
+						<label class="col-md-3 control-label"><span th:text="'Product Quantity:'"></span></label>
+						<div class="col-md-6">
+							<input type="number" class="form-control" size= "10" id="prodQuantity" th:field="*{prodQuantity}" />
+						</div>
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('prodQuantity')}" th:errors="*{prodQuantity}">Product Selling Quantity Error</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label"><span th:text="'Units:'"></span></label>
+						<div class="col-md-6">
 							<select id="product" name="product" th:field="*{prodUnits}" class="form-control">
 								<option th:value="'0'" th:text="'Select'">Select</option>
 								<option th:value="'Kg'" th:text="'Kg'"></option>
@@ -86,31 +104,43 @@
 								<option th:value="'Pieces'" th:text="'Pieces'"></option>
 							</select>
 						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Product Price:'"></span></label>
-						<div class="col-md-8">
-							<input type="number" class="form-control" size= "20"  id="prodPrice" th:field="*{prodPrice}" />
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('prodUnits')}" th:errors="*{prodUnits}">Product Unit Error</p>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Expiry:'"></span></label>
-						<div class="col-md-8">
+						<label class="col-md-3 control-label"><span th:text="'Product Price:'"></span></label>
+						<div class="col-md-6">
+							<input type="number" class="form-control" size= "20"  id="prodPrice" th:field="*{prodPrice}" />
+						</div>
+						<div class="col-md-3">
+							<p class="form-error-text" th:if="${#fields.hasErrors('prodPrice')}" th:errors="*{prodPrice}">Product Price Error</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label"><span th:text="'Expiry:'"></span></label>
+						<div class="col-md-6">
 							<div class="input-group date" data-provide="datepicker">
-								<input type="text" class="form-control" id="date" size= "100" th:name="prodExpiry" th:field="*{prodExpiry}" />
+								<input type="text" class="form-control" id="date" size= "100" th:name="prodExpiry" th:field="*{prodExpiry}" required="required" />
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-th"></span>
 								</div>
 							</div>
 						</div>
+						<div class="col-md-3">
+							<!-- <p class="form-error-text" th:if="${#fields.hasErrors('prodExpiry')}" th:errors="*{prodExpiry}">Product Expire Error</p> -->
+						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="col-md-4 control-label"><span th:text="'Product Image:'"></span></label>
-						<div class="col-md-8">
+						<label class="col-md-3 control-label"><span th:text="'Product Image:'"></span></label>
+						<div class="col-md-6">
 							<input type="file" name="imgFile" th:field="*{imgFile}" /> <!-- class="form-control" -->
+						</div>
+						<div class="col-md-3">
+							<!-- <p class="form-error-text" th:if="${#fields.hasErrors('imgFile')}" th:errors="*{imgFile}">Product image Selection Error</p> -->
 						</div>
 					</div>
 					
@@ -123,7 +153,7 @@
 				</form>
 			</div> <!-- ./col-sm-6 -->
 			
-			<div class="col-sm-4"></div>
+			<div class="col-sm-2"></div>
 	</div> <!-- ./row -->
 </div> <!-- ./container upload -->
 	
