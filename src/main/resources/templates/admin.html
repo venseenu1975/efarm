@@ -2,16 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="fragments/header :: header-css"></div>
-<style type="text/css">
-.background {
-    width: 100%;
-    background-image: url('../../images/efarm.gif');
-   /* background-repeat: no-repeat;
-    background-size: 80px 60px;*/
-}
-</style>
+	<style type="text/css">
+		.bgimg {
+		    background-image: url('../images/efarm.gif');
+		    border: 2px solid #FF00FF;
+    		border-radius: 8px;
+    		padding: 5px;
+		    width: 3000px;
+		    height: 330px;
+		    /* background-repeat: no-repeat; 
+		    background-size:100% 100%; */
+		}
+	</style>
 </head>
-<body class="">
+
+<body>
 
 <div th:replace="fragments/header :: admin_header"></div>
 
@@ -24,10 +29,13 @@
       </div>
 </div>
 
-<div class="container background">
-<!-- <img th:src="@{./images/efarm.gif}" class="img-rounded" alt="E-Organic Market"  align="centre" width="1800" height="300"> </img>
- -->    <div class="starter-template">
-    </div>
+<div class="container bgimg">
+    <!-- <div class="row"> -->
+	
+	<!-- <img th:src="@{./images/efarm.gif}" class="img-rounded" alt="E-Organic Market"  align="centre" width="1800" height="300"> </img> -->
+    <!-- <div class="starter-template"></div> -->
+   
+   <!-- </div> -->
 </div>
 
 <!-- <div class="container">
@@ -39,7 +47,12 @@
 </div> -->
 <!-- /.container -->
 
-<div th:replace="fragments/footer :: footer"></div>
+<br/><br/>
+<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+</footer>
 
 </body>
 </html>
