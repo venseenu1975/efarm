@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"/>
@@ -24,7 +24,7 @@
 	</div>
 	
 	<div class="container upload">
-	<form th:object="${orders}" method="post" enctype="multipart/form-data">
+	<form  th:object="${farm}" method="post" enctype="multipart/form-data">
 			<div th:replace="fragments/header :: prod-search"></div>
 			<div class="row">
 			 

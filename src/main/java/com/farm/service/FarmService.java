@@ -224,7 +224,7 @@ public class FarmService {
 			            	com.farm.model.OrderSummary summary = new com.farm.model.OrderSummary();
 			            	summary.setOrderId(rs.getInt("order_id"));
 			            	summary.setSellerName(rs.getString("seller_id"));
-			            	summary.setProductName(rs.getString("product_name"));
+			            	summary.setProductName(rs.getString("prod_name"));
 			            	summary.setProductQuantity(rs.getDouble("product_quantity"));
 			            	summary.setUnits(rs.getString("product_units"));
 			            	summary.setOrderDate(rs.getTimestamp("order_date"));

@@ -8,7 +8,7 @@ private Integer id;
 private Integer buyerId;
 private BigDecimal amount;
 private String paymentMode;
-
+private String prodName;
 
 public Integer getId() {
 	return id;
@@ -34,4 +34,11 @@ public String getPaymentMode() {
 public void setPaymentMode(String paymentMode) {
 	this.paymentMode = paymentMode;
 }
+public String getProdName() {
+	return prodName;
+}
+public void setProdName(String prodName) {
+	this.prodName = prodName;
+}
+
 }
