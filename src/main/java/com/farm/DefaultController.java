@@ -1,12 +1,9 @@
 package com.farm;
 
 import java.io.IOException;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,9 +71,6 @@ public class DefaultController {
 		return "farm_user_reg";
 	}
 
-	@Value("${registration_success_message}")
-	private String regSuccessMsg;
-
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String populateState(@Valid User user, BindingResult bindingResult, Model model) throws IOException {
 
@@ -87,7 +81,7 @@ public class DefaultController {
 		log.info("user   " + user.getuAddress());
 		log.info("user   " + user.getuLat());
 		userService.create(user);
-		FarmUtil.sendSMS(regSuccessMsg, user.getuPhoneNo());
+		FarmUtil.sendSMS(FarmUtil.getMsgProperties().getProperty("register.user"), user.getuPhoneNo());
 		securityService.autologin(user.getuAliasName(), user.getuPass());
 		return "redirect:/";
 	}
