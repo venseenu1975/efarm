@@ -6,14 +6,12 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
-public class Farm  implements Serializable{
+
+public class Farm implements Serializable {
 	/**
 	 * 
 	 */
@@ -32,18 +30,19 @@ public class Farm  implements Serializable{
 	private Date date;
 	@NotNull
 	private Integer prodQuantity;
-	@NotEmpty @NotNull
+	@NotEmpty
+	@NotNull
 	private String prodName;
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date prodExpiry;
 
 	private Boolean active;
-	@NotEmpty @NotNull
+	@NotEmpty
+	@NotNull
 	private String prodUnits;
 	@NotNull
 	private BigDecimal prodPrice;
 	private String addToCartprodId;
-	
 
 	public String getAddToCartprodId() {
 		return addToCartprodId;
@@ -52,10 +51,9 @@ public class Farm  implements Serializable{
 	public void setAddToCartprodId(String addToCartprodId) {
 		this.addToCartprodId = addToCartprodId;
 	}
-	
-	List<BasketObject> basket =new ArrayList<>();
-	private Boolean addToCart;
 
+	List<BasketObject> basket = new ArrayList<>();
+	private Boolean addToCart;
 
 	public Boolean getAddToCart() {
 		return addToCart;
