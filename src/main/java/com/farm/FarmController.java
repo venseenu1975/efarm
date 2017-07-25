@@ -85,7 +85,8 @@ public class FarmController {
 	public static final String FARMSELL = "farm_sell";
 	public static final String FARMADDCATEGORY = "farm_add_category";
 	public static final String FARMADDPRODUCT = "farm_add_product";
-	public static final String FARM_ORDERS = "farm_processed_orders";
+	public static final String FARM_P_ORDERS = "farm_processed_orders";
+	public static final String FARM_R_ORDERS = "farm_received_orders";
 	private static Logger log = Logger.getLogger(FarmController.class);
 
 	@RequestMapping("/sell")
@@ -403,8 +404,17 @@ public class FarmController {
 	public String populateOrders(ModelMap model, @ModelAttribute Farm farm) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		List<OrderSummary> orderSummaryLst = farmService.getPlacedOrders(auth.getName());
+		model.put("orders", orderSummaryLst);
+		return FARM_P_ORDERS;
+	}
+	
+	@RequestMapping("/ordersReceived")
+	public String populateReceivedOrders(ModelMap model, @ModelAttribute Farm farm) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<OrderSummary> orderSummaryLst = farmService.getReceivedOrders(auth.getName());
 		System.out.println("order summary size:"+orderSummaryLst.size());
 		model.put("orders", orderSummaryLst);
-		return FARM_ORDERS;
+		return FARM_R_ORDERS;
 	}
+	
 }

@@ -235,6 +235,28 @@ public class FarmService {
 		
 	}
 
+	 
+	
+	public List<com.farm.model.OrderSummary>  getReceivedOrders(String userName){
+		 return jdbcTemplate.query("select os.order_id, o.buyer_id, sp.prod_name, os.amount,os.product_quantity, os.product_units,o.order_date from "
+				 +" order_summary os, efarm_orders o, seller_products sp where sp.id = os.product_id  "
+				 +" and os.order_id = o.id and os.seller_id = ?;", new Object[]{userName},
+				 new RowMapper<com.farm.model.OrderSummary>(){
+					 @Override
+			            public com.farm.model.OrderSummary mapRow(ResultSet rs, int rowNum)throws SQLException {
+			            	com.farm.model.OrderSummary summary = new com.farm.model.OrderSummary();
+			            	summary.setOrderId(rs.getInt("order_id"));
+			            	summary.setSellerName(rs.getString("buyer_id"));
+			            	summary.setProductName(rs.getString("prod_name"));
+			            	summary.setAmount(rs.getBigDecimal("amount"));
+			            	summary.setProductQuantity(rs.getDouble("product_quantity"));
+			            	summary.setUnits(rs.getString("product_units"));
+			            	summary.setOrderDate(rs.getTimestamp("order_date"));
+			                return summary;
+				 }
+				 });
+		
+	}
 
 
 	public String getUserContact(String name) {
