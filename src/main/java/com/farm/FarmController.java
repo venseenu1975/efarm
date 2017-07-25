@@ -55,6 +55,9 @@ public class FarmController {
 
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	FarmUtil farmUtil;
 
 	@Autowired
 	UserService userService;
@@ -125,7 +128,10 @@ public class FarmController {
 		model.put("products", farmService.populateProduct(farm));
 		return FARMSELL;
 	}
-
+	
+	@Value("${distanceInKms}")
+	private  String distanceInKM;
+	
 	@RequestMapping("/search")
 	public ModelAndView populateSearchResults(ModelMap model, @ModelAttribute Farm farm)
 			throws ParseException, IOException {
@@ -152,12 +158,12 @@ public class FarmController {
 					log.info("expiryDate:" + expiryDate);
 					log.info("Seller ID:" + sellerProduct.getSellerId());
 					com.farm.entity.User sellerDetails = userService.getUser(sellerProduct.getSellerId());
-					String configuredDistance = FarmUtil.getProperties().get("distanceInKms").toString();
+					System.out.println(distanceInKM);
 					double confDistance = 0;
-					if (null != configuredDistance)
-						confDistance = Double.valueOf(configuredDistance);
-					log.info("Configured Distance:" + configuredDistance);
-					double distanceInKms = FarmUtil.distance(sellerDetails.getLat().doubleValue(),
+					if (null != distanceInKM)
+						confDistance = Double.valueOf(distanceInKM);
+					log.info("Configured Distance:" + distanceInKM);
+					double distanceInKms = farmUtil.distance(sellerDetails.getLat().doubleValue(),
 							buyer.getLat().doubleValue(), sellerDetails.getLon().doubleValue(),
 							buyer.getLon().doubleValue());
 					log.info("distance in m >>" + distanceInKms);
@@ -226,7 +232,7 @@ public class FarmController {
 							"basket prod units >> " + farmMap.get(basketObject.getSellerProdId()).getProdUnits());
 					log.info("seller id  >> " + farmMap.get(basketObject.getSellerProdId()).getSellerId());
 
-					basketObject.setItemPrice(FarmUtil.calculateCost(basketObject.getQuantity(),
+					basketObject.setItemPrice(farmUtil.calculateCost(basketObject.getQuantity(),
 							farmMap.get(basketObject.getSellerProdId()).getProdPrice()));
 					total = total.add(basketObject.getItemPrice());
 					basketObject.setTotalPrice(total);
@@ -302,6 +308,9 @@ public class FarmController {
 		return "farm_pay";
 	}
 
+	@Value("${order.confirmation}")
+	private  String orderConfirmation;
+	
 	@RequestMapping("/buyBasket")
 	public String buyBasket(Map<String, Object> model, @ModelAttribute Farm farm, SessionStatus status) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -317,42 +326,7 @@ public class FarmController {
 				log.info("Ur order id is >>" + orderId);
 
 				for (BasketObject basketObject : list) {
-					int prodId = Integer.parseInt(basketObject.getAddToCartprodId().substring(0,
-							basketObject.getAddToCartprodId().indexOf('_')));
-					/*
-					 * log.info("basket seller prod id  >> "
-					 * +Integer.valueOf(basketObject.getAddToCartprodId().
-					 * substring(0,
-					 * basketObject.getAddToCartprodId().indexOf("_"))));
-					 * log.info(
-					 * "---------------------From map---------------------------------"
-					 * ); log.info("basket quantity >> "
-					 * +farmMap.get(basketObject.getAddToCartprodId()).
-					 * getQuantity()); log.info(
-					 * "basket Item Price >> "
-					 * +farmMap.get(basketObject.getAddToCartprodId()).
-					 * getItemPrice()); log.info("basket Price >> "
-					 * +farmMap.get(basketObject.getAddToCartprodId()).getPrice(
-					 * )); log.info("basket prod units >> "
-					 * +farmMap.get(basketObject.getAddToCartprodId()).
-					 * getProdUnits()); log.info(
-					 * "basket seller  id  >> "
-					 * +farmMap.get(basketObject.getAddToCartprodId()).
-					 * getSellerId()); log.info(
-					 * "basket total  price  >> "+basketObject.getTotalPrice());
-					 * log.info(
-					 * "------------------------------------------------------")
-					 * ;
-					 * 
-					 * basketObject.setQuantity(farmMap.get(basketObject.
-					 * getAddToCartprodId()).getQuantity());
-					 * basketObject.setItemPrice(farmMap.get(basketObject.
-					 * getAddToCartprodId()).getItemPrice());
-					 * basketObject.setProdUnits(farmMap.get(basketObject.
-					 * getAddToCartprodId()).getProdUnits());
-					 * basketObject.setSellerId(farmMap.get(basketObject.
-					 * getAddToCartprodId()).getSellerId());
-					 */
+					int prodId = Integer.parseInt(basketObject.getAddToCartprodId().substring(0,basketObject.getAddToCartprodId().indexOf('_')));
 					basketObject.setOrderId(orderId);
 					basketObject.setSellerProdId(prodId);
 				}
@@ -361,7 +335,7 @@ public class FarmController {
 				model.put("order_id", orderId);
 				model.put("order", farmService.getOrderSummary(orderId));		
 				LocalDate localDate = LocalDate.now();		       
-				FarmUtil.sendSMS(FarmUtil.getMsgProperties().getProperty("order.confirmation").replace("$", Integer.toString(orderId)).replace("#",  " "+localDate.now().plus(1, ChronoUnit.DAYS)), farmService.getUserContact(auth.getName()));
+				farmUtil.sendSMS(orderConfirmation.replace("$", Integer.toString(orderId)).replace("#",  " "+localDate.now().plus(1, ChronoUnit.DAYS)), farmService.getUserContact(auth.getName()));
 				status.setComplete();
 			}
 		}
