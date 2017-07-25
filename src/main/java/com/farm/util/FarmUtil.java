@@ -16,20 +16,18 @@ import com.twilio.sdk.resource.instance.Message;
 
 public class FarmUtil {
 
-	public static final String ACCOUNT_SID = "ACac6cbd686fe5d0d353053c3674540f3d";
-	public static final String AUTH_TOKEN = "73b2cb3aa84dcae953c9a4a0aca7842f";
-	public static final String TWILIO_NUMBER = "+14159660510";
 	private static Logger log = Logger.getLogger(FarmUtil.class);
 
-	public static void sendSMS(String messageContent, String toNumber) {
+	public static void sendSMS(String messageContent, String toNumber) throws IOException {
 		try {
-			TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+			TwilioRestClient client = new TwilioRestClient(FarmUtil.getMsgProperties().getProperty("ACCOUNT.SID"),
+					FarmUtil.getMsgProperties().getProperty("AUTH.TOKEN"));
 			// Build a filter for the MessageList
 			List<NameValuePair> params = new ArrayList<>();
 			params.add(new BasicNameValuePair("Body", messageContent));
 			params.add(new BasicNameValuePair("To", toNumber)); // Add real
 																// number here
-			params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
+			params.add(new BasicNameValuePair("From", FarmUtil.getMsgProperties().getProperty("TWILIO.NUMBER")));
 			MessageFactory messageFactory = client.getAccount().getMessageFactory();
 			Message message = messageFactory.create(params);
 			log.info(message.getSid());
@@ -74,6 +72,27 @@ public class FarmUtil {
 		log.info("Entering inside Utils.getConnectionProperties()");
 		Properties connectionProp = new Properties();
 		String propFileName = "efarm.properties";
+		InputStream input = FarmUtil.class.getClassLoader().getResourceAsStream(propFileName);
+
+		if (input == null) {
+			log.info("Could not find/read file: " + propFileName);
+
+		} else {
+			// load a properties file
+			try {
+				connectionProp.load(input);
+			} catch (IOException e) {
+				log.error("Could not load properties file: " + propFileName);
+				throw new IOException(e.getMessage(), e);
+			}
+		}
+		return connectionProp;
+	}
+
+	public static Properties getMsgProperties() throws IOException {
+		log.info("Entering inside Utils.getConnectionProperties()");
+		Properties connectionProp = new Properties();
+		String propFileName = "messaging.properties";
 		InputStream input = FarmUtil.class.getClassLoader().getResourceAsStream(propFileName);
 
 		if (input == null) {

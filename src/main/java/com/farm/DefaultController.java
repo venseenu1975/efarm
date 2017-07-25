@@ -1,5 +1,7 @@
 package com.farm;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -76,7 +78,7 @@ public class DefaultController {
 	private String regSuccessMsg;
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String populateState(@Valid User user, BindingResult bindingResult, Model model) {
+	public String populateState(@Valid User user, BindingResult bindingResult, Model model) throws IOException {
 
 		if (bindingResult.hasErrors()) {
 			return "farm_user_reg";
