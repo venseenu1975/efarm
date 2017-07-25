@@ -215,7 +215,6 @@ public class FarmService {
 	}
 	
 	public List<com.farm.model.OrderSummary>  getPlacedOrders(String userName){
-		System.out.println("Username is:"+userName);
 		 return jdbcTemplate.query("select os.order_id, os.seller_id, sp.prod_name, os.product_quantity, os.product_units,o.order_date from "
 				 +" order_summary os, efarm_orders o, seller_products sp where sp.id = os.product_id and os.order_id = o.id and os.order_id in "
 				 +" (select id from efarm_orders where buyer_id = ?);", new Object[]{userName},
