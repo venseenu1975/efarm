@@ -215,7 +215,7 @@ public class FarmService {
 	}
 	
 	public List<com.farm.model.OrderSummary>  getPlacedOrders(String userName){
-		 return jdbcTemplate.query("select os.order_id, os.seller_id, sp.prod_name, os.product_quantity, os.product_units,o.order_date from "
+		 return jdbcTemplate.query("select os.order_id, os.seller_id, sp.prod_name, os.amount, os.product_quantity, os.product_units,o.order_date from "
 				 +" order_summary os, efarm_orders o, seller_products sp where sp.id = os.product_id and os.order_id = o.id and os.order_id in "
 				 +" (select id from efarm_orders where buyer_id = ?);", new Object[]{userName},
 				 new RowMapper<com.farm.model.OrderSummary>(){
@@ -225,6 +225,7 @@ public class FarmService {
 			            	summary.setOrderId(rs.getInt("order_id"));
 			            	summary.setSellerName(rs.getString("seller_id"));
 			            	summary.setProductName(rs.getString("prod_name"));
+			            	summary.setAmount(rs.getBigDecimal("amount"));
 			            	summary.setProductQuantity(rs.getDouble("product_quantity"));
 			            	summary.setUnits(rs.getString("product_units"));
 			            	summary.setOrderDate(rs.getTimestamp("order_date"));
