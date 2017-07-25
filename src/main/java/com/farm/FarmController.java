@@ -335,7 +335,7 @@ public class FarmController {
 				model.put("order_id", orderId);
 				model.put("order", farmService.getOrderSummary(orderId));		
 				LocalDate localDate = LocalDate.now();		       
-				farmUtil.sendSMS(orderConfirmation.replace("$", Integer.toString(orderId)).replace("#",  " "+localDate.now().plus(1, ChronoUnit.DAYS)), farmService.getUserContact(auth.getName()));
+				//farmUtil.sendSMS(orderConfirmation.replace("$", Integer.toString(orderId)).replace("#",  " "+localDate.now().plus(1, ChronoUnit.DAYS)), farmService.getUserContact(auth.getName()));
 				status.setComplete();
 			}
 		}

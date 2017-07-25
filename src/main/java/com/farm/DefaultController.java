@@ -95,7 +95,7 @@ public class DefaultController {
 		log.info("user   " + user.getuAddress());
 		log.info("user   " + user.getuLat());
 		userService.create(user);
-		farmUtil.sendSMS(registerationSuccessMsg, user.getuPhoneNo());
+		//farmUtil.sendSMS(registerationSuccessMsg, user.getuPhoneNo());
 		securityService.autologin(user.getuAliasName(), user.getuPass());
 		return "redirect:/";
 	}
