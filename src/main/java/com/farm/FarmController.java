@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -299,11 +302,8 @@ public class FarmController {
 		return "farm_pay";
 	}
 
-	@Value("${order_success_message}")
-	private String orderSuccessMsg;
-
 	@RequestMapping("/buyBasket")
-	public String buyBasket(Map<String, Object> model, @ModelAttribute Farm farm, SessionStatus status) {
+	public String buyBasket(Map<String, Object> model, @ModelAttribute Farm farm, SessionStatus status) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Map<String, BasketObject> farmMap = null;
 		if (null != model.get("cart")) {
@@ -358,12 +358,10 @@ public class FarmController {
 				}
 				farm.setBasket(list);
 				farmService.createOrderSummary(farm);
-
 				model.put("order_id", orderId);
-				model.put("order", farmService.getOrderSummary(orderId));
-				orderSuccessMsg = orderSuccessMsg + " " + orderId;
-				// FarmUtil.sendSMS(orderSuccessMsg,
-				// farmService.getUserContact(auth.getName()));
+				model.put("order", farmService.getOrderSummary(orderId));		
+				LocalDate localDate = LocalDate.now();		       
+				FarmUtil.sendSMS(FarmUtil.getMsgProperties().getProperty("order.confirmation").replace("$", Integer.toString(orderId)).replace("#",  " "+localDate.now().plus(1, ChronoUnit.DAYS)), farmService.getUserContact(auth.getName()));
 				status.setComplete();
 			}
 		}
