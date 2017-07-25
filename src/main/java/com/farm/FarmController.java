@@ -100,6 +100,8 @@ public class FarmController {
 	public String singleFileUpload(@Valid Farm farm, BindingResult bindingResult, Map<String, Object> model) {
 
 		if (bindingResult.hasErrors()) {
+			model.put(CATEGORIES, farmService.getCategory());
+			model.put("farm", farm);
 			return FARMSELL;
 		}
 
@@ -347,6 +349,7 @@ public class FarmController {
 	public String addCategory(@Valid Category category, BindingResult bindingResult, ModelMap model) {
 
 		if (bindingResult.hasErrors()) {
+			model.put("category", category);
 			return FARMADDCATEGORY;
 		}
 
@@ -361,6 +364,7 @@ public class FarmController {
 	public String addProduct(@Valid Product product, BindingResult bindingResult, ModelMap model) {
 		try {
 			if (bindingResult.hasErrors()) {
+				model.put("product", product);
 				return FARMADDPRODUCT;
 			}
 
