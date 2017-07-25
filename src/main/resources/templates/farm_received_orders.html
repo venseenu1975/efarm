@@ -18,16 +18,15 @@
 
 	<div class="blog-header">
 	      <div class="container">
-	        <h6 class="blog-title w3-myfont">Here is your daily needs</h6>
+	        <h6 class="blog-title w3-myfont">Orders placed for your products are...</h6>
 	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
 	      </div>
 	</div>
 	
 	<div class="container">
 	<form  th:object="${farm}" method="post" enctype="multipart/form-data">
-			<div th:replace="fragments/header :: prod-search"></div>
+			<div th:replace="fragments/header :: prod-search"></div> <br/>
 			<div class="row">
-			  <h6 class="blog-title" th:text="'Orders Placed for your Products are....'">  </h6>
 				<table class="table table-striped table-condensed table-hover" th:if="${orders !=null and !orders.empty}">
 					<thead>
 					<tr>
