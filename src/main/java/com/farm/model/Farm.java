@@ -30,8 +30,6 @@ public class Farm implements Serializable {
 	private Date date;
 	@NotNull
 	private Integer prodQuantity;
-	@NotEmpty
-	@NotNull
 	private String prodName;
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date prodExpiry;

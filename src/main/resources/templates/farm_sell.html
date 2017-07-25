@@ -51,14 +51,11 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group" style="display:none">
 						 <label class="col-md-3 control-label"><span th:text="'Product Name:'"></span></label>
 						 <div class="col-md-6">
 						 	<input type="text" class="form-control" size= "100" id="prodName" th:field="*{prodName}" />
 						 </div>
-						 <div class="col-md-3">
-						 	<p class="form-error-text" th:if="${#fields.hasErrors('prodName')}" th:errors="*{prodName}">Product Variety Error</p>
-						</div>
 					</div>
 					
 					<div class="form-group">	

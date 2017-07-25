@@ -90,8 +90,8 @@ public class FarmService {
     
 
 
-	public List<Product> populateProduct(Farm farm) {
-		 return jdbcTemplate.query("SELECT * FROM product_inv where category=?",new Object[] { farm.getCategory() },
+	public List<Product> populateProduct(Integer cat) {
+		 return jdbcTemplate.query("SELECT * FROM product_inv where category=?",new Object[] { cat },
 				 new RowMapper<Product>() {
 	            @Override
 	            public Product mapRow(ResultSet rs, int rowNum)throws SQLException {

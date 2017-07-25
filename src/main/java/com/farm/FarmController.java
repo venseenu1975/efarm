@@ -100,6 +100,8 @@ public class FarmController {
 	public String singleFileUpload(@Valid Farm farm, BindingResult bindingResult, Map<String, Object> model) {
 
 		if (bindingResult.hasErrors()) {
+			if(null != farm.getCategory() && String.valueOf(farm.getCategory()) !="")
+			model.put("products", farmService.populateProduct(farm.getCategory()));
 			model.put(CATEGORIES, farmService.getCategory());
 			model.put("farm", farm);
 			return FARMSELL;
@@ -127,7 +129,7 @@ public class FarmController {
 	public String populateProduct(ModelMap model, @ModelAttribute Farm farm) {
 		log.info("user   " + farm.getCategory());
 		model.put(CATEGORIES, farmService.getCategory());
-		model.put("products", farmService.populateProduct(farm));
+		model.put("products", farmService.populateProduct(farm.getCategory()));
 		return FARMSELL;
 	}
 	
