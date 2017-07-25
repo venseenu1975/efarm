@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>E-Farm</title>
+ <div th:replace="fragments/header :: header-css"/>
+<script>
+	$(document).ready(function() {
+		$('#Search').click(function() {
+			document.forms[0].action = "/search";
+			document.forms[0].submit();
+		});
+	});
+	</script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+	<div class="blog-header">
+	      <div class="container">
+	        <h6 class="blog-title w3-myfont">Here is your daily needs</h6>
+	        <p class="lead blog-description"><b>E-Organic Market </b>  (Eat Healthy Live Healthy)</p>
+	      </div>
+	</div>
+	
+	<div class="container upload">
+	<form  th:object="${farm}" method="post" enctype="multipart/form-data">
+			<div th:replace="fragments/header :: prod-search"></div>
+			<div class="row">
+			  <h6 class="blog-title" th:text="'Orders Placed for your Products are....'">  </h6>
+				<table class="table table-bordered" th:if="${orders !=null and !orders.empty}">
+					<thead>
+					<tr>
+					<th>OrderId</th>
+					<th>BuyerName</th>
+					<th>ProductName</th>
+					<th>ProductQuantity</th>
+					<th>ProductUnits</th>
+					<th>Amount</th>
+					<th>OrderDate</th>
+					</tr>
+					</thead>
+					
+					<tbody>
+					<tr th:each="order : ${orders}">
+					<td th:text="${order.orderId}"> </td>
+					<td th:text="${order.sellerName}"> </td>
+					<td th:text="${order.productName}"> </td>
+					<td th:text="${order.productQuantity}"> </td>
+					<td th:text="${order.units}"> </td>
+					<td th:text="${order.amount}"> </td>
+					<td th:text="${order.orderDate}"> </td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+	
+	<br/><br/><br/>
+	
+	<footer class="blog-footer">
+	      <p>
+	      	<div th:replace="fragments/footer :: footer"></div>
+	      </p>
+	      <p>
+	        <a href="#">Back to top</a>
+	      </p>
+	</footer>
+	
+</body>
+
+</html>
