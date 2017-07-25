@@ -25,21 +25,29 @@
 	
 	<div class="container upload">
 	<form th:object="${orders}" method="post" enctype="multipart/form-data">
-			<div th:replace="fragments/header :: prod-search"></div>
+			
 			<div class="row">
-			 
+			  <h6 class="blog-title" th:text="'Your orders....'">  </h6>
 				<table class="table table-bordered" th:if="${orders !=null and !orders.empty}">
 					<thead>
 					<tr>
+					<th>OrderId</th>
+					<th>SellerName</th>
 					<th>ProductName</th>
 					<th>ProductQuantity</th>
+					<th>ProductUnits</th>
+					<th>OrderDate</th>
 					</tr>
 					</thead>
 					
 					<tbody>
 					<tr th:each="order : ${orders}">
+					<td th:text="${order.orderId}"> </td>
+					<td th:text="${order.sellerName}"> </td>
 					<td th:text="${order.productName}"> </td>
 					<td th:text="${order.productQuantity}"> </td>
+					<td th:text="${order.units}"> </td>
+					<td th:text="${order.orderDate}"> </td>
 					</tr>
 					</tbody>
 				</table>

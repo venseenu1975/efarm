@@ -405,6 +405,7 @@ public class FarmController {
 	public String populateOrders(ModelMap model, @ModelAttribute Farm farm) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		List<OrderSummary> orderSummaryLst = farmService.getPlacedOrders(auth.getName());
+		System.out.println("order summary size:"+orderSummaryLst.size());
 		model.put("orders", orderSummaryLst);
 		return FARM_ORDERS;
 	}
