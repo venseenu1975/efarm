@@ -1,15 +1,22 @@
 package com.farm;
 
 import java.io.IOException;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.farm.model.User;
 import com.farm.service.SecurityService;
 import com.farm.service.UserService;
@@ -17,9 +24,13 @@ import com.farm.util.FarmUtil;
 
 @Controller
 public class DefaultController {
+	
 	private static Logger log = Logger.getLogger(DefaultController.class);
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	FarmUtil farmUtil;
 
 	@Autowired
 	private SecurityService securityService;
@@ -70,7 +81,10 @@ public class DefaultController {
 		model.addAttribute("user", new User());
 		return "farm_user_reg";
 	}
-
+	
+	@Value("${register.user}")
+	private  String registerationSuccessMsg;
+	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String populateState(@Valid User user, BindingResult bindingResult, Model model) throws IOException {
 
@@ -81,7 +95,7 @@ public class DefaultController {
 		log.info("user   " + user.getuAddress());
 		log.info("user   " + user.getuLat());
 		userService.create(user);
-		FarmUtil.sendSMS(FarmUtil.getMsgProperties().getProperty("register.user"), user.getuPhoneNo());
+		farmUtil.sendSMS(registerationSuccessMsg, user.getuPhoneNo());
 		securityService.autologin(user.getuAliasName(), user.getuPass());
 		return "redirect:/";
 	}

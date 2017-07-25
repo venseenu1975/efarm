@@ -1,6 +1,8 @@
 package com.farm.util;
 
 import java.io.IOException;
+
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,25 +11,41 @@ import java.util.Properties;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.stereotype.Component;
+
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
 
+@Component
 public class FarmUtil {
 
 	private static Logger log = Logger.getLogger(FarmUtil.class);
+	
+	
+	@Value("${ACCOUNT.SID}")
+	private  String accountSID;
+	
+	@Value("${AUTH.TOKEN}")
+	private  String authToken;
+	
+	@Value("${TWILIO.NUMBER}")
+	private  String twilioNum;
 
-	public static void sendSMS(String messageContent, String toNumber) throws IOException {
+	public  void sendSMS(String messageContent, String toNumber) throws IOException {
 		try {
-			TwilioRestClient client = new TwilioRestClient(FarmUtil.getMsgProperties().getProperty("ACCOUNT.SID"),
-					FarmUtil.getMsgProperties().getProperty("AUTH.TOKEN"));
+			TwilioRestClient client = new TwilioRestClient(accountSID,authToken);
 			// Build a filter for the MessageList
 			List<NameValuePair> params = new ArrayList<>();
 			params.add(new BasicNameValuePair("Body", messageContent));
 			params.add(new BasicNameValuePair("To", toNumber)); // Add real
 																// number here
-			params.add(new BasicNameValuePair("From", FarmUtil.getMsgProperties().getProperty("TWILIO.NUMBER")));
+			params.add(new BasicNameValuePair("From",twilioNum));
 			MessageFactory messageFactory = client.getAccount().getMessageFactory();
 			Message message = messageFactory.create(params);
 			log.info(message.getSid());
@@ -89,24 +107,8 @@ public class FarmUtil {
 		return connectionProp;
 	}
 
-	public static Properties getMsgProperties() throws IOException {
-		log.info("Entering inside Utils.getConnectionProperties()");
-		Properties connectionProp = new Properties();
-		String propFileName = "messaging.properties";
-		InputStream input = FarmUtil.class.getClassLoader().getResourceAsStream(propFileName);
-
-		if (input == null) {
-			log.info("Could not find/read file: " + propFileName);
-
-		} else {
-			// load a properties file
-			try {
-				connectionProp.load(input);
-			} catch (IOException e) {
-				log.error("Could not load properties file: " + propFileName);
-				throw new IOException(e.getMessage(), e);
-			}
-		}
-		return connectionProp;
-	}
+	 @Bean
+	    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+	        return new PropertySourcesPlaceholderConfigurer();
+	    }
 }
