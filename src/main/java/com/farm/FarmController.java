@@ -39,6 +39,7 @@ import com.farm.entity.SellerProduct;
 import com.farm.model.BasketObject;
 import com.farm.model.Category;
 import com.farm.model.Farm;
+import com.farm.model.OrderSummary;
 import com.farm.model.Product;
 import com.farm.model.User;
 import com.farm.service.FarmService;
@@ -86,6 +87,7 @@ public class FarmController {
 	public static final String FARMSELL = "farm_sell";
 	public static final String FARMADDCATEGORY = "farm_add_category";
 	public static final String FARMADDPRODUCT = "farm_add_product";
+	public static final String FARM_ORDERS = "farm_processed_orders";
 	private static Logger log = Logger.getLogger(FarmController.class);
 
 	@RequestMapping("/sell")
@@ -396,5 +398,14 @@ public class FarmController {
 	public String product(Map<String, Object> model, @ModelAttribute Product product) {
 		model.put(CATEGORIES, farmService.getCategory());
 		return FARMADDPRODUCT;
+	}
+	
+	
+	@RequestMapping("/placedOrders")
+	public String populateOrders(ModelMap model, @ModelAttribute Farm farm) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<OrderSummary> orderSummaryLst = farmService.getPlacedOrders(auth.getName());
+		model.put("orders", orderSummaryLst);
+		return FARM_ORDERS;
 	}
 }
