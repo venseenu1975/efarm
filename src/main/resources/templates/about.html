@@ -14,8 +14,9 @@
 <div sec:authorize="hasRole('ROLE_USER')">
 <div th:replace="fragments/header :: header"></div>
 </div>
-
-
+<div sec:authorize="isAnonymous()">
+<div th:replace="fragments/header :: login_header"></div>
+</div>
 
 <div class="blog-header">
       <div class="container">
