@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <title>E-Farm</title>
  <div th:replace="fragments/header :: header-css"></div>
@@ -11,7 +13,15 @@
 
 <body>
 
-	<div th:replace="fragments/header :: header"></div>
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+<div th:replace="fragments/header :: admin_header"></div>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+<div th:replace="fragments/header :: header"></div>
+</div>
+<div sec:authorize="isAnonymous()">
+<div th:replace="fragments/header :: login_header"></div>
+</div>
 	
 	<div class="blog-header">
 	      <div class="container">
