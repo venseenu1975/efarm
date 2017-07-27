@@ -26,14 +26,15 @@ h2{
   }
 }
 .bgimg {
-	    background-image: url('../images/efarm.gif');
+	    background-image: url('../images/efarm_1.gif');
 	   /*  border: 2px solid #FF00FF; */
    		border-radius: 8px;
    		padding: 5px;
 	    width: 3000px;
 	    height: 360px;
-	    /* background-repeat: no-repeat; 
-   			background-size:100% 100%; */
+	    background-repeat: no-repeat; 
+	    margin-left:325px;
+   		/* 	background-size:100% 100%; */
 }
 .submit-button {
   margin-top: 10px;
