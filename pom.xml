@@ -122,7 +122,7 @@
 					<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.springframework.boot.SpringApplication.SpringBootWebApplication</mainClass>
+							<mainClass>com.farm.SpringBootWebApplication</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Class-Path>config/</Class-Path>
